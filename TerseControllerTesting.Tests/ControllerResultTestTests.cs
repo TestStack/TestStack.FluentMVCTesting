@@ -19,6 +19,11 @@ namespace TerseControllerTesting.Tests
             ReturnType<RedirectResult>(t => t.ShouldRedirectTo("")),
             ReturnType<RedirectToRouteResult>(t => t.ShouldRedirectTo(c => c.EmptyResult)),
             ReturnType<RedirectToRouteResult>(t => t.ShouldRedirectTo<SomeOtherController>(c => c.SomeAction())),
+            ReturnType<ViewResult>(t => t.ShouldRenderView("")),
+            ReturnType<ViewResult>(t => t.ShouldRenderDefaultView()),
+            ReturnType<PartialViewResult>(t => t.ShouldRenderPartialView("")),
+            ReturnType<PartialViewResult>(t => t.ShouldRenderDefaultPartialView()),
+            ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
         };
         // Different ways that action redirects can be asserted along with the expected method name and the correct controller action call for that assertion
         private static readonly List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>> ActionRedirects = new List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>>
