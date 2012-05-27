@@ -25,6 +25,7 @@ namespace TerseControllerTesting.Tests
             ReturnType<PartialViewResult>(t => t.ShouldRenderDefaultPartialView()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
             ReturnType<HttpStatusCodeResult>(t => t.ShouldGiveHttpStatus()),
+            ReturnType<JsonResult>(t => t.ShouldReturnJson()),
         };
         // Different ways that action redirects can be asserted along with the expected method name and the correct controller action call for that assertion
         private static readonly List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>> ActionRedirects = new List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>>
@@ -313,6 +314,14 @@ namespace TerseControllerTesting.Tests
                 _controller.WithCallTo(c => c.StatusCode()).ShouldGiveHttpStatus(ControllerResultTestController.Code+1)
             );
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected HTTP status code to be '{0}', but instead received a '{1}'.", ControllerResultTestController.Code + 1, ControllerResultTestController.Code)));
+        }
+        #endregion
+
+        #region Json tests
+        [Test]
+        public void Allow_the_object_that_is_returned_to_be_checked()
+        {
+            _controller.WithCallTo(c => c.Json()).ShouldReturnJson(d => Assert.That(d, Is.EqualTo(ControllerResultTestController.JsonValue)));
         }
         #endregion
     }

@@ -12,6 +12,7 @@ namespace TerseControllerTesting.Tests.TestControllers
         public const string PartialName = "NamedPartial";
         public const string RandomViewName = "Random";
         public const int Code = 403;
+        public const string JsonValue = "json";
         #endregion
 
         #region Empty, Null and Random Results
@@ -164,7 +165,7 @@ namespace TerseControllerTesting.Tests.TestControllers
         #region JSON
         public ActionResult Json()
         {
-            return Json("{data:true}");
+            return Json(JsonValue);
         }
         #endregion
     }
