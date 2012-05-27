@@ -24,6 +24,7 @@ namespace TerseControllerTesting.Tests
             ReturnType<PartialViewResult>(t => t.ShouldRenderPartialView("")),
             ReturnType<PartialViewResult>(t => t.ShouldRenderDefaultPartialView()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
+            ReturnType<HttpStatusCodeResult>(t => t.ShouldGiveHttpStatus()),
         };
         // Different ways that action redirects can be asserted along with the expected method name and the correct controller action call for that assertion
         private static readonly List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>> ActionRedirects = new List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>>
@@ -290,6 +291,29 @@ namespace TerseControllerTesting.Tests
             _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderFile(ControllerResultTestController.FileContentType);
         }
 
+        #endregion
+
+        #region HTTP Status tests
+        [Test]
+        public void Check_for_http_not_found()
+        {
+            _controller.WithCallTo(c => c.NotFound()).ShouldGiveHttpStatus(404);
+        }
+
+        [Test]
+        public void Check_for_http_status()
+        {
+            _controller.WithCallTo(c => c.StatusCode()).ShouldGiveHttpStatus(ControllerResultTestController.Code);
+        }
+
+        [Test]
+        public void Check_for_invalid_http_status()
+        {
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.StatusCode()).ShouldGiveHttpStatus(ControllerResultTestController.Code+1)
+            );
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected HTTP status code to be '{0}', but instead received a '{1}'.", ControllerResultTestController.Code + 1, ControllerResultTestController.Code)));
+        }
         #endregion
     }
 }
