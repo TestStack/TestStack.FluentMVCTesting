@@ -220,9 +220,30 @@ namespace TerseControllerTesting.Tests
 
         #region View tests
         [Test]
-        public void Check_for_default_view()
+        public void Check_for_default_view_or_partial()
         {
             _controller.WithCallTo(c => c.DefaultView()).ShouldRenderDefaultView();
+            _controller.WithCallTo(c => c.DefaultViewExplicit()).ShouldRenderDefaultView();
+            _controller.WithCallTo(c => c.DefaultPartial()).ShouldRenderDefaultPartialView();
+            _controller.WithCallTo(c => c.DefaultPartialExplicit()).ShouldRenderDefaultPartialView();
+        }
+
+        [Test]
+        public void Check_for_invalid_view_name_when_expecting_default_view()
+        {
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.RandomView()).ShouldRenderDefaultView()
+            );
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected result view to be 'RandomView', but instead was given '{0}'.", ControllerResultTestController.RandomViewName)));
+        }
+
+        [Test]
+        public void Check_for_invalid_view_name_when_expecting_default_partial()
+        {
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.RandomPartial()).ShouldRenderDefaultPartialView()
+            );
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected result view to be 'RandomPartial', but instead was given '{0}'.", ControllerResultTestController.RandomViewName)));
         }
         #endregion
     }

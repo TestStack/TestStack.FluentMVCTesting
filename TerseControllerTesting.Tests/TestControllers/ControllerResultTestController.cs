@@ -108,9 +108,19 @@ namespace TerseControllerTesting.Tests.TestControllers
             return View();
         }
 
+        public ActionResult DefaultViewExplicit()
+        {
+            return View("DefaultViewExplicit");
+        }
+
         public ActionResult DefaultPartial()
         {
             return PartialView();
+        }
+
+        public ActionResult DefaultPartialExplicit()
+        {
+            return PartialView("DefaultPartialExplicit");
         }
 
         public ActionResult EmptyFile()
@@ -132,6 +142,11 @@ namespace TerseControllerTesting.Tests.TestControllers
         public ActionResult RandomView()
         {
             return View(RandomViewName);
+        }
+
+        public ActionResult RandomPartial()
+        {
+            return PartialView(RandomViewName);
         }
         #endregion
 
