@@ -28,7 +28,7 @@ namespace TerseControllerTesting.Tests
             ReturnType<JsonResult>(t => t.ShouldReturnJson()),
         };
         // Different ways that action redirects can be asserted along with the expected method name and the correct controller action call for that assertion
-        private static readonly List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>> ActionRedirects = new List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>>
+        private static readonly List<RedirectToActionTestMetadata> ActionRedirects = new List<RedirectToActionTestMetadata>
         {
             ActionRedirect("ActionWithNoParameters",
                 t => t.ShouldRedirectTo(c => c.ActionWithNoParameters),
@@ -81,15 +81,20 @@ namespace TerseControllerTesting.Tests
         #endregion
 
         #region Setup
+        public class RedirectToActionTestMetadata : Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>
+        {
+            public RedirectToActionTestMetadata(string expectedMethodName, TestAction testCall, Expression<Func<ControllerResultTestController, ActionResult>> validControllerActionCall)
+                : base(expectedMethodName, testCall, validControllerActionCall) { }
+        }
         private ControllerResultTestController _controller;
         public delegate void TestAction(ControllerResultTest<ControllerResultTestController> testClass);
         private static Tuple<string, TestAction> ReturnType<T>(TestAction a)
         {
             return new Tuple<string, TestAction>(typeof(T).Name, a);
         }
-        private static Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> ActionRedirect(string s, TestAction a, Expression<Func<ControllerResultTestController, ActionResult>> c)
+        private static RedirectToActionTestMetadata ActionRedirect(string s, TestAction a, Expression<Func<ControllerResultTestController, ActionResult>> c)
         {
-            return new Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>(s, a, c);
+            return new RedirectToActionTestMetadata(s, a, c);
         }
 
         [SetUp]
@@ -162,14 +167,14 @@ namespace TerseControllerTesting.Tests
 
         [Test]
         [TestCaseSource("ActionRedirects")]
-        public void Check_for_redirect_to_action(Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> test)
+        public void Check_for_redirect_to_action(RedirectToActionTestMetadata test)
         {
             test.Item2(_controller.WithCallTo(test.Item3));
         }
 
         [Test]
         [TestCaseSource("ActionRedirects")]
-        public void Check_for_redirect_to_incorrect_controller(Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> test)
+        public void Check_for_redirect_to_incorrect_controller(RedirectToActionTestMetadata test)
         {
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 test.Item2(_controller.WithCallTo(c => c.RedirectToAnotherController()))
@@ -179,7 +184,7 @@ namespace TerseControllerTesting.Tests
 
         [Test]
         [TestCaseSource("ActionRedirects")]
-        public void Check_for_redirect_to_incorrect_action(Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> test)
+        public void Check_for_redirect_to_incorrect_action(RedirectToActionTestMetadata test)
         {
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 test.Item2(_controller.WithCallTo(c => c.RedirectToRandomResult()))
@@ -191,7 +196,7 @@ namespace TerseControllerTesting.Tests
 
         [Test]
         [TestCaseSource("ActionRedirects")]
-        public void Check_for_redirect_to_empty_action(Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> test)
+        public void Check_for_redirect_to_empty_action(RedirectToActionTestMetadata test)
         {
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 test.Item2(_controller.WithCallTo(c => c.RedirectToRouteName()))
