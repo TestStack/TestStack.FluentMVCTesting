@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="ControllerExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestControllers\TestController.cs" />
+    <Compile Include="TestControllers\ControllerExtensionsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -2,7 +2,7 @@
 
 namespace TerseControllerTesting.Tests.TestControllers
 {
-    class TestController : Controller
+    class ControllerExtensionsController : Controller
     {
         public bool SomeActionCalled { get; set; }
         public bool SomeChildActionCalled { get; set; }

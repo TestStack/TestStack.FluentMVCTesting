@@ -6,12 +6,12 @@ namespace TerseControllerTesting.Tests
     [TestFixture]
     class ControllerExtensionsShould
     {
-        private TestController _controller;
+        private ControllerExtensionsController _controller;
 
         [SetUp]
         public void Setup()
         {
-            _controller = new TestController();
+            _controller = new ControllerExtensionsController();
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace TerseControllerTesting.Tests
         public void Throw_exception_for_child_action_call_to_non_child_action()
         {
             var exception = Assert.Throws<InvalidControllerActionException>(() => _controller.WithCallToChild(c => c.SomeAction()));
-            Assert.That(exception.Message, Is.EqualTo("Expected action SomeAction of controller TerseControllerTesting.Tests.TestControllers.TestController to be a child action, but it didn't have the ChildActionOnly attribute."));
+            Assert.That(exception.Message, Is.EqualTo("Expected action SomeAction of controller TerseControllerTesting.Tests.TestControllers.ControllerExtensionsController to be a child action, but it didn't have the ChildActionOnly attribute."));
         }
     }
 }
