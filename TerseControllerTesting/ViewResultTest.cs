@@ -16,9 +16,12 @@ namespace TerseControllerTesting
 
         public ModelTest<TModel> WithModel<TModel>() where TModel : class
         {
+            if (_viewResult.Model == null)
+                throw new ViewResultModelAssertionException("Expected view model, but was null.");
+
             var castedModel = _viewResult.Model as TModel;
             if (castedModel == null)
-                throw new ViewResultModelAssertionException(string.Format("Expected view model to be of type '{0}'. It is actually null.", typeof(TModel).Name));
+                throw new ViewResultModelAssertionException(string.Format("Expected view model to be of type '{0}', but it is actually of type '{1}'.", typeof(TModel).Name, _viewResult.Model.GetType().Name));
 
             return new ModelTest<TModel>(_controller);
         }
@@ -29,7 +32,7 @@ namespace TerseControllerTesting
 
             var model = _viewResult.Model as TModel;
             if (model != expectedModel)
-                throw new ViewResultModelAssertionException("Expected view model to be passed in model, but in fact it was a different model.");
+                throw new ViewResultModelAssertionException("Expected view model to be the given model, but in fact it was a different model.");
 
             return test;
         }
@@ -40,7 +43,7 @@ namespace TerseControllerTesting
 
             var model = _viewResult.Model as TModel;
             if (!predicate(model))
-                throw new ViewResultModelAssertionException("Expected view model to pass a condition, but it failed.");
+                throw new ViewResultModelAssertionException("Expected view model to pass the given condition, but it failed.");
 
             return test;
         }
