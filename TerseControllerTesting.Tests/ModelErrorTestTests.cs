@@ -5,12 +5,20 @@ using NUnit.Framework;
 
 namespace TerseControllerTesting.Tests
 {
-    [TestFixture]
-    internal class ModelErrorTestShould
+    class ModelErrorTestMetadata : Tuple<string, string, string, ModelErrorTestCall>
     {
-        // Error message part, valid value for first error, valid value for second error, lambda with method to call
+        public ModelErrorTestMetadata(string errorMessagePart, string validError1Value, string validError2Value, ModelErrorTestCall testCall)
+            : base(errorMessagePart, validError1Value, validError2Value, testCall) {}
+    }
+    delegate ModelTest<TestViewModel> ModelErrorTestCall(ModelErrorTest<TestViewModel> modelErrorTest, string input);
+
+    [TestFixture]
+    class ModelErrorTestShould
+    {
+        // List of test metadata:
+        //  Error message part, valid value for first error, valid value for second error, lambda with method to call
         #pragma warning disable 169
-        private static List<Tuple<string, string, string, Action<ModelErrorTest<TestViewModel>, string>>> _tests = new List<Tuple<string, string, string, Action<ModelErrorTest<TestViewModel>, string>>>
+        private static List<ModelErrorTestMetadata> _tests = new List<ModelErrorTestMetadata>
         {
             Test("to be", Error1, Error2, (t, s) => t.ThatEquals(s)),
             Test("to start with", Error1.Substring(0, 3), Error2.Substring(0, 3), (t, s) => t.BeginningWith(s)),
@@ -19,9 +27,9 @@ namespace TerseControllerTesting.Tests
         };
         #pragma warning restore 169
 
-        private static Tuple<string, string, string, Action<ModelErrorTest<TestViewModel>, string>> Test(string message, string error1, string error2, Action<ModelErrorTest<TestViewModel>, string> testCall)
+        private static ModelErrorTestMetadata Test(string message, string error1, string error2, ModelErrorTestCall testCall)
         {
-            return new Tuple<string, string, string, Action<ModelErrorTest<TestViewModel>, string>>(message, error1, error2, testCall);
+            return new ModelErrorTestMetadata(message, error1, error2, testCall);
         }
 
         private ModelErrorTest<TestViewModel> _modelTest;
@@ -45,7 +53,7 @@ namespace TerseControllerTesting.Tests
 
         [Test]
         [TestCaseSource("_tests")]
-        public void Check_for_lack_of_matching_error_message(Tuple<string, string, string, Action<ModelErrorTest<TestViewModel>, string>> test)
+        public void Check_for_lack_of_matching_error_message(ModelErrorTestMetadata test)
         {
             var exception = Assert.Throws<ModelErrorAssertionException>(() =>
                 test.Item4(_modelTest, NonError)
@@ -55,14 +63,14 @@ namespace TerseControllerTesting.Tests
 
         [Test]
         [TestCaseSource("_tests")]
-        public void Check_for_first_error_message(Tuple<string, string, string, Action<ModelErrorTest<TestViewModel>, string>> test)
+        public void Check_for_first_error_message(ModelErrorTestMetadata test)
         {
             test.Item4(_modelTest, test.Item2);
         }
 
         [Test]
         [TestCaseSource("_tests")]
-        public void Check_for_subsequent_error_message(Tuple<string, string, string, Action<ModelErrorTest<TestViewModel>, string>> test)
+        public void Check_for_subsequent_error_message(ModelErrorTestMetadata test)
         {
             test.Item4(_modelTest, test.Item3);
         }
