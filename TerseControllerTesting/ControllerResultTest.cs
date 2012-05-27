@@ -61,47 +61,49 @@ namespace TerseControllerTesting
                 throw new ActionResultAssertionException(string.Format("Expected redirect to URL '{0}', but instead was given a redirect to URL '{1}'.", url, redirectResult.Url));
         }
 
-        public void ShouldRedirectToRoute(string route)
+        public RouteValueDictionary ShouldRedirectToRoute(string route)
         {
             ValidateActionReturnType<RedirectToRouteResult>();
             var redirectResult = (RedirectToRouteResult)_actionResult;
 
             if (redirectResult.RouteName != route)
                 throw new ActionResultAssertionException(string.Format("Expected redirect to route '{0}', but instead was given a redirect to route '{1}'.", route, redirectResult.RouteName));
+
+            return redirectResult.RouteValues;
         }
 
-        public void ShouldRedirectTo(Func<T, Func<ActionResult>> actionRedirectedTo)
+        public RouteValueDictionary ShouldRedirectTo(Func<T, Func<ActionResult>> actionRedirectedTo)
         {
-            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
         }
 
-        public void ShouldRedirectTo(Func<T, Func<int, ActionResult>> actionRedirectedTo)
+        public RouteValueDictionary ShouldRedirectTo(Func<T, Func<int, ActionResult>> actionRedirectedTo)
         {
-            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
         }
 
-        public void ShouldRedirectTo<T1>(Func<T, Func<T1, ActionResult>> actionRedirectedTo)
+        public RouteValueDictionary ShouldRedirectTo<T1>(Func<T, Func<T1, ActionResult>> actionRedirectedTo)
         {
-            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
         }
 
-        public void ShouldRedirectTo<T1, T2>(Func<T, Func<T1, T2, ActionResult>> actionRedirectedTo)
+        public RouteValueDictionary ShouldRedirectTo<T1, T2>(Func<T, Func<T1, T2, ActionResult>> actionRedirectedTo)
         {
-            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
         }
 
-        public void ShouldRedirectTo<T1, T2, T3>(Func<T, Func<T1, T2, T3, ActionResult>> actionRedirectedTo)
+        public RouteValueDictionary ShouldRedirectTo<T1, T2, T3>(Func<T, Func<T1, T2, T3, ActionResult>> actionRedirectedTo)
         {
-            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
         }
 
-        public void ShouldRedirectTo(Expression<Action<T>> actionRedirectedTo)
+        public RouteValueDictionary ShouldRedirectTo(Expression<Action<T>> actionRedirectedTo)
         {
             var methodCall = (MethodCallExpression) actionRedirectedTo.Body;
-            ShouldRedirectTo(methodCall.Method);
+            return ShouldRedirectTo(methodCall.Method);
         }
 
-        public void ShouldRedirectTo(MethodInfo method, RouteValueDictionary expectedValues = null)
+        public RouteValueDictionary ShouldRedirectTo(MethodInfo method, RouteValueDictionary expectedValues = null)
         {
             ValidateActionReturnType<RedirectToRouteResult>();
 
@@ -119,7 +121,7 @@ namespace TerseControllerTesting
                 throw new ActionResultAssertionException(string.Format("Expected redirect to action '{0}', but instead was given a redirect to action '{1}'.", actionName, redirectResult.RouteValues["Action"]));
 
             if (expectedValues == null)
-                return;
+                return redirectResult.RouteValues;
 
             foreach (var expectedRouteValue in expectedValues)
             {
@@ -138,9 +140,17 @@ namespace TerseControllerTesting
                             ));
                 }
             }
+
+            return redirectResult.RouteValues;
         }
 
-        public void ShouldRedirectTo<TController>(MethodInfo methodInfo) where TController : Controller
+        public RouteValueDictionary ShouldRedirectTo<TController>(Expression<Action<TController>> actionRedirectedTo) where TController : Controller
+        {
+            var methodCall = (MethodCallExpression)actionRedirectedTo.Body;
+            return ShouldRedirectTo<TController>(methodCall.Method);
+        }
+
+        public RouteValueDictionary ShouldRedirectTo<TController>(MethodInfo methodInfo) where TController : Controller
         {
             ValidateActionReturnType<RedirectToRouteResult>();
 
@@ -154,6 +164,8 @@ namespace TerseControllerTesting
 
             if (redirectResult.RouteValues["Action"].ToString() != actionName)
                 throw new ActionResultAssertionException(string.Format("Expected redirect to action '{0}', but instead was given a redirect to action '{1}'.", actionName, redirectResult.RouteValues["Action"]));
+
+            return redirectResult.RouteValues;
         }
 
         #endregion

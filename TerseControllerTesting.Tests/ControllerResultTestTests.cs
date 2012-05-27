@@ -17,6 +17,7 @@ namespace TerseControllerTesting.Tests
             ReturnType<EmptyResult>(t => t.ShouldReturnEmptyResult()),
             ReturnType<RedirectResult>(t => t.ShouldRedirectTo("")),
             ReturnType<RedirectToRouteResult>(t => t.ShouldRedirectTo(c => c.EmptyResult)),
+            ReturnType<RedirectToRouteResult>(t => t.ShouldRedirectTo<SomeOtherController>(c => c.SomeAction())),
         };
         private static readonly List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>> ActionRedirects = new List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>>
         {
@@ -56,6 +57,11 @@ namespace TerseControllerTesting.Tests
                 t => t.ShouldRedirectTo(c => c.ActionWithMoreThanThreeParameters(0, 0, 0, 0)),
                 c => c.RedirectToActionWithMoreThanThreeParameters()
             ),
+        };
+        private static readonly List<TestAction> OtherControllerRedirects = new List<TestAction>
+        {
+            c => c.ShouldRedirectTo<SomeOtherController>(typeof(SomeOtherController).GetMethod("SomeAction")),
+            c => c.ShouldRedirectTo<SomeOtherController>(c2 => c2.SomeAction()),
         };
         #pragma warning restore 169
         
@@ -147,7 +153,7 @@ namespace TerseControllerTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 test.Item2(_controller.WithCallTo(c => c.RedirectToAnotherController()))
             );
-            Assert.That(exception.Message, Is.EqualTo("Expected redirect to controller 'ControllerResultTest', but instead was given a redirect to controller 'SomeOtherController'."));
+            Assert.That(exception.Message, Is.EqualTo("Expected redirect to controller 'ControllerResultTest', but instead was given a redirect to controller 'SomeOther'."));
         }
 
         [Test]
@@ -160,6 +166,8 @@ namespace TerseControllerTesting.Tests
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected redirect to action '{0}', but instead was given a redirect to action 'RandomResult'.", test.Item1)));
         }
 
+        // todo: Test the route values expectations
+
         [Test]
         [TestCaseSource("ActionRedirects")]
         public void Check_for_redirect_to_empty_action(Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> test)
@@ -168,6 +176,31 @@ namespace TerseControllerTesting.Tests
                 test.Item2(_controller.WithCallTo(c => c.RedirectToRouteName()))
             );
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected redirect to action '{0}', but instead was given a redirect without an action.", test.Item1)));
+        }
+
+        [Test]
+        [TestCaseSource("OtherControllerRedirects")]
+        public void Check_for_redirect_to_another_controller(TestAction action)
+        {
+            action(_controller.WithCallTo(c => c.RedirectToAnotherController()));
+        }
+
+        [Test]
+        public void Check_for_redirect_to_incorrect_other_controller()
+        {
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.RedirectToAnotherController()).ShouldRedirectTo<YetAnotherController>(c => c.SomeAction())
+            );
+            Assert.That(exception.Message, Is.EqualTo("Expected redirect to controller 'YetAnother', but instead was given a redirect to controller 'SomeOther'."));
+        }
+
+        [Test]
+        public void Check_for_redirect_to_incorrect_action_in_another_controller()
+        {
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.RedirectToAnotherController()).ShouldRedirectTo<SomeOtherController>(c => c.SomeOtherAction())
+            );
+            Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'SomeOtherAction', but instead was given a redirect to action 'SomeAction'."));
         }
     }
 }

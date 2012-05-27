@@ -71,7 +71,7 @@ namespace TerseControllerTesting.Tests.TestControllers
 
         public ActionResult RedirectToAnotherController()
         {
-            return RedirectToAction("SomeAction", "SomeOtherController");
+            return RedirectToAction("SomeAction", "SomeOther");
         }
 
         #region Redirect Actions
@@ -147,6 +147,19 @@ namespace TerseControllerTesting.Tests.TestControllers
     }
 
     class SomeOtherController : Controller
+    {
+        public ActionResult SomeAction()
+        {
+            return new EmptyResult();
+        }
+
+        public ActionResult SomeOtherAction()
+        {
+            return new EmptyResult();
+        }
+    }
+
+    class YetAnotherController : Controller
     {
         public ActionResult SomeAction()
         {
