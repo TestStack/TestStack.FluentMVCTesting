@@ -48,6 +48,7 @@
     <Compile Include="ControllerExtensionsTests.cs" />
     <Compile Include="ControllerResultTestTests.cs" />
     <Compile Include="ModelTestTests.cs" />
+    <Compile Include="ModelErrorTestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestControllers\ControllerExtensionsController.cs" />
     <Compile Include="TestControllers\ControllerResultTestController.cs" />
