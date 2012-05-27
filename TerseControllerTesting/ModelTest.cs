@@ -4,7 +4,14 @@ using System.Web.Mvc;
 
 namespace TerseControllerTesting
 {
-    public class ModelTest<TModel>
+    public interface IModelTest<TModel>
+    {
+        ModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError);
+        ModelErrorTest<TModel> AndModelError(string errorKey);
+        void AndNoModelErrors();
+    }
+
+    public class ModelTest<TModel> : IModelTest<TModel>
     {
         private readonly Controller _controller;
 

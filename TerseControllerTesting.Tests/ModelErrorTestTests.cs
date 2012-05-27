@@ -10,7 +10,7 @@ namespace TerseControllerTesting.Tests
         public ModelErrorTestMetadata(string errorMessagePart, string validError1Value, string validError2Value, ModelErrorTestCall testCall)
             : base(errorMessagePart, validError1Value, validError2Value, testCall) {}
     }
-    delegate ModelTest<TestViewModel> ModelErrorTestCall(ModelErrorTest<TestViewModel> modelErrorTest, string input);
+    delegate IModelTest<TestViewModel> ModelErrorTestCall(ModelErrorTest<TestViewModel> modelErrorTest, string input);
 
     [TestFixture]
     class ModelErrorTestShould

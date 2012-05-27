@@ -8,18 +8,18 @@ namespace TerseControllerTesting
 {
     public class ModelErrorTest<TModel>
     {
-        private readonly ModelTest<TModel> _modelTest;
+        private readonly IModelTest<TModel> _modelTest;
         private readonly string _errorKey;
         private readonly List<string> _errors;
 
-        public ModelErrorTest(ModelTest<TModel> modelTest, string errorKey, IEnumerable<ModelError> errors)
+        public ModelErrorTest(IModelTest<TModel> modelTest, string errorKey, IEnumerable<ModelError> errors)
         {
             _modelTest = modelTest;
             _errorKey = errorKey;
             _errors = errors.Select(e => e.ErrorMessage).ToList();
         }
 
-        public ModelTest<TModel> ThatEquals(string errorMessage)
+        public IModelTest<TModel> ThatEquals(string errorMessage)
         {
             if (!_errors.Any(e => e == errorMessage))
             {
@@ -28,7 +28,7 @@ namespace TerseControllerTesting
             return _modelTest;
         }
 
-        public ModelTest<TModel> BeginningWith(string beginMessage)
+        public IModelTest<TModel> BeginningWith(string beginMessage)
         {
             if (!_errors.Any(e => e.StartsWith(beginMessage)))
             {
@@ -37,7 +37,7 @@ namespace TerseControllerTesting
             return _modelTest;
         }
 
-        public ModelTest<TModel> EndingWith(string endMessage)
+        public IModelTest<TModel> EndingWith(string endMessage)
         {
             if (!_errors.Any(e => e.EndsWith(endMessage)))
             {
@@ -46,7 +46,7 @@ namespace TerseControllerTesting
             return _modelTest;
         }
 
-        public ModelTest<TModel> Containing(string containsMessage)
+        public IModelTest<TModel> Containing(string containsMessage)
         {
             if (!_errors.Any(e => e.Contains(containsMessage)))
             {
