@@ -172,11 +172,11 @@ namespace TerseControllerTesting
 
         #region View Results
 
-        public ViewResultTest ShouldRenderView(string viewName)
+        private ViewResultTest ShouldRenderViewResult<TViewResult>(string viewName) where TViewResult : ViewResultBase
         {
-            ValidateActionReturnType<ViewResult>();
+            ValidateActionReturnType<TViewResult>();
 
-            var viewResult = (ViewResult)_actionResult;
+            var viewResult = (TViewResult)_actionResult;
 
             if (viewResult.ViewName != viewName && (viewName != _actionName || viewResult.ViewName != ""))
             {
@@ -186,18 +186,24 @@ namespace TerseControllerTesting
             return new ViewResultTest(viewResult, _controller);
         }
 
+        public ViewResultTest ShouldRenderView(string viewName)
+        {
+            return ShouldRenderViewResult<ViewResult>(viewName);
+        }
+
         public ViewResultTest ShouldRenderPartialView(string viewName)
         {
-            ValidateActionReturnType<PartialViewResult>();
+            return ShouldRenderViewResult<PartialViewResult>(viewName);
+        }
 
-            var viewResult = (PartialViewResult)_actionResult;
+        public ViewResultTest ShouldRenderDefaultView()
+        {
+            return ShouldRenderView(_actionName);
+        }
 
-            if (viewResult.ViewName != viewName && (viewName != _actionName || viewResult.ViewName != ""))
-            {
-                throw new ActionResultAssertionException(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", viewName, viewResult.ViewName == "" ? _actionName : viewResult.ViewName));
-            }
-
-            return new ViewResultTest(viewResult, _controller);
+        public ViewResultTest ShouldRenderDefaultPartialView()
+        {
+            return ShouldRenderPartialView(_actionName);
         }
 
         public void ShouldRenderFile(string contentType = null)
@@ -210,34 +216,6 @@ namespace TerseControllerTesting
             {
                 throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
             }
-        }
-
-        public ViewResultTest ShouldRenderDefaultView()
-        {
-            ValidateActionReturnType<ViewResult>();
-
-            var viewResult = (ViewResult)_actionResult;
-
-            if (viewResult.ViewName != "" && viewResult.ViewName != _actionName)
-            {
-                throw new ActionResultAssertionException(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", _actionName, viewResult.ViewName));
-            }
-
-            return new ViewResultTest(viewResult, _controller);
-        }
-
-        public ViewResultTest ShouldRenderDefaultPartialView()
-        {
-            ValidateActionReturnType<PartialViewResult>();
-
-            var viewResult = (PartialViewResult)_actionResult;
-
-            if (viewResult.ViewName != "" && viewResult.ViewName != _actionName)
-            {
-                throw new ActionResultAssertionException(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", _actionName, viewResult.ViewName));
-            }
-
-            return new ViewResultTest(viewResult, _controller);
         }
 
         #endregion
