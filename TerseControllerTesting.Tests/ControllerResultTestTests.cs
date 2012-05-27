@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 using NUnit.Framework;
 using TerseControllerTesting.Tests.TestControllers;
@@ -17,12 +18,55 @@ namespace TerseControllerTesting.Tests
             ReturnType<RedirectResult>(t => t.ShouldRedirectTo("")),
             ReturnType<RedirectToRouteResult>(t => t.ShouldRedirectTo(c => c.EmptyResult)),
         };
+        private static readonly List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>> ActionRedirects = new List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>>
+        {
+            ActionRedirect("ActionWithNoParameters",
+                t => t.ShouldRedirectTo(c => c.ActionWithNoParameters),
+                c => c.RedirectToActionWithNoParameters()
+            ),
+            ActionRedirect("ActionWithOneParameter",
+                t => t.ShouldRedirectTo(c => c.ActionWithOneParameter),
+                c => c.RedirectToActionWithOneParameter()
+            ),
+            ActionRedirect("ActionWithOneParameter",
+                t => t.ShouldRedirectTo<int>(c => c.ActionWithOneParameter),
+                c => c.RedirectToActionWithOneParameter()
+            ),
+            ActionRedirect("ActionWithTwoParameters",
+                t => t.ShouldRedirectTo<int, int>(c => c.ActionWithTwoParameters),
+                c => c.RedirectToActionWithTwoParameters()
+            ),
+            ActionRedirect("ActionWithThreeParameters",
+                t => t.ShouldRedirectTo<int, int, int>(c => c.ActionWithThreeParameters),
+                c => c.RedirectToActionWithThreeParameters()
+            ),
+            ActionRedirect("ActionWithOneParameter",
+                t => t.ShouldRedirectTo(c => c.ActionWithOneParameter(0)),
+                c => c.RedirectToActionWithOneParameter()
+            ),
+            ActionRedirect("ActionWithTwoParameters",
+                t => t.ShouldRedirectTo(c => c.ActionWithTwoParameters(0, 0)),
+                c => c.RedirectToActionWithTwoParameters()
+            ),
+            ActionRedirect("ActionWithThreeParameters",
+                t => t.ShouldRedirectTo(c => c.ActionWithThreeParameters(0, 0, 0)),
+                c => c.RedirectToActionWithThreeParameters()
+            ),
+            ActionRedirect("ActionWithMoreThanThreeParameters",
+                t => t.ShouldRedirectTo(c => c.ActionWithMoreThanThreeParameters(0, 0, 0, 0)),
+                c => c.RedirectToActionWithMoreThanThreeParameters()
+            ),
+        };
         #pragma warning restore 169
-
+        
         public delegate void TestAction(ControllerResultTest<ControllerResultTestController> testClass);
         private static Tuple<string, TestAction> ReturnType<T>(TestAction a)
         {
             return new Tuple<string, TestAction>(typeof(T).Name, a);
+        }
+        private static Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> ActionRedirect(string s, TestAction a, Expression<Func<ControllerResultTestController, ActionResult>> c)
+        {
+            return new Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>(s, a, c);
         }
 
         [SetUp]
@@ -90,36 +134,40 @@ namespace TerseControllerTesting.Tests
         }
 
         [Test]
-        public void Check_for_redirect_to_action()
+        [TestCaseSource("ActionRedirects")]
+        public void Check_for_redirect_to_action(Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> test)
         {
-            _controller.WithCallTo(c => c.RedirectToActionWithNoParameters()).ShouldRedirectTo(c => c.ActionWithNoParameters);
+            test.Item2(_controller.WithCallTo(test.Item3));
         }
 
         [Test]
-        public void Check_for_redirect_to_incorrect_controller()
+        [TestCaseSource("ActionRedirects")]
+        public void Check_for_redirect_to_incorrect_controller(Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> test)
         {
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
-                _controller.WithCallTo(c => c.RedirectToAnotherController()).ShouldRedirectTo(c => c.ActionWithNoParameters)
+                test.Item2(_controller.WithCallTo(c => c.RedirectToAnotherController()))
             );
             Assert.That(exception.Message, Is.EqualTo("Expected redirect to controller 'ControllerResultTest', but instead was given a redirect to controller 'SomeOtherController'."));
         }
 
         [Test]
-        public void Check_for_redirect_to_incorrect_action()
+        [TestCaseSource("ActionRedirects")]
+        public void Check_for_redirect_to_incorrect_action(Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> test)
         {
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
-                _controller.WithCallTo(c => c.RedirectToRandomResult()).ShouldRedirectTo(c => c.ActionWithNoParameters)
+                test.Item2(_controller.WithCallTo(c => c.RedirectToRandomResult()))
             );
-            Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'ActionWithNoParameters', but instead was given a redirect to action 'RandomResult'."));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected redirect to action '{0}', but instead was given a redirect to action 'RandomResult'.", test.Item1)));
         }
 
         [Test]
-        public void Check_for_redirect_to_empty_action()
+        [TestCaseSource("ActionRedirects")]
+        public void Check_for_redirect_to_empty_action(Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>> test)
         {
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
-                _controller.WithCallTo(c => c.RedirectToRouteName()).ShouldRedirectTo(c => c.ActionWithNoParameters)
+                test.Item2(_controller.WithCallTo(c => c.RedirectToRouteName()))
             );
-            Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'ActionWithNoParameters', but instead was given a redirect without an action."));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected redirect to action '{0}', but instead was given a redirect without an action.", test.Item1)));
         }
     }
 }

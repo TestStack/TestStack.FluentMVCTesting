@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
@@ -69,24 +70,35 @@ namespace TerseControllerTesting
                 throw new ActionResultAssertionException(string.Format("Expected redirect to route '{0}', but instead was given a redirect to route '{1}'.", route, redirectResult.RouteName));
         }
 
-        public void ShouldRedirectTo(Func<T, Func<object, ActionResult>> actionRedirectedTo)
-        {
-            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
-        }
-
-        public void ShouldRedirectTo(Func<T, Func<object, object, ActionResult>> actionRedirectedTo)
-        {
-            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
-        }
-
-        public void ShouldRedirectTo(Func<T, Func<object, object, object, ActionResult>> actionRedirectedTo)
-        {
-            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
-        }
-
         public void ShouldRedirectTo(Func<T, Func<ActionResult>> actionRedirectedTo)
         {
             ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+        }
+
+        public void ShouldRedirectTo(Func<T, Func<int, ActionResult>> actionRedirectedTo)
+        {
+            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+        }
+
+        public void ShouldRedirectTo<T1>(Func<T, Func<T1, ActionResult>> actionRedirectedTo)
+        {
+            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+        }
+
+        public void ShouldRedirectTo<T1, T2>(Func<T, Func<T1, T2, ActionResult>> actionRedirectedTo)
+        {
+            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+        }
+
+        public void ShouldRedirectTo<T1, T2, T3>(Func<T, Func<T1, T2, T3, ActionResult>> actionRedirectedTo)
+        {
+            ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+        }
+
+        public void ShouldRedirectTo(Expression<Action<T>> actionRedirectedTo)
+        {
+            var methodCall = (MethodCallExpression) actionRedirectedTo.Body;
+            ShouldRedirectTo(methodCall.Method);
         }
 
         public void ShouldRedirectTo(MethodInfo method, RouteValueDictionary expectedValues = null)

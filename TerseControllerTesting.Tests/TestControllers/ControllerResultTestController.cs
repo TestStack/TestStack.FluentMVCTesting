@@ -91,7 +91,7 @@ namespace TerseControllerTesting.Tests.TestControllers
         {
             return new EmptyResult();
         }
-        public ActionResult ActionWithMoreThanThreeParameters(int param1, int param2, int param3)
+        public ActionResult ActionWithMoreThanThreeParameters(int param1, int param2, int param3, int param4)
         {
             return new EmptyResult();
         }
