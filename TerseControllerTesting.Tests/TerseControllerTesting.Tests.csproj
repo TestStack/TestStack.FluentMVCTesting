@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,8 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerExtensionsTests.cs" />
+    <Compile Include="ControllerResultTestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestControllers\ControllerExtensionsController.cs" />
+    <Compile Include="TestControllers\ControllerResultTestController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
