@@ -4,12 +4,15 @@ namespace TerseControllerTesting.Tests.TestControllers
 {
     class ControllerResultTestController : Controller
     {
+        #region Testing Constants
         public const string RouteName = "RouteName";
         public const string RedirectUrl = "http://url/";
         public const string FileContentType = "application/contentType";
         public const string ViewName = "NamedView";
         public const string PartialName = "NamedPartial";
+        public const string RandomViewName = "Random";
         public const int Code = 403;
+        #endregion
 
         #region Empty, Null and Random Results
         public ActionResult EmptyResult()
@@ -125,6 +128,11 @@ namespace TerseControllerTesting.Tests.TestControllers
         {
             return PartialView(PartialName);
         }
+
+        public ActionResult RandomView()
+        {
+            return View(RandomViewName);
+        }
         #endregion
 
         #region Http Status
@@ -146,6 +154,7 @@ namespace TerseControllerTesting.Tests.TestControllers
         #endregion
     }
 
+    #region Test Classes
     class SomeOtherController : Controller
     {
         public ActionResult SomeAction()
@@ -171,4 +180,5 @@ namespace TerseControllerTesting.Tests.TestControllers
     {
         public override void ExecuteResult(ControllerContext context) {}
     }
+    #endregion
 }

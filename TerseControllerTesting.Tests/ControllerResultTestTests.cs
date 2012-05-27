@@ -10,8 +10,9 @@ namespace TerseControllerTesting.Tests
     [TestFixture]
     class ControllerResultTestShould
     {
-        private ControllerResultTestController _controller;
+        #region Generic test cases
         #pragma warning disable 169
+        // Expected action return types for the different types of assertions
         private static readonly List<Tuple<string, TestAction>> ReturnTypes = new List<Tuple<string, TestAction>>
         {
             ReturnType<EmptyResult>(t => t.ShouldReturnEmptyResult()),
@@ -19,6 +20,7 @@ namespace TerseControllerTesting.Tests
             ReturnType<RedirectToRouteResult>(t => t.ShouldRedirectTo(c => c.EmptyResult)),
             ReturnType<RedirectToRouteResult>(t => t.ShouldRedirectTo<SomeOtherController>(c => c.SomeAction())),
         };
+        // Different ways that action redirects can be asserted along with the expected method name and the correct controller action call for that assertion
         private static readonly List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>> ActionRedirects = new List<Tuple<string, TestAction, Expression<Func<ControllerResultTestController, ActionResult>>>>
         {
             ActionRedirect("ActionWithNoParameters",
@@ -41,6 +43,10 @@ namespace TerseControllerTesting.Tests
                 t => t.ShouldRedirectTo<int, int, int>(c => c.ActionWithThreeParameters),
                 c => c.RedirectToActionWithThreeParameters()
             ),
+            ActionRedirect("ActionWithNoParameters",
+                t => t.ShouldRedirectTo(c => c.ActionWithNoParameters()),
+                c => c.RedirectToActionWithNoParameters()
+            ),
             ActionRedirect("ActionWithOneParameter",
                 t => t.ShouldRedirectTo(c => c.ActionWithOneParameter(0)),
                 c => c.RedirectToActionWithOneParameter()
@@ -58,13 +64,17 @@ namespace TerseControllerTesting.Tests
                 c => c.RedirectToActionWithMoreThanThreeParameters()
             ),
         };
+        // Different ways that redirects to another controller can be asserted
         private static readonly List<TestAction> OtherControllerRedirects = new List<TestAction>
         {
             c => c.ShouldRedirectTo<SomeOtherController>(typeof(SomeOtherController).GetMethod("SomeAction")),
             c => c.ShouldRedirectTo<SomeOtherController>(c2 => c2.SomeAction()),
         };
         #pragma warning restore 169
-        
+        #endregion
+
+        #region Setup
+        private ControllerResultTestController _controller;
         public delegate void TestAction(ControllerResultTest<ControllerResultTestController> testClass);
         private static Tuple<string, TestAction> ReturnType<T>(TestAction a)
         {
@@ -80,7 +90,9 @@ namespace TerseControllerTesting.Tests
         {
             _controller = new ControllerResultTestController();
         }
+        #endregion
 
+        #region General tests
         [Test]
         [TestCaseSource("ReturnTypes")]
         public void Check_return_type(Tuple<string, TestAction> test)
@@ -106,7 +118,9 @@ namespace TerseControllerTesting.Tests
         {
             _controller.WithCallTo(c => c.EmptyResult()).ShouldReturnEmptyResult();
         }
+        #endregion
 
+        #region Redirect tests
         [Test]
         public void Check_for_redirect_to_url()
         {
@@ -202,5 +216,14 @@ namespace TerseControllerTesting.Tests
             );
             Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'SomeOtherAction', but instead was given a redirect to action 'SomeAction'."));
         }
+        #endregion
+
+        #region View tests
+        [Test]
+        public void Check_for_default_view()
+        {
+            _controller.WithCallTo(c => c.DefaultView()).ShouldRenderDefaultView();
+        }
+        #endregion
     }
 }
