@@ -1,0 +1,14 @@
+obj
+bin
+_ReSharper*
+*.csproj.user
+*.ReSharper.user
+*.ReSharper
+*.user
+*.suo
+*.cache
+~$*
+*~
+*.log
+*/NUnit*/tools
+*/NhibernateProfiler*/tools
