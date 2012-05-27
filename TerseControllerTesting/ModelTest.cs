@@ -6,8 +6,8 @@ namespace TerseControllerTesting
 {
     public interface IModelTest<TModel>
     {
-        ModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError);
-        ModelErrorTest<TModel> AndModelError(string errorKey);
+        IModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError);
+        IModelErrorTest<TModel> AndModelError(string errorKey);
         void AndNoModelErrors();
     }
 
@@ -20,7 +20,7 @@ namespace TerseControllerTesting
             _controller = controller;
         }
 
-        public ModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError)
+        public IModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError)
         {
             var member = ((MemberExpression)memberWithError.Body).Member.Name;
             if (!_controller.ModelState.ContainsKey(member) || _controller.ModelState[member].Errors.Count == 0)
@@ -28,7 +28,7 @@ namespace TerseControllerTesting
             return new ModelErrorTest<TModel>(this, member, _controller.ModelState[member].Errors);
         }
 
-        public ModelErrorTest<TModel> AndModelError(string errorKey)
+        public IModelErrorTest<TModel> AndModelError(string errorKey)
         {
             if (!_controller.ModelState.ContainsKey(errorKey) || _controller.ModelState[errorKey].Errors.Count == 0)
                 throw new ViewResultModelAssertionException(string.Format("Expected controller '{0}' to have a model error against key '{1}', but none found.", _controller.GetType().Name, errorKey));

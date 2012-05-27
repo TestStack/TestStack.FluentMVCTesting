@@ -6,7 +6,17 @@ using System.Web.Mvc;
 
 namespace TerseControllerTesting
 {
-    public class ModelErrorTest<TModel>
+    public interface IModelErrorTest<TModel>
+    {
+        IModelTest<TModel> ThatEquals(string errorMessage);
+        IModelTest<TModel> BeginningWith(string beginMessage);
+        IModelTest<TModel> EndingWith(string endMessage);
+        IModelTest<TModel> Containing(string containsMessage);
+        IModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError);
+        IModelErrorTest<TModel> AndModelError(string errorKey);
+    }
+
+    public class ModelErrorTest<TModel> : IModelErrorTest<TModel>
     {
         private readonly IModelTest<TModel> _modelTest;
         private readonly string _errorKey;
@@ -55,12 +65,12 @@ namespace TerseControllerTesting
             return _modelTest;
         }
 
-        public ModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError)
+        public IModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError)
         {
             return _modelTest.AndModelErrorFor(memberWithError);
         }
 
-        public ModelErrorTest<TModel> AndModelError(string errorKey)
+        public IModelErrorTest<TModel> AndModelError(string errorKey)
         {
             return _modelTest.AndModelError(errorKey);
         }

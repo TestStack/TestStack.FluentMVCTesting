@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Web.Mvc;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace TerseControllerTesting.Tests
@@ -32,7 +34,9 @@ namespace TerseControllerTesting.Tests
             return new ModelErrorTestMetadata(message, error1, error2, testCall);
         }
 
-        private ModelErrorTest<TestViewModel> _modelTest;
+        private ModelErrorTest<TestViewModel> _modelErrorTest;
+        private IModelTest<TestViewModel> _modelTest;
+
         private const string ErrorKey = "Key";
         private const string Error1 = "Error message 1";
         private const string Error2 = "Error message 2";
@@ -48,7 +52,8 @@ namespace TerseControllerTesting.Tests
         [SetUp]
         public void Setup()
         {
-            _modelTest = new ModelErrorTest<TestViewModel>(new ModelTest<TestViewModel>(new ViewTestController()), ErrorKey, _errors);
+            _modelTest = Substitute.For<IModelTest<TestViewModel>>();
+            _modelErrorTest = new ModelErrorTest<TestViewModel>(_modelTest, ErrorKey, _errors);
         }
 
         [Test]
@@ -56,7 +61,7 @@ namespace TerseControllerTesting.Tests
         public void Check_for_lack_of_matching_error_message(ModelErrorTestMetadata test)
         {
             var exception = Assert.Throws<ModelErrorAssertionException>(() =>
-                test.Item4(_modelTest, NonError)
+                test.Item4(_modelErrorTest, NonError)
             );
             Assert.That(exception.Message, Is.EqualTo(string.Format("{0} {1} '{2}', but instead found '{3}'.", _initialExceptionMessage, test.Item1, NonError, _combinedErrors)));
         }
@@ -65,14 +70,39 @@ namespace TerseControllerTesting.Tests
         [TestCaseSource("_tests")]
         public void Check_for_first_error_message(ModelErrorTestMetadata test)
         {
-            test.Item4(_modelTest, test.Item2);
+            test.Item4(_modelErrorTest, test.Item2);
         }
 
         [Test]
         [TestCaseSource("_tests")]
         public void Check_for_subsequent_error_message(ModelErrorTestMetadata test)
         {
-            test.Item4(_modelTest, test.Item3);
+            test.Item4(_modelErrorTest, test.Item3);
+        }
+
+        [Test]
+        [TestCaseSource("_tests")]
+        public void Allow_for_chained_test_calls(ModelErrorTestMetadata test)
+        {
+            Assert.That(test.Item4(_modelErrorTest, test.Item2), Is.EqualTo(_modelTest));
+        }
+
+        [Test]
+        public void Chain_call_to_check_model_error_in_property()
+        {
+            var returnVal = Substitute.For<IModelErrorTest<TestViewModel>>();
+            _modelTest.AndModelErrorFor(Arg.Any<Expression<Func<TestViewModel, string>>>()).Returns(returnVal);
+
+            Assert.That(_modelErrorTest.AndModelErrorFor(m => m.Property1), Is.EqualTo(returnVal));
+        }
+
+        [Test]
+        public void Chain_call_to_check_model_error_by_key()
+        {
+            var returnVal = Substitute.For<IModelErrorTest<TestViewModel>>();
+            _modelTest.AndModelError("Key").Returns(returnVal);
+
+            Assert.That(_modelErrorTest.AndModelError("Key"), Is.EqualTo(returnVal));
         }
     }
 }

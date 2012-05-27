@@ -95,7 +95,7 @@ namespace TerseControllerTesting.Tests
     }
 
     class InvalidViewModel {}
-    class TestViewModel
+    public class TestViewModel
     {
         public string Property1 { get; set; }
         public int Property2 { get; set; }
