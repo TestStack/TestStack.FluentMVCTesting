@@ -18,7 +18,7 @@ namespace TerseControllerTesting
             var castedActionResult = _actionResult as TActionResult;
 
             if (_actionResult == null)
-                throw new ActionResultAssertionException(string.Format("Received null action result when expecting {0}", typeof(TActionResult).Name));
+                throw new ActionResultAssertionException(string.Format("Received null action result when expecting {0}.", typeof(TActionResult).Name));
 
             if (castedActionResult == null)
                 throw new ActionResultAssertionException(
