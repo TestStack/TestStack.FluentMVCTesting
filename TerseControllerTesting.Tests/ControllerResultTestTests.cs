@@ -273,6 +273,18 @@ namespace TerseControllerTesting.Tests
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", ControllerResultTestController.PartialName, ControllerResultTestController.RandomViewName)));
         }
 
+        [Test]
+        public void Check_for_file_result()
+        {
+            _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderFile();
+        }
+
+        [Test]
+        public void Check_for_file_result_and_check_content_type()
+        {
+            _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderFile(ControllerResultTestController.FileContentType);
+        }
+
         #endregion
     }
 }
