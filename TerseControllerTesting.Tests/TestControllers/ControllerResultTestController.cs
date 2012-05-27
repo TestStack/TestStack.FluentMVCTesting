@@ -4,6 +4,13 @@ namespace TerseControllerTesting.Tests.TestControllers
 {
     class ControllerResultTestController : Controller
     {
+        public const string RouteName = "RouteName";
+        public const string RedirectUrl = "http://url/";
+        public const string FileContentType = "application/contentType";
+        public const string ViewName = "NamedView";
+        public const string PartialName = "NamedPartial";
+        public const int Code = 403;
+
         #region Empty, Null and Random Results
         public ActionResult EmptyResult()
         {
@@ -24,12 +31,12 @@ namespace TerseControllerTesting.Tests.TestControllers
         #region Redirects
         public ActionResult RedirectToUrl()
         {
-            return Redirect("http://url/");
+            return Redirect(RedirectUrl);
         }
 
         public ActionResult RedirectToRouteName()
         {
-            return RedirectToRoute("RouteName");
+            return RedirectToRoute(RouteName);
         }
 
         public ActionResult RedirectToActionWithNoParameters()
@@ -61,7 +68,6 @@ namespace TerseControllerTesting.Tests.TestControllers
         {
             return RedirectToAction("SomeAction", "SomeOtherController");
         }
-        #endregion
 
         #region Redirect Actions
         public ActionResult ActionWithNoParameters()
@@ -86,6 +92,8 @@ namespace TerseControllerTesting.Tests.TestControllers
         }
         #endregion
 
+        #endregion
+
         #region Views
         public ActionResult DefaultView()
         {
@@ -100,17 +108,17 @@ namespace TerseControllerTesting.Tests.TestControllers
         public ActionResult EmptyFile()
         {
             var content = new byte[] {};
-            return File(content, "application/contentType");
+            return File(content, FileContentType);
         }
 
         public ActionResult NamedView()
         {
-            return View("NamedView");
+            return View(ViewName);
         }
 
         public ActionResult NamedPartial()
         {
-            return PartialView("NamedPartial");
+            return PartialView(PartialName);
         }
         #endregion
 
@@ -121,7 +129,7 @@ namespace TerseControllerTesting.Tests.TestControllers
         }
         public ActionResult StatusCode()
         {
-            return new HttpStatusCodeResult(403);
+            return new HttpStatusCodeResult(Code);
         }
         #endregion
 

@@ -10,11 +10,13 @@ namespace TerseControllerTesting.Tests
     class ControllerResultTestShould
     {
         private ControllerResultTestController _controller;
+        #pragma warning disable 169
         private static readonly List<Tuple<string, TestAction>> ReturnTypes = new List<Tuple<string, TestAction>>
         {
             ReturnType<EmptyResult>(t => t.ShouldReturnEmptyResult()),
             ReturnType<RedirectResult>(t => t.ShouldRedirectTo("")),
         };
+        #pragma warning restore 169
 
         public delegate void TestAction(ControllerResultTest<ControllerResultTestController> testClass);
         private static Tuple<string, TestAction> ReturnType<T>(TestAction a)
@@ -57,16 +59,33 @@ namespace TerseControllerTesting.Tests
         [Test]
         public void Check_for_redirect_to_url()
         {
-            _controller.WithCallTo(c => c.RedirectToUrl()).ShouldRedirectTo("http://url/");
+            _controller.WithCallTo(c => c.RedirectToUrl()).ShouldRedirectTo(ControllerResultTestController.RedirectUrl);
         }
 
         [Test]
         public void Check_for_redirect_to_invalid_url()
         {
+            const string url = "http://validurl/";
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
-                _controller.WithCallTo(c => c.RedirectToUrl()).ShouldRedirectTo("http://validurl/")
+                _controller.WithCallTo(c => c.RedirectToUrl()).ShouldRedirectTo(url)
             );
-            Assert.That(exception.Message, Is.EqualTo("Expected redirect to URL 'http://validurl/', but instead was given a redirect to URL 'http://url/'."));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected redirect to URL '{0}', but instead was given a redirect to URL '{1}'.", url, ControllerResultTestController.RedirectUrl)));
+        }
+
+        [Test]
+        public void Check_for_redirect_to_route_name()
+        {
+            _controller.WithCallTo(c => c.RedirectToRouteName()).ShouldRedirectToRoute(ControllerResultTestController.RouteName);
+        }
+
+        [Test]
+        public void Check_for_redirect_to_invalid_route_name()
+        {
+            const string routeName = "ValidRoute";
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.RedirectToRouteName()).ShouldRedirectToRoute(routeName)
+            );
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected redirect to route '{0}', but instead was given a redirect to route '{1}'.", routeName, ControllerResultTestController.RouteName)));
         }
     }
 }
