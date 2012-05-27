@@ -15,6 +15,7 @@ namespace TerseControllerTesting.Tests
         {
             ReturnType<EmptyResult>(t => t.ShouldReturnEmptyResult()),
             ReturnType<RedirectResult>(t => t.ShouldRedirectTo("")),
+            ReturnType<RedirectToRouteResult>(t => t.ShouldRedirectTo(c => c.EmptyResult)),
         };
         #pragma warning restore 169
 
@@ -86,6 +87,39 @@ namespace TerseControllerTesting.Tests
                 _controller.WithCallTo(c => c.RedirectToRouteName()).ShouldRedirectToRoute(routeName)
             );
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected redirect to route '{0}', but instead was given a redirect to route '{1}'.", routeName, ControllerResultTestController.RouteName)));
+        }
+
+        [Test]
+        public void Check_for_redirect_to_action()
+        {
+            _controller.WithCallTo(c => c.RedirectToActionWithNoParameters()).ShouldRedirectTo(c => c.ActionWithNoParameters);
+        }
+
+        [Test]
+        public void Check_for_redirect_to_incorrect_controller()
+        {
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.RedirectToAnotherController()).ShouldRedirectTo(c => c.ActionWithNoParameters)
+            );
+            Assert.That(exception.Message, Is.EqualTo("Expected redirect to controller 'ControllerResultTest', but instead was given a redirect to controller 'SomeOtherController'."));
+        }
+
+        [Test]
+        public void Check_for_redirect_to_incorrect_action()
+        {
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.RedirectToRandomResult()).ShouldRedirectTo(c => c.ActionWithNoParameters)
+            );
+            Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'ActionWithNoParameters', but instead was given a redirect to action 'RandomResult'."));
+        }
+
+        [Test]
+        public void Check_for_redirect_to_empty_action()
+        {
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.RedirectToRouteName()).ShouldRedirectTo(c => c.ActionWithNoParameters)
+            );
+            Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'ActionWithNoParameters', but instead was given a redirect without an action."));
         }
     }
 }

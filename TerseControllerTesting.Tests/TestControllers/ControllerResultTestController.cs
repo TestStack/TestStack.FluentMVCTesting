@@ -26,6 +26,11 @@ namespace TerseControllerTesting.Tests.TestControllers
         {
             return new RandomResult();
         }
+
+        public ActionResult RedirectToRandomResult()
+        {
+            return RedirectToAction("RandomResult");
+        }
         #endregion
 
         #region Redirects

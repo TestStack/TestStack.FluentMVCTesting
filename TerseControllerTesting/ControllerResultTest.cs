@@ -100,6 +100,9 @@ namespace TerseControllerTesting
             if (redirectResult.RouteValues.ContainsKey("Controller") && redirectResult.RouteValues["Controller"].ToString() != controllerName)
                 throw new ActionResultAssertionException(string.Format("Expected redirect to controller '{0}', but instead was given a redirect to controller '{1}'.", controllerName, redirectResult.RouteValues["Controller"]));
 
+            if (!redirectResult.RouteValues.ContainsKey("Action"))
+                throw new ActionResultAssertionException(string.Format("Expected redirect to action '{0}', but instead was given a redirect without an action.", actionName));
+
             if (redirectResult.RouteValues["Action"].ToString() != actionName)
                 throw new ActionResultAssertionException(string.Format("Expected redirect to action '{0}', but instead was given a redirect to action '{1}'.", actionName, redirectResult.RouteValues["Action"]));
 
