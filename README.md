@@ -14,7 +14,7 @@ I came up with this library after using the [MVCContrib.TestHelper](http://mvcco
 Installation
 ------------
 
-You can install this library using NuGet into your Test Library; it will automatically reference System.Web and System.Web.Mvc (via NuGet packages) for you.
+You can install this library using NuGet into your Test Library; it will automatically reference System.Web and System.Web.Mvc (via NuGet packages, sorry it also installs a heap of other dependencies - it would be cool if Microsoft provided a package with just the MVC dll!) for you.
 
 If you are using ASP.NET MVC 4 then:
 
