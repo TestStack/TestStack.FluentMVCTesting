@@ -17,7 +17,7 @@
        en-US 
     </language>
     <dependencies>
-      <dependency id="AspNetMvc" version="3" />
+      <dependency id="AspNetMvc" version="3.0" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />
