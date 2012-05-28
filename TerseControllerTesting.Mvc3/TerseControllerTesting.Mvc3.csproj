@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{152CA00F-18D3-4CF5-8CA0-2C5B70CBEA19}</ProjectGuid>
+    <ProjectGuid>{17E643B6-0448-4E6F-A8D8-D726154D73E1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TerseControllerTesting</RootNamespace>
-    <AssemblyName>TerseControllerTesting</AssemblyName>
+    <RootNamespace>TerseControllerTesting.Mvc3</RootNamespace>
+    <AssemblyName>TerseControllerTesting.Mvc3</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,13 +34,13 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>robdmoore.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\TerseControllerTesting\robdmoore.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,16 +48,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControllerExtensions.cs" />
-    <Compile Include="ControllerResultTest.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="ModelErrorTest.cs" />
-    <Compile Include="ModelTest.cs" />
+    <Compile Include="..\TerseControllerTesting\ControllerExtensions.cs">
+      <Link>ControllerExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\TerseControllerTesting\ControllerResultTest.cs">
+      <Link>ControllerResultTest.cs</Link>
+    </Compile>
+    <Compile Include="..\TerseControllerTesting\Exceptions.cs">
+      <Link>Exceptions.cs</Link>
+    </Compile>
+    <Compile Include="..\TerseControllerTesting\ModelErrorTest.cs">
+      <Link>ModelErrorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\TerseControllerTesting\ModelTest.cs">
+      <Link>ModelTest.cs</Link>
+    </Compile>
+    <Compile Include="..\TerseControllerTesting\ViewResultTest.cs">
+      <Link>ViewResultTest.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewResultTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="robdmoore.snk" />
+    <None Include="..\TerseControllerTesting\robdmoore.snk">
+      <Link>robdmoore.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
