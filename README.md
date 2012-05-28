@@ -14,7 +14,7 @@ I came up with this library after using the [MVCContrib.TestHelper](http://mvcco
 Installation
 ------------
 
-You can install this library using NuGet into your Test Library; it will automatically reference System.Web and System.Web.Mvc for you.
+You can install this library using NuGet into your Test Library; it will automatically reference System.Web and System.Web.Mvc (via NuGet packages) for you.
 
 If you are using ASP.NET MVC 4 then:
 
@@ -23,6 +23,15 @@ If you are using ASP.NET MVC 4 then:
 If you are using ASP.NET MVC 3 then:
 
     Install-Package FluentMVCTesting.Mvc3
+
+Known Issues
+------------
+
+If you get the following exception:
+
+    System.Security.VerificationException : Method FluentMVCTesting.ControllerExtensions.WithCallTo: type argument 'MyApp.Controllers.MyController' violates the constraint of type parameter 'T'.
+
+It means you are referencing a version of System.Web.Mvc that isn't compatible with the one that was used to build the dll that was generated for the NuGet package. Ensure that you are using the correct package for your version of MVC and that you are using the [AspNetMvc packages on nuget.org](https://nuget.org/packages/aspnetmvc) rather than the dll from the GAC.
 
 Examples
 --------
