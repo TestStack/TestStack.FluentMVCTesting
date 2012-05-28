@@ -11,8 +11,20 @@
        Robert Moore
     </authors>
     <description>
-       Fluent library for testing ASP.NET MVC controllers.
+       Fluent library for testing ASP.NET MVC controllers. ASP.NET MVC 4 version; install FluentMVCTesting.Mvc3 if you are using MVC 3.
     </description>
+    <projectUrl>
+       http://github.com/robdmoore/FluentMVCTesting
+    </projectUrl>
+    <licenseUrl>
+       https://github.com/robdmoore/FluentMVCTesting/blob/master/LICENSE
+    </licenseUrl>
+    <iconUrl>
+       https://raw.github.com/robdmoore/FluentMVCTesting/master/logo.png
+    </iconUrl>
+    <tags>
+       fluent, mvc, asp.net, testing, terse
+    </tags>
     <language>
        en-US 
     </language>
