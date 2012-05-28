@@ -10,7 +10,7 @@ namespace TerseControllerTesting.Tests
     [TestFixture]
     class ControllerResultTestShould
     {
-        #region Generic test cases
+        #region Test cases
         #pragma warning disable 169
         // Expected action return types for the different types of assertions
         private static readonly List<Tuple<string, TestAction>> ReturnTypes = new List<Tuple<string, TestAction>>
