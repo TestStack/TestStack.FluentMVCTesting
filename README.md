@@ -99,7 +99,8 @@ If you are redirecting to an action that takes no parameters, or takes a single 
 
 Then you can write this test:
 
-    _controller.WithCallTo(c => c.RedirectToActionWithNoParameters()).ShouldRedirectTo(c => c.ActionWithNoParameters)
+    _controller.WithCallTo(c => c.RedirectToActionWithNoParameters())
+        .ShouldRedirectTo(c => c.ActionWithNoParameters);
 
 I can explicitly define whatever signatures I want to allow this terser syntax, but obviously the different permutations that are possible are mind-boggling and it wouldn't be helpful for any custom types in your project. Unfortunately, despite best efforts I couldn't figure out a way to generically specify these definitions - if anyone has ideas for how to do this let me know!
 
@@ -109,16 +110,147 @@ If you have 1-3 parameters being passed into the action being redirected to then
 
 Then you can write the following test for the redirect:
 
-    _controller.WithCallTo(c => c.Index()).ShouldRedirectTo<string, int, bool>(c => c.SomeAction)
+    _controller.WithCallTo(c => c.Index())
+        .ShouldRedirectTo<string, int, bool>(c => c.SomeAction);
 
 If you have more than three parameters, or you are uncomfortable with that syntax then you can specify a lambda with a call to the action you want and pass in dummy values for the parameters, e.g. for the previous example:
 
-    _controller.WithCallTo(c => c.Index()).ShouldRedirectTo(c => c.SomeAction(null, 0, false))
+    _controller.WithCallTo(c => c.Index())
+        .ShouldRedirectTo(c => c.SomeAction(null, 0, false));
 
 You can also pass through a MethodInfo object against the method you are redirecting to, e.g.:
 
-    _controller.WithCallTo(c => c.Index()).ShouldRedirectTo(typeof(HomeController).GetMethod("SomeAction"))
+    _controller.WithCallTo(c => c.Index())
+        .ShouldRedirectTo(typeof(HomeController).GetMethod("SomeAction"));
 
 If you use this option (I don't recommend it because it uses a "magic" string so if you change the action name then the string won't change, although at least the test will break because the Method name will no longer be valid; in saying that if you change your parameters more often than the action name this might be a better option) be careful that you don't get an AmbiguousMatchException if there are multiple actions with that name.
 
 At this stage there isn't support for the `[ActionName()]` attribute or simply passing through a string to check against the action name, but if either are important to you feel free to add an issue for this GitHub project and I can add them.
+
+### Redirect to action in another controller
+
+If you are redirecting to an action in another controller, then there are two syntaxes that you can currently use (similar to the last two mentioned above):
+
+    _controller.WithCallTo(c => c.Index())
+        .ShouldRedirectTo<SomeOtherController>(typeof(SomeOtherController).GetMethod("SomeAction"));
+
+    _controller.WithCallTo(c => c.Index())
+        .ShouldRedirectTo<SomeOtherController>(c2 => c2.SomeAction());
+
+### View results (where the view name is the same as the action name - explicitly or via an empty string)
+
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView();
+
+    // Or, if you want to check a partial is returned
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultPartialView();
+
+### View results
+
+    _controller.WithCallTo(c => c.Index()).ShouldRenderView("ViewName");
+
+    // Or, if you want to check a partial is returned
+    _controller.WithCallTo(c => c.Index()).ShouldRenderPartialView("ViewName");
+
+Unfortunately, I couldn't think of a way to get rid of the magic strings here so where possible use the default ones above.
+
+See below for model testing.
+
+### Files
+
+    _controller.WithCallTo(c => c.Index()).ShouldRenderFile();
+
+    _controller.WithCallTo(c => c.Index()).ShouldRenderFile("content/type");
+
+### Http status codes
+
+    _controller.WithCallTo(c => c.Index()).ShouldGiveHttpStatus();
+
+    _controller.WithCallTo(c => c.Index()).ShouldGiveHttpStatus(404);
+
+### JSON
+
+    _controller.WithCallTo(c => c.Index()).ShouldReturnJson();
+
+    _controller.WithCallTo(c => c.Index()).ShouldReturnJson(data =>
+    {
+        /* Assertions on the data being turned into json (data) */}
+    );
+
+### Model tests
+
+If you assert that the action returns a view of some sort there are some other methods that you can call (seen easily using intellisense). These allow you to check the model, e.g.:
+
+    // Check the type of the model
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>();
+
+    // Check that a particular object was passed through as the model
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel(expectedModel);
+
+    // Check that the model that was return passes a predicate
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>(m => m.Property1 == "hello");
+
+    // Make assertions on the model
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>(m => {/* Make assertions on m */});
+
+Note: if you use any of these model tests then it will check that the model passed through isn't null.
+
+### Model error tests
+
+Once you have made assertions about the model you can then make assertions that particular model errors are present for properties of that model. While it's not generally the best idea to add validation logic to controllers ([doing it unobtrusively is best](http://robdmoore.id.au/blog/2012/04/27/unobtrusive-validation-in-asp-net-mvc-3-and-4/)), sometimes it's useful.
+
+    // Check that there are no model errors
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>().WithNoModelErrors();
+
+    // Check that there is a model error against a given property in the model
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>().AndModelErrorFor(m => m.Property1);
+
+    // Check that there is a model error against a specific key
+    // Avoid if possible given it includes a magic string
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>().AndModelError("Key");
+
+    // You can chain these model error calls and thus check for multiple errors
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>()
+        .AndModelErrorFor(m => m.Property1)
+        .AndModelErrorFor(m => m.Property2);
+
+You can also make assertions on the content of the error message(s); these methods will look for any error messages against that particular model state key that match the given criteria:
+
+    // Equality
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>().AndModelErrorFor(m => m.Property1)
+        .ThatEquals("The error message.");
+    
+    // Start of message
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>().AndModelErrorFor(m => m.Property1)
+        .BeginningWith("The error");
+    
+    // End of message
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>().AndModelErrorFor(m => m.Property1)
+        .BeginningWith("message.");
+    
+    // Containing
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>().AndModelErrorFor(m => m.Property1)
+        .Containing("e error m");
+
+You can chain the error property checks after any of these checks (you can only perform one of the checks though):
+
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
+        .WithModel<ModelType>()
+        .AndModelErrorFor(m => m.Property1).ThatEquals("The error message.")
+        .AndModelErrorFor(m => m.Property2);
+
+Any questions, comments or additions?
+--------------------------
+
+Leave an issue on the GitHub project or a comment on my [blog](http://robdmoore.id.au). Also, feel free to send through a pull request.
