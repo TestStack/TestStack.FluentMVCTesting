@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='UTF-8'?> 
+<package>
+  <metadata>
+    <id>
+       FluentMVCTesting 
+    </id>
+    <version>
+       1.0.0
+    </version>
+    <authors>
+       Robert Moore
+    </authors>
+    <description>
+       Fluent library for testing ASP.NET MVC controllers.
+    </description>
+    <language>
+       en-US 
+    </language>
+    <dependencies>
+      <dependency id="AspNetMvc" version="4" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+     <file src="bin\Release\FluentMVCTesting.dll" target="lib\NET40" />
+     <file src="bin\Release\FluentMVCTesting.pdb" target="lib\NET40" />
+  </files>
+</package>

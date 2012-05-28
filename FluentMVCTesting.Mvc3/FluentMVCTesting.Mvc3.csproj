@@ -34,7 +34,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\TerseControllerTesting\robdmoore.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\FluentMvcTesting\robdmoore.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -48,30 +48,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\TerseControllerTesting\ControllerExtensions.cs">
+    <Compile Include="..\FluentMvcTesting\ControllerExtensions.cs">
       <Link>ControllerExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\TerseControllerTesting\ControllerResultTest.cs">
+    <Compile Include="..\FluentMvcTesting\ControllerResultTest.cs">
       <Link>ControllerResultTest.cs</Link>
     </Compile>
-    <Compile Include="..\TerseControllerTesting\Exceptions.cs">
+    <Compile Include="..\FluentMvcTesting\Exceptions.cs">
       <Link>Exceptions.cs</Link>
     </Compile>
-    <Compile Include="..\TerseControllerTesting\ModelErrorTest.cs">
+    <Compile Include="..\FluentMvcTesting\ModelErrorTest.cs">
       <Link>ModelErrorTest.cs</Link>
     </Compile>
-    <Compile Include="..\TerseControllerTesting\ModelTest.cs">
+    <Compile Include="..\FluentMvcTesting\ModelTest.cs">
       <Link>ModelTest.cs</Link>
     </Compile>
-    <Compile Include="..\TerseControllerTesting\ViewResultTest.cs">
+    <Compile Include="..\FluentMvcTesting\ViewResultTest.cs">
       <Link>ViewResultTest.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\TerseControllerTesting\robdmoore.snk">
+    <None Include="..\FluentMvcTesting\robdmoore.snk">
       <Link>robdmoore.snk</Link>
     </None>
+    <None Include="FluentMVCTesting.Mvc3.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

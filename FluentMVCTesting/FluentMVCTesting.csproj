@@ -57,6 +57,7 @@
     <Compile Include="ViewResultTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FluentMVCTesting.nuspec" />
     <None Include="robdmoore.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
