@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Web.Mvc;
 
-namespace TerseControllerTesting
+namespace FluentMVCTesting
 {
     public static class ControllerExtensions
     {
@@ -31,7 +31,7 @@ namespace TerseControllerTesting
             var action = ((MethodCallExpression)actionCall.Body).Method;
 
             if (!action.IsDefined(typeof(ChildActionOnlyAttribute), false))
-                throw new InvalidControllerActionException(string.Format("Expected action {0} of controller {1} to be a child action, but it didn't have the ChildActionOnly attribute.", action.Name, controller));
+                throw new InvalidControllerActionException(string.Format("Expected action {0} of controller {1} to be a child action, but it didn't have the ChildActionOnly attribute.", action.Name, controller.GetType().Name));
 
             return controller.WithCallTo(actionCall);
         }

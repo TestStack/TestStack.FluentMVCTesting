@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using TerseControllerTesting.Tests.TestControllers;
+﻿using FluentMVCTesting.Tests.TestControllers;
+using NUnit.Framework;
 
-namespace TerseControllerTesting.Tests
+namespace FluentMVCTesting.Tests
 {
     [TestFixture]
     class ControllerExtensionsShould
@@ -39,7 +39,7 @@ namespace TerseControllerTesting.Tests
         public void Throw_exception_for_child_action_call_to_non_child_action()
         {
             var exception = Assert.Throws<InvalidControllerActionException>(() => _controller.WithCallToChild(c => c.SomeAction()));
-            Assert.That(exception.Message, Is.EqualTo("Expected action SomeAction of controller TerseControllerTesting.Tests.TestControllers.ControllerExtensionsController to be a child action, but it didn't have the ChildActionOnly attribute."));
+            Assert.That(exception.Message, Is.EqualTo("Expected action SomeAction of controller ControllerExtensionsController to be a child action, but it didn't have the ChildActionOnly attribute."));
         }
     }
 }

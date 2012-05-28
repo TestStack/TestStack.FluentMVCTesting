@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerseControllerTesting", "TerseControllerTesting\TerseControllerTesting.csproj", "{152CA00F-18D3-4CF5-8CA0-2C5B70CBEA19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentMVCTesting", "FluentMVCTesting\FluentMVCTesting.csproj", "{152CA00F-18D3-4CF5-8CA0-2C5B70CBEA19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerseControllerTesting.Tests", "TerseControllerTesting.Tests\TerseControllerTesting.Tests.csproj", "{4DCC907C-A08A-4139-BB6B-2D34B21F318B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentMVCTesting.Tests", "FluentMVCTesting.Tests\FluentMVCTesting.Tests.csproj", "{4DCC907C-A08A-4139-BB6B-2D34B21F318B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerseControllerTesting.Mvc3", "TerseControllerTesting.Mvc3\TerseControllerTesting.Mvc3.csproj", "{17E643B6-0448-4E6F-A8D8-D726154D73E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentMVCTesting.Mvc3", "FluentMVCTesting.Mvc3\FluentMVCTesting.Mvc3.csproj", "{17E643B6-0448-4E6F-A8D8-D726154D73E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

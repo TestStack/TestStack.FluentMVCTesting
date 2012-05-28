@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using FluentMVCTesting.Tests.TestControllers;
 using NUnit.Framework;
-using TerseControllerTesting.Tests.TestControllers;
 
-namespace TerseControllerTesting.Tests
+namespace FluentMVCTesting.Tests
 {
     [TestFixture]
     class ControllerResultTestShould

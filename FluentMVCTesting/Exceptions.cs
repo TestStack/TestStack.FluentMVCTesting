@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TerseControllerTesting
+namespace FluentMVCTesting
 {
 
     public class ActionResultAssertionException : Exception

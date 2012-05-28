@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 
-namespace TerseControllerTesting
+namespace FluentMVCTesting
 {
     public interface IModelTest<TModel>
     {

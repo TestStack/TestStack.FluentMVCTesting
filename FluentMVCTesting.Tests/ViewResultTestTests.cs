@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using NUnit.Framework;
 
-namespace TerseControllerTesting.Tests
+namespace FluentMVCTesting.Tests
 {
     [TestFixture]
     class ViewResultTestShould

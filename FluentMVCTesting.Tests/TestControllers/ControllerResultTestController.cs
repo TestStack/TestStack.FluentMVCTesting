@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace TerseControllerTesting.Tests.TestControllers
+namespace FluentMVCTesting.Tests.TestControllers
 {
     class ControllerResultTestController : Controller
     {

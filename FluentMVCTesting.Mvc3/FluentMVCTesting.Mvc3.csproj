@@ -8,8 +8,8 @@
     <ProjectGuid>{17E643B6-0448-4E6F-A8D8-D726154D73E1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TerseControllerTesting.Mvc3</RootNamespace>
-    <AssemblyName>TerseControllerTesting.Mvc3</AssemblyName>
+    <RootNamespace>FluentMVCTesting</RootNamespace>
+    <AssemblyName>FluentMVCTesting.Mvc3</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

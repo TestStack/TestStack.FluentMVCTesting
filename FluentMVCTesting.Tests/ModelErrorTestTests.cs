@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace TerseControllerTesting.Tests
+namespace FluentMVCTesting.Tests
 {
     class ModelErrorTestMetadata : Tuple<string, string, string, ModelErrorTestCall>
     {
