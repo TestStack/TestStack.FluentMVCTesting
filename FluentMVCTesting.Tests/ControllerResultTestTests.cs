@@ -70,6 +70,10 @@ namespace FluentMVCTesting.Tests
                 t => t.ShouldRedirectTo(c => c.ActionWithMoreThanThreeParameters(0, 0, 0, 0)),
                 c => c.RedirectToActionWithMoreThanThreeParameters()
             ),
+            ActionRedirect("ActionWithMoreThanThreeParameters",
+                t => t.ShouldRedirectTo(typeof(ControllerResultTestController).GetMethod("ActionWithMoreThanThreeParameters")),
+                c => c.RedirectToActionWithMoreThanThreeParameters()
+            ),
         };
         // Different ways that redirects to another controller can be asserted
         private static readonly List<TestAction> OtherControllerRedirects = new List<TestAction>
