@@ -5,9 +5,11 @@ This library provides a fluent interface for creating terse and expressive tests
 
 This library is testing framework agnostic, so you can combine it with the testing library of your choice (e.g. NUnit, xUnit, etc.).
 
-The library is compatible with the AAA testing methodology, although it combines the Act and Assert parts together (but you can have other assertions after the Fluent assertion). See the code examples below for more information.
+The library is compatible with the AAA testing methodology, although it combines the Act and Assert parts together (but you can also have other assertions after the Fluent assertion). See the code examples below for more information.
 
-The motivation behind this library is to provide a way to test MVC actions quickly, tersely and maintainably. Most examples I find on MVC controller testing are incredibly verbose, repetitive and time-consuming to write and maintain. Given how quickly you can write controller actions and how simple they are (assuming you are following best practices and keeping them lean) the time to test them generally isn't worth it given you can glance at most of your controller actions and know they are right or wrong instantly. This library aims to make the time to implement the tests inconsequential and then the value your tests are providing is worth it. The other problem that I've noticed with most examples of controller testing is that there are a lot of magic strings being used to test view and action names; this library also aims to utilise the type system to resolve a lot of those magic strings, thus ensuring your tests are more maintainable and require less re-work when you perform major refactoring of your code.
+The motivation behind this library is to provide a way to test MVC actions quickly, tersely and maintainably. Most examples I find on MVC controller testing are incredibly verbose, repetitive and time-consuming to write and maintain. Given how quickly you can write controller actions and how simple they are (assuming you are following best practices and keeping them lean) the time to test them generally isn't worth it given you can glance at most of your controller actions and know they are right or wrong instantly. This library aims to make the time to implement the tests inconsequential and then the value your tests are providing is worth it. The other problem that I've noticed with most examples of controller testing is that there are a lot of magic strings being used to test view and action names; this library also aims to (where possible) utilise the type system to resolve a lot of those magic strings, thus ensuring your tests are more maintainable and require less re-work when you perform major refactoring of your code.
+
+I came up with this library after using the [MVCContrib.TestHelper](http://mvccontrib.codeplex.com/wikipage?title=TestHelper) library for quite a while, but becoming frustrated with it; the library was initially created during an [experiment I conducted](http://robdmoore.id.au/blog/2011/03/14/terse-controller-testing-with-asp-net-mvc/) to try and create terse controller tests. I (and my team) have been using the library for over a year on a number of projects for the company that I work for.
 
 Installation
 ------------
@@ -125,17 +127,17 @@ You can also pass through a MethodInfo object against the method you are redirec
 
 If you use this option (I don't recommend it because it uses a "magic" string so if you change the action name then the string won't change, although at least the test will break because the Method name will no longer be valid; in saying that if you change your parameters more often than the action name this might be a better option) be careful that you don't get an AmbiguousMatchException if there are multiple actions with that name.
 
-At this stage there isn't support for the `[ActionName()]` attribute or simply passing through a string to check against the action name, but if either are important to you feel free to add an issue for this GitHub project and I can add them.
+At this stage there isn't support for the `[ActionName()]` attribute or simply passing through a string to check against the action name, but if either are important to you feel free to add an issue in this GitHub project and I can add them.
 
 ### Redirect to action in another controller
 
 If you are redirecting to an action in another controller, then there are two syntaxes that you can currently use (similar to the last two mentioned above):
 
     _controller.WithCallTo(c => c.Index())
-        .ShouldRedirectTo<SomeOtherController>(typeof(SomeOtherController).GetMethod("SomeAction"));
+        .ShouldRedirectTo<SomeOtherController>(c2 => c2.SomeAction());
 
     _controller.WithCallTo(c => c.Index())
-        .ShouldRedirectTo<SomeOtherController>(c2 => c2.SomeAction());
+        .ShouldRedirectTo<SomeOtherController>(typeof(SomeOtherController).GetMethod("SomeAction"));
 
 ### View results (where the view name is the same as the action name - explicitly or via an empty string)
 
@@ -225,23 +227,23 @@ You can also make assertions on the content of the error message(s); these metho
 
     // Equality
     _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
-        .WithModel<ModelType>().AndModelErrorFor(m => m.Property1)
-        .ThatEquals("The error message.");
+        .WithModel<ModelType>()
+        .AndModelErrorFor(m => m.Property1).ThatEquals("The error message.");
     
     // Start of message
     _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
-        .WithModel<ModelType>().AndModelErrorFor(m => m.Property1)
-        .BeginningWith("The error");
+        .WithModel<ModelType>()
+        .AndModelErrorFor(m => m.Property1).BeginningWith("The error");
     
     // End of message
     _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
-        .WithModel<ModelType>().AndModelErrorFor(m => m.Property1)
-        .BeginningWith("message.");
+        .WithModel<ModelType>()
+        .AndModelErrorFor(m => m.Property1).BeginningWith("message.");
     
     // Containing
     _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView()
-        .WithModel<ModelType>().AndModelErrorFor(m => m.Property1)
-        .Containing("e error m");
+        .WithModel<ModelType>()
+        .AndModelErrorFor(m => m.Property1).Containing("e error m");
 
 You can chain the error property checks after any of these checks (you can only perform one of the checks though):
 
