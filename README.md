@@ -264,4 +264,4 @@ You can chain the error property checks after any of these checks (you can only 
 Any questions, comments or additions?
 --------------------------
 
-Leave an issue on the GitHub project or a comment on my [blog](http://robdmoore.id.au). Also, feel free to send through a pull request.
+Leave an issue on the GitHub project or a comment on my [blog](http://robdmoore.id.au/blog/2012/05/29/fluentmvctesting-fluent-terse-and-maintainable-asp-net-mvc-controller-testing/). Also, feel free to send through a pull request.
