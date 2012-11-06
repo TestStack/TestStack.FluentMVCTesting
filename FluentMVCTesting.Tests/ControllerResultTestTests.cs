@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Net;
 using System.Web.Mvc;
 using FluentMVCTesting.Tests.TestControllers;
 using NUnit.Framework;
@@ -307,7 +308,7 @@ namespace FluentMVCTesting.Tests
         [Test]
         public void Check_for_http_not_found()
         {
-            _controller.WithCallTo(c => c.NotFound()).ShouldGiveHttpStatus(404);
+            _controller.WithCallTo(c => c.NotFound()).ShouldGiveHttpStatus(HttpStatusCode.NotFound);
         }
 
         [Test]

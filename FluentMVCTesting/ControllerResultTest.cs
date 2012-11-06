@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
@@ -235,6 +236,11 @@ namespace FluentMVCTesting
 
             if (statusCodeResult.StatusCode != status)
                 throw new ActionResultAssertionException(string.Format("Expected HTTP status code to be '{0}', but instead received a '{1}'.", status, statusCodeResult.StatusCode));
+        }
+
+        public void ShouldGiveHttpStatus(HttpStatusCode status)
+        {
+            ShouldGiveHttpStatus((int) status);
         }
 
         #endregion
