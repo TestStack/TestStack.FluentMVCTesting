@@ -12,3 +12,4 @@ _ReSharper*
 *.log
 */NUnit*/tools
 */NhibernateProfiler*/tools
+packages
