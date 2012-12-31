@@ -8,7 +8,7 @@
        1.0.0
     </version>
     <authors>
-       Robert Moore
+       Robert Moore, TestStack
     </authors>
     <description>
       Simple, terse, fluent unit testing of ASP.NET MVC Controllers.
