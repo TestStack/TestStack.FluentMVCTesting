@@ -15,13 +15,13 @@
        ASP.NET MVC 4 version; install FluentMVCTesting.Mvc3 if you are using MVC 3.
     </description>
     <projectUrl>
-       http://github.com/robdmoore/FluentMVCTesting
+      https://github.com/TestStack/TestStack.FluentMVCTesting
     </projectUrl>
     <licenseUrl>
-       https://github.com/robdmoore/FluentMVCTesting/blob/master/LICENSE
+      https://github.com/TestStack/TestStack.FluentMVCTesting/blob/master/LICENSE
     </licenseUrl>
     <iconUrl>
-       https://raw.github.com/robdmoore/FluentMVCTesting/master/logo.png
+      https://raw.github.com/TestStack/TestStack.FluentMVCTesting/master/logo.png
     </iconUrl>
     <tags>
        fluent, mvc, asp.net, testing, terse
