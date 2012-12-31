@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace FluentMVCTesting.Tests
+namespace TestStack.FluentMVCTesting.Tests
 {
     [TestFixture]
     class ModelTestShould

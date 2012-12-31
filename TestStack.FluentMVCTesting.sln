@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentMVCTesting", "FluentMVCTesting\FluentMVCTesting.csproj", "{152CA00F-18D3-4CF5-8CA0-2C5B70CBEA19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting", "TestStack.FluentMVCTesting\TestStack.FluentMVCTesting.csproj", "{152CA00F-18D3-4CF5-8CA0-2C5B70CBEA19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentMVCTesting.Tests", "FluentMVCTesting.Tests\FluentMVCTesting.Tests.csproj", "{4DCC907C-A08A-4139-BB6B-2D34B21F318B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting.Tests", "TestStack.FluentMVCTesting.Tests\TestStack.FluentMVCTesting.Tests.csproj", "{4DCC907C-A08A-4139-BB6B-2D34B21F318B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentMVCTesting.Mvc3", "FluentMVCTesting.Mvc3\FluentMVCTesting.Mvc3.csproj", "{17E643B6-0448-4E6F-A8D8-D726154D73E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting.Mvc3", "TestStack.FluentMVCTesting.Mvc3\TestStack.FluentMVCTesting.Mvc3.csproj", "{17E643B6-0448-4E6F-A8D8-D726154D73E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{21EA5DD6-9360-4966-AE7C-FC2329AAE01F}"
 	ProjectSection(SolutionItems) = preProject

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace FluentMVCTesting
+namespace TestStack.FluentMVCTesting
 {
     public class ControllerResultTest<T> where T : Controller
     {

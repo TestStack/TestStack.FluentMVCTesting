@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentMVCTesting
+namespace TestStack.FluentMVCTesting
 {
 
     public class ActionResultAssertionException : Exception

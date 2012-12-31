@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 
-namespace FluentMVCTesting
+namespace TestStack.FluentMVCTesting
 {
     public interface IModelErrorTest<TModel>
     {

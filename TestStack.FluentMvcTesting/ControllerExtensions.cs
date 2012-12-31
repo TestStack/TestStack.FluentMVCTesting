@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Web.Mvc;
 
-namespace FluentMVCTesting
+namespace TestStack.FluentMVCTesting
 {
     public static class ControllerExtensions
     {

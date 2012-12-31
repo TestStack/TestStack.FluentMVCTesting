@@ -13,3 +13,4 @@ _ReSharper*
 */NUnit*/tools
 */NhibernateProfiler*/tools
 packages
+*.DotSettings

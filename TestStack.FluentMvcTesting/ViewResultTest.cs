@@ -1,7 +1,7 @@
 using System;
 using System.Web.Mvc;
 
-namespace FluentMVCTesting
+namespace TestStack.FluentMVCTesting
 {
     public class ViewResultTest
     {

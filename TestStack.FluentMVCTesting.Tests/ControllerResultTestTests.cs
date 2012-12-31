@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Web.Mvc;
-using FluentMVCTesting.Tests.TestControllers;
 using NUnit.Framework;
+using TestStack.FluentMVCTesting.Tests.TestControllers;
 
-namespace FluentMVCTesting.Tests
+namespace TestStack.FluentMVCTesting.Tests
 {
     [TestFixture]
     class ControllerResultTestShould

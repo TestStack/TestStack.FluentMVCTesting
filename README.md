@@ -1,15 +1,15 @@
-﻿Fluent MVC Testing
+﻿TestStack.FluentMVCTesting
 ====================================
 
-This library provides a fluent interface for creating terse and expressive tests against ASP.NET MVC controllers.
+This library provides a fluent interface for creating terse and expressive tests against ASP.NET MVC controllers. This library is part of [TestStack](http://teststack.github.com/).
 
 This library is testing framework agnostic, so you can combine it with the testing library of your choice (e.g. NUnit, xUnit, etc.).
 
 The library is compatible with the AAA testing methodology, although it combines the Act and Assert parts together (but you can also have other assertions after the Fluent assertion). See the code examples below for more information.
 
-The motivation behind this library is to provide a way to test MVC actions quickly, tersely and maintainably. Most examples I find on MVC controller testing are incredibly verbose, repetitive and time-consuming to write and maintain. Given how quickly you can write controller actions and how simple they are (assuming you are following best practices and keeping them lean) the time to test them generally isn't worth it given you can glance at most of your controller actions and know they are right or wrong instantly. This library aims to make the time to implement the tests inconsequential and then the value your tests are providing is worth it. The other problem that I've noticed with most examples of controller testing is that there are a lot of magic strings being used to test view and action names; this library also aims to (where possible) utilise the type system to resolve a lot of those magic strings, thus ensuring your tests are more maintainable and require less re-work when you perform major refactoring of your code.
+The motivation behind this library is to provide a way to test MVC actions quickly, tersely and maintainably. Most examples we find on MVC controller testing are incredibly verbose, repetitive and time-consuming to write and maintain. Given how quickly you can write controller actions and how simple they are (assuming you are following best practices and keeping them lean) the time to test them generally isn't worth it given you can glance at most of your controller actions and know they are right or wrong instantly. This library aims to make the time to implement the tests inconsequential and then the value your tests are providing is worth it. The other problem that we've noticed with most examples of controller testing is that there are a lot of magic strings being used to test view and action names; this library also aims to (where possible) utilise the type system to resolve a lot of those magic strings, thus ensuring your tests are more maintainable and require less re-work when you perform major refactoring of your code.
 
-I came up with this library after using the [MVCContrib.TestHelper](http://mvccontrib.codeplex.com/wikipage?title=TestHelper) library for quite a while, but becoming frustrated with it; the library was initially created during an [experiment I conducted](http://robdmoore.id.au/blog/2011/03/14/terse-controller-testing-with-asp-net-mvc/) to try and create terse controller tests. I (and my team) have been using the library for over a year on a number of projects for the company that I work for.
+This library was inspired by the [MVCContrib.TestHelper](http://mvccontrib.codeplex.com/wikipage?title=TestHelper) library.
 
 Installation
 ------------
@@ -18,11 +18,11 @@ You can install this library using NuGet into your Test Library; it will automat
 
 If you are using ASP.NET MVC 4 then:
 
-    Install-Package FluentMVCTesting
+    Install-Package TestStack.FluentMVCTesting
 
 If you are using ASP.NET MVC 3 then:
 
-    Install-Package FluentMVCTesting.Mvc3
+    Install-Package TestStack.FluentMVCTesting.Mvc3
 
 Known Issues
 ------------
@@ -162,7 +162,7 @@ If you are redirecting to an action in another controller, then there are two sy
     // Or, if you want to check a partial is returned
     _controller.WithCallTo(c => c.Index()).ShouldRenderPartialView("ViewName");
 
-Unfortunately, I couldn't think of a way to get rid of the magic strings here so where possible use the default ones above.
+Unfortunately, we couldn't think of a way to get rid of the magic strings here so where possible use the default ones above.
 
 See below for model testing.
 
@@ -264,4 +264,4 @@ You can chain the error property checks after any of these checks (you can only 
 Any questions, comments or additions?
 --------------------------
 
-Leave an issue on the GitHub project or a comment on my [blog](http://robdmoore.id.au/blog/2012/05/29/fluentmvctesting-fluent-terse-and-maintainable-asp-net-mvc-controller-testing/). Also, feel free to send through a pull request.
+Leave an issue on the [GitHub project](https://github.com/TestStack/TestStack.FluentMVCTesting/issues) or send a [pull request](https://github.com/TestStack/TestStack.FluentMVCTesting/pulls).

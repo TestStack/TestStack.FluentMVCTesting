@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>
-       FluentMVCTesting 
+      TestStack.FluentMVCTesting
     </id>
     <version>
        1.0.0
@@ -11,7 +11,8 @@
        Robert Moore
     </authors>
     <description>
-       Fluent library for testing ASP.NET MVC controllers. ASP.NET MVC 4 version; install FluentMVCTesting.Mvc3 if you are using MVC 3.
+       Simple, terse, fluent unit testing of ASP.NET MVC Controllers.
+       ASP.NET MVC 4 version; install FluentMVCTesting.Mvc3 if you are using MVC 3.
     </description>
     <projectUrl>
        http://github.com/robdmoore/FluentMVCTesting

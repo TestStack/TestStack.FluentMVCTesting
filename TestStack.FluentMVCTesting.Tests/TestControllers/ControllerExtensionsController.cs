@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace FluentMVCTesting.Tests.TestControllers
+namespace TestStack.FluentMVCTesting.Tests.TestControllers
 {
     class ControllerExtensionsController : Controller
     {

@@ -1,7 +1,7 @@
-﻿using FluentMVCTesting.Tests.TestControllers;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using TestStack.FluentMVCTesting.Tests.TestControllers;
 
-namespace FluentMVCTesting.Tests
+namespace TestStack.FluentMVCTesting.Tests
 {
     [TestFixture]
     class ControllerExtensionsShould
