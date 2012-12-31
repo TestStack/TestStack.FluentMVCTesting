@@ -37,7 +37,7 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-     <file src="bin\Release\FluentMVCTesting.Mvc3.dll" target="lib\NET40" />
-     <file src="bin\Release\FluentMVCTesting.Mvc3.pdb" target="lib\NET40" />
+     <file src="bin\Release\TestStack.FluentMVCTesting.Mvc3.dll" target="lib\NET40" />
+     <file src="bin\Release\TestStack.FluentMVCTesting.Mvc3.pdb" target="lib\NET40" />
   </files>
 </package>
