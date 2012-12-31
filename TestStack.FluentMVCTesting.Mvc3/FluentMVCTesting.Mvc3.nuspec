@@ -8,20 +8,20 @@
        1.0.0
     </version>
     <authors>
-       Robert Moore
+       Robert Moore, TestStack
     </authors>
     <description>
       Simple, terse, fluent unit testing of ASP.NET MVC Controllers.
       ASP.NET MVC 3 version; install FluentMVCTesting if you are using MVC4.
     </description>
     <projectUrl>
-       http://github.com/robdmoore/FluentMVCTesting
+      https://github.com/TestStack/TestStack.FluentMVCTesting
     </projectUrl>
     <licenseUrl>
-       https://github.com/robdmoore/FluentMVCTesting/blob/master/LICENSE
+      https://github.com/TestStack/TestStack.FluentMVCTesting/blob/master/LICENSE
     </licenseUrl>
     <iconUrl>
-      https://raw.github.com/robdmoore/FluentMVCTesting/master/logo.png
+      https://raw.github.com/TestStack/TestStack.FluentMVCTesting/master/logo.png
     </iconUrl>
     <tags>
        fluent, mvc, asp.net, testing, terse
