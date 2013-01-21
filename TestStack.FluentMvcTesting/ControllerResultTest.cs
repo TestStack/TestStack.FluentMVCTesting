@@ -207,7 +207,7 @@ namespace TestStack.FluentMVCTesting
             return ShouldRenderPartialView(_actionName);
         }
 
-        public void ShouldRenderFile(string contentType = null)
+        public FileContentResult ShouldRenderFile(string contentType = null)
         {
             ValidateActionReturnType<FileContentResult>();
 
@@ -217,6 +217,8 @@ namespace TestStack.FluentMVCTesting
             {
                 throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
             }
+
+            return fileResult;
         }
 
         #endregion
