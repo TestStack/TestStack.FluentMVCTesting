@@ -55,12 +55,28 @@ namespace TestStack.FluentMVCTesting.Tests
         }
 
         [Test]
-        public void Check_for_execpected_lack_of_model_error_in_property()
+        public void Check_for_unexpected_lack_of_model_error_in_property()
         {
             var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
                 _modelTest.AndModelErrorFor(m => m.Property1)
             );
             Assert.That(exception.Message, Is.EqualTo("Expected controller 'ViewTestController' to have a model error for member 'Property1', but none found."));
+        }
+
+        [Test]
+        public void Check_for_no_model_error_in_property()
+        {
+            _modelTest.AndNoModelErrorFor(m => m.Property1);
+        }
+
+        [Test]
+        public void Check_for_unexpected_model_error_in_property()
+        {
+            _controller.ModelState.AddModelError("Property1", "error");
+            var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
+                _modelTest.AndNoModelErrorFor(m => m.Property1)
+            );
+            Assert.That(exception.Message, Is.EqualTo("Expected controller 'ViewTestController' to have no model errors for member 'Property1', but found some."));
         }
     }
 }

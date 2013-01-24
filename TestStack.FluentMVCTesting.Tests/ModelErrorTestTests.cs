@@ -97,6 +97,15 @@ namespace TestStack.FluentMVCTesting.Tests
         }
 
         [Test]
+        public void Chain_call_to_check_no_model_error_in_property()
+        {
+            var returnVal = Substitute.For<IModelTest<TestViewModel>>();
+            _modelTest.AndNoModelErrorFor(Arg.Any<Expression<Func<TestViewModel, string>>>()).Returns(returnVal);
+
+            Assert.That(_modelErrorTest.AndNoModelErrorFor(m => m.Property1), Is.EqualTo(returnVal));
+        }
+
+        [Test]
         public void Chain_call_to_check_model_error_by_key()
         {
             var returnVal = Substitute.For<IModelErrorTest<TestViewModel>>();

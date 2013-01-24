@@ -13,6 +13,7 @@ namespace TestStack.FluentMVCTesting
         IModelTest<TModel> EndingWith(string endMessage);
         IModelTest<TModel> Containing(string containsMessage);
         IModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError);
+        IModelTest<TModel> AndNoModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithNoError);
         IModelErrorTest<TModel> AndModelError(string errorKey);
     }
 
@@ -73,6 +74,11 @@ namespace TestStack.FluentMVCTesting
         public IModelErrorTest<TModel> AndModelError(string errorKey)
         {
             return _modelTest.AndModelError(errorKey);
+        }
+
+        public IModelTest<TModel> AndNoModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithNoError)
+        {
+            return _modelTest.AndNoModelErrorFor(memberWithNoError);
         }
     }
 }

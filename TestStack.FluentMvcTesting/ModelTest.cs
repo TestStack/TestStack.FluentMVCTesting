@@ -7,6 +7,7 @@ namespace TestStack.FluentMVCTesting
     public interface IModelTest<TModel>
     {
         IModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError);
+        IModelTest<TModel> AndNoModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithNoError);
         IModelErrorTest<TModel> AndModelError(string errorKey);
         void AndNoModelErrors();
     }
@@ -26,6 +27,14 @@ namespace TestStack.FluentMVCTesting
             if (!_controller.ModelState.ContainsKey(member) || _controller.ModelState[member].Errors.Count == 0)
                 throw new ViewResultModelAssertionException(string.Format("Expected controller '{0}' to have a model error for member '{1}', but none found.", _controller.GetType().Name, member));
             return new ModelErrorTest<TModel>(this, member, _controller.ModelState[member].Errors);
+        }
+
+        public IModelTest<TModel> AndNoModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithNoError)
+        {
+            var member = ((MemberExpression)memberWithNoError.Body).Member.Name;
+            if (_controller.ModelState.ContainsKey(member))
+                throw new ViewResultModelAssertionException(string.Format("Expected controller '{0}' to have no model errors for member '{1}', but found some.", _controller.GetType().Name, member));
+            return this;
         }
 
         public IModelErrorTest<TModel> AndModelError(string errorKey)
