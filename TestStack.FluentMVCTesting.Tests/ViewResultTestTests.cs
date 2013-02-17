@@ -1,4 +1,9 @@
-﻿using System.Web.Mvc;
+﻿//
+
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+//
 using NUnit.Framework;
 
 namespace TestStack.FluentMVCTesting.Tests
@@ -17,6 +22,69 @@ namespace TestStack.FluentMVCTesting.Tests
             _model = new TestViewModel { Property1 = "test", Property2 = 3 };
             _viewResult.ViewData.Model = _model;
             _viewResultTest = new ViewResultTest(_viewResult, new ViewTestController());
+        }
+
+        [Test]
+        public void Check_string_message_key_on_viewbag()
+        {
+            _viewResult.ViewBag.Message = "Hello View Data Message";
+            Assert.That(_viewResultTest.WithViewBag<string>("Message"), Is.EqualTo("Hello View Data Message"));
+        }
+
+        [Test]
+        public void Check_int_message_key_on_viewbag()
+        {
+            _viewResult.ViewBag.Page = 1;
+            Assert.That(_viewResultTest.WithViewBag<int>("Page"), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Check_wrong_message_member_name_passed_missing_member_message_for_viewbag()
+        {
+            _viewResult.ViewBag.Message = "Hello View Data Message";
+
+            var exception = Assert.Throws<MissingMemberException>(() =>
+                _viewResultTest.WithViewBag<string>("Message2")
+            );
+
+            Assert.That(exception.Message, Is.EqualTo("Member 'ViewBag.Message2' not found."));
+        }
+
+
+        [Test]
+        public void Check_string_message_key_on_viewdata()
+        {
+            _viewResult.ViewData["Message"] = "Hello View Data Message";
+            Assert.That(_viewResultTest.WithViewData<string>("Message"), Is.EqualTo("Hello View Data Message"));
+        }
+
+        [Test]
+        public void Check_int_message_key_on_viewdata()
+        {
+            _viewResult.ViewData["Page"] = 1;
+            Assert.That(_viewResultTest.WithViewData<int>("Page"), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Check_wrong_message_key_passed_missing_message_key_for_viewdata()
+        {
+            _viewResult.ViewData["Message"] = "Hello View Data Message";
+
+            var exception = Assert.Throws<KeyNotFoundException>(() =>
+                _viewResultTest.WithViewData<string>("Message2")
+            );
+
+            Assert.That(exception.Message, Is.EqualTo("Exception with ViewData, 'Message2' key not found"));
+        }
+
+        [Test]
+        public void Check_row_count_zero_for_viewdata()
+        {
+            var exception = Assert.Throws<KeyNotFoundException>(() =>
+                _viewResultTest.WithViewData<string>("Message")
+            );
+
+            Assert.That(exception.Message, Is.EqualTo("Exception with ViewData, 'Message' key not found"));
         }
 
         [Test]
