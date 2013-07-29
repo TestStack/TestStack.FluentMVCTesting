@@ -1,4 +1,6 @@
-﻿Copyright (C) 2012 Robert Moore and TestStack.FluentMVCTesting contributors'
+﻿The MIT License (MIT)
+
+Copyright (c) 2012-2013 Robert Moore and TestStack.FluentMVCTesting Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
