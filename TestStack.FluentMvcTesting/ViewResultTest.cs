@@ -1,5 +1,10 @@
+//
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
+//
+using ImpromptuInterface;
 
 namespace TestStack.FluentMVCTesting
 {
@@ -12,6 +17,33 @@ namespace TestStack.FluentMVCTesting
         {
             _viewResult = viewResult;
             _controller = controller;
+        }
+        
+        public TMember WithViewBag<TMember>(string psMemberName)
+        {
+            TMember member = default(TMember);
+            var target = _viewResult.ViewBag;
+
+            IEnumerable<string> memberNames = Impromptu.GetMemberNames(_viewResult.ViewBag, true);
+            if ( !memberNames.Contains(psMemberName) )
+                throw new MissingMemberException("ViewBag",psMemberName);
+
+            member = Impromptu.InvokeGet(target, psMemberName);
+
+            return member;
+        }
+        public TProperty WithViewData<TProperty>(string psKeyName)
+        {
+            if (_viewResult.ViewData == null || _viewResult.ViewData.Count <= 0 || !_viewResult.ViewData.ContainsKey(psKeyName))
+                throw new KeyNotFoundException(string.Format("Exception with ViewData, '{0}' key not found",psKeyName));
+
+            var target = _viewResult.ViewData;
+            TProperty propertyValue = default(TProperty);
+
+            if (target != null)
+                propertyValue = (TProperty)target[psKeyName];
+
+            return propertyValue;
         }
 
         public ModelTest<TModel> WithModel<TModel>() where TModel : class
