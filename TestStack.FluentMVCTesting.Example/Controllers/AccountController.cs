@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
+using TestStack.FluentMVCTesting.Example.Services;
 using WebMatrix.WebData;
 using TestStack.FluentMVCTesting.Example.Filters;
 using TestStack.FluentMVCTesting.Example.Models;
@@ -17,6 +18,17 @@ namespace TestStack.FluentMVCTesting.Example.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private readonly IAuthenticationService _authenticationService;
+
+        public AccountController()
+            : this(new AuthenticationService())
+        {}
+
+        public AccountController(IAuthenticationService authenticationService)
+        {
+            _authenticationService = authenticationService;
+        }
+
         //
         // GET: /Account/Login
 
@@ -35,13 +47,14 @@ namespace TestStack.FluentMVCTesting.Example.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (ModelState.IsValid && _authenticationService.Login(model))
             {
                 return RedirectToLocal(returnUrl);
             }
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
