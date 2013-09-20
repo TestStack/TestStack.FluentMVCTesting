@@ -10,7 +10,6 @@ namespace TestStack.FluentMVCTesting.Sample.Tests.Controllers
 {
     class AccountControllerTests
     {
-        #region Setup
         private AccountController _controller;
         private IAuthenticationService _authenticationService;
 
@@ -23,9 +22,6 @@ namespace TestStack.FluentMVCTesting.Sample.Tests.Controllers
                 Url = new UrlHelper(Substitute.For<RequestContext>())
             };
         }
-        #endregion
-
-        #region Login
 
         [Test]
         public void WhenViewingLoginPage_ThenShowDefaultViewWithReturnUrl()
@@ -98,7 +94,5 @@ namespace TestStack.FluentMVCTesting.Sample.Tests.Controllers
             _controller.WithCallTo(c => c.Login(vm, returnUrl))
                 .ShouldRedirectTo<HomeController>(c => c.Index());
         }
-
-        #endregion
     }
 }
