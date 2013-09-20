@@ -2,11 +2,11 @@
 using System.Web.Routing;
 using NSubstitute;
 using NUnit.Framework;
-using TestStack.FluentMVCTesting.Example.Controllers;
-using TestStack.FluentMVCTesting.Example.Models;
-using TestStack.FluentMVCTesting.Example.Services;
+using TestStack.FluentMVCTesting.Sample.Controllers;
+using TestStack.FluentMVCTesting.Sample.Models;
+using TestStack.FluentMVCTesting.Sample.Services;
 
-namespace TestStack.FluentMVCTesting.Example.Tests.Controllers
+namespace TestStack.FluentMVCTesting.Sample.Tests.Controllers
 {
     class AccountControllerTests
     {

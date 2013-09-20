@@ -7,8 +7,8 @@
     <ProjectGuid>{F36BC506-1076-49BF-A1A4-A76D6560AA64}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestStack.FluentMVCTesting.Example.Tests</RootNamespace>
-    <AssemblyName>TestStack.FluentMVCTesting.Example.Tests</AssemblyName>
+    <RootNamespace>TestStack.FluentMVCTesting.Sample.Tests</RootNamespace>
+    <AssemblyName>TestStack.FluentMVCTesting.Sample.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -83,9 +83,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TestStack.FluentMVCTesting.Example\TestStack.FluentMVCTesting.Example.csproj">
+    <ProjectReference Include="..\TestStack.FluentMVCTesting.Example\TestStack.FluentMVCTesting.Sample.csproj">
       <Project>{0BD41AAC-8155-4328-A1A2-CB634430BB39}</Project>
-      <Name>TestStack.FluentMVCTesting.Example</Name>
+      <Name>TestStack.FluentMVCTesting.Sample</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestStack.FluentMVCTesting\TestStack.FluentMVCTesting.csproj">
       <Project>{152ca00f-18d3-4cf5-8ca0-2c5b70cbea19}</Project>

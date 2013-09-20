@@ -21,11 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{EC0FFD
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{46E90596-A670-4D0B-B036-C7859573C89E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{46E90596-A670-4D0B-B036-C7859573C89E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting.Example", "TestStack.FluentMVCTesting.Example\TestStack.FluentMVCTesting.Example.csproj", "{0BD41AAC-8155-4328-A1A2-CB634430BB39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting.Sample", "TestStack.FluentMVCTesting.Example\TestStack.FluentMVCTesting.Sample.csproj", "{0BD41AAC-8155-4328-A1A2-CB634430BB39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting.Example.Tests", "TestStack.FluentMVCTesting.Example.Tests\TestStack.FluentMVCTesting.Example.Tests.csproj", "{F36BC506-1076-49BF-A1A4-A76D6560AA64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting.Sample.Tests", "TestStack.FluentMVCTesting.Example.Tests\TestStack.FluentMVCTesting.Sample.Tests.csproj", "{F36BC506-1076-49BF-A1A4-A76D6560AA64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

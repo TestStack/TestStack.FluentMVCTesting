@@ -1,7 +1,7 @@
-﻿using TestStack.FluentMVCTesting.Example.Models;
+﻿using TestStack.FluentMVCTesting.Sample.Models;
 using WebMatrix.WebData;
 
-namespace TestStack.FluentMVCTesting.Example.Services
+namespace TestStack.FluentMVCTesting.Sample.Services
 {
     public interface IAuthenticationService
     {

@@ -1,11 +1,12 @@
-﻿@model ICollection<TestStack.FluentMVCTesting.Example.Models.ExternalLogin>
+﻿@using TestStack.FluentMVCTesting.Sample.Models
+@model ICollection<TestStack.FluentMVCTesting.Sample.Models.ExternalLogin>
 
 @if (Model.Count > 0)
 {
     <h3>Registered external logins</h3>
     <table>
         <tbody>
-        @foreach (TestStack.FluentMVCTesting.Example.Models.ExternalLogin externalLogin in Model)
+        @foreach (ExternalLogin externalLogin in Model)
         {
             <tr>
                 <td>@externalLogin.ProviderDisplayName</td>

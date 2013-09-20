@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="TestStack.FluentMVCTesting.Example.MvcApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="TestStack.FluentMVCTesting.Sample.MvcApplication" Language="C#" %>

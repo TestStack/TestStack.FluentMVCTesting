@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace TestStack.FluentMVCTesting.Example
+namespace TestStack.FluentMVCTesting.Sample.App_Start
 {
     public class BundleConfig
     {

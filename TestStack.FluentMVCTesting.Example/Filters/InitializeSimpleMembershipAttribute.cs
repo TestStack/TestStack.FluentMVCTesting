@@ -3,10 +3,10 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
+using TestStack.FluentMVCTesting.Sample.Models;
 using WebMatrix.WebData;
-using TestStack.FluentMVCTesting.Example.Models;
 
-namespace TestStack.FluentMVCTesting.Example.Filters
+namespace TestStack.FluentMVCTesting.Sample.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public sealed class InitializeSimpleMembershipAttribute : ActionFilterAttribute
