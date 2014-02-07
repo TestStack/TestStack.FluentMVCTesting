@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RouteValueDictionaryExtension.cs" />
     <Compile Include="ControllerExtensions.cs" />
     <Compile Include="ControllerResultTest.cs" />
     <Compile Include="Exceptions.cs" />

@@ -22,4 +22,19 @@ namespace TestStack.FluentMVCTesting
     {
         public InvalidControllerActionException(string message) : base(message) { }
     }
+
+    public class InvalidRouteValueException : Exception
+    {
+        public InvalidRouteValueException(string message) : base(message) { }
+    }
+
+    public class MissingRouteValueException : Exception
+    {
+        public MissingRouteValueException(string message) : base(message) { }
+    }
+
+    public class ValueTypeMismatchException : Exception
+    {
+        public ValueTypeMismatchException(string message) : base(message) { }
+    }
 }
