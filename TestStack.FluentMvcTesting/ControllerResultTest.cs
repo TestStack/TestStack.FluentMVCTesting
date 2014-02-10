@@ -160,6 +160,9 @@ namespace TestStack.FluentMVCTesting
 
             var redirectResult = (RedirectToRouteResult)_actionResult;
 
+            if (redirectResult.RouteValues["Controller"] == null)
+                throw new ActionResultAssertionException(string.Format("Expected redirect to action '{0}' in '{1}' controller, but instead was given redirect to action with default controller.", actionName, controllerName));
+
             if (redirectResult.RouteValues["Controller"].ToString() != controllerName)
                 throw new ActionResultAssertionException(string.Format("Expected redirect to controller '{0}', but instead was given a redirect to controller '{1}'.", controllerName, redirectResult.RouteValues["Controller"]));
 
