@@ -240,7 +240,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.RedirectToAnotherActionNoController()).ShouldRedirectTo<SomeOtherController>(c => c.SomeOtherAction())
             );
-            Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'SomeOtherAction' in 'SomeOther' controller, but instead was given redirect to 'SomeAction' within the same controller."));
+            Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'SomeOtherAction' in 'SomeOther' controller, but instead was given redirect to action 'SomeAction' within the same controller."));
         }
         #endregion
 
