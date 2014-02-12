@@ -78,6 +78,11 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
             return RedirectToAction("SomeAction", "SomeOther");
         }
 
+        public ActionResult RedirectToAnotherActionNoController()
+        {
+            return RedirectToAction("SomeAction");
+        }
+
         #region Redirect Actions
         public ActionResult ActionWithNoParameters()
         {
