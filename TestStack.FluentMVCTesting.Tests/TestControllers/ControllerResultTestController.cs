@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.IO;
+using System.Web.Mvc;
 
 namespace TestStack.FluentMVCTesting.Tests.TestControllers
 {
@@ -132,6 +133,12 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         public ActionResult EmptyFile()
         {
             var content = new byte[] {};
+            return File(content, FileContentType);
+        }
+
+        public ActionResult EmptyStream()
+        {
+            var content = new MemoryStream();
             return File(content, FileContentType);
         }
 
