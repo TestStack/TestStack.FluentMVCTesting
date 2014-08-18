@@ -26,6 +26,7 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<PartialViewResult>(t => t.ShouldRenderDefaultPartialView()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream()),
+            ReturnType<FilePathResult>(t=> t.ShouldRenderFilePath()),
             ReturnType<HttpStatusCodeResult>(t => t.ShouldGiveHttpStatus()),
             ReturnType<JsonResult>(t => t.ShouldReturnJson()),
         };
@@ -322,6 +323,12 @@ namespace TestStack.FluentMVCTesting.Tests
         public void Check_for_file_stream_result_and_check_content_type()
         {
             _controller.WithCallTo(c => c.EmptyStream()).ShouldRenderFileStream(ControllerResultTestController.FileContentType);
+        }
+
+        [Test]
+        public void Check_for_file_path_result()
+        {
+            _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath();
         }
 
         #endregion

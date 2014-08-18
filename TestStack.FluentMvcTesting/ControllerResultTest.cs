@@ -238,6 +238,12 @@ namespace TestStack.FluentMVCTesting
             return fileResult;
         }
 
+        public FilePathResult ShouldRenderFilePath()
+        {
+            ValidateActionReturnType<FilePathResult>();
+            return (FilePathResult)_actionResult;
+        }
+
         #endregion
 
         #region Http Status
