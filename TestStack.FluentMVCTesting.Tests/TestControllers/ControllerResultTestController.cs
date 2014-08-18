@@ -142,6 +142,11 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
             return File(content, FileContentType);
         }
 
+        public ActionResult EmptyFilePath()
+        {
+            return File("dummy", FileContentType);
+        }
+
         public ActionResult NamedView()
         {
             return View(ViewName);
