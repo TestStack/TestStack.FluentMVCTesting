@@ -300,7 +300,9 @@ namespace TestStack.FluentMVCTesting.Tests
             );
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", ControllerResultTestController.PartialName, ControllerResultTestController.RandomViewName)));
         }
+        #endregion
 
+        #region File tests
         [Test]
         public void Check_for_file_result()
         {
@@ -342,7 +344,6 @@ namespace TestStack.FluentMVCTesting.Tests
         {
             _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath(ControllerResultTestController.FileName, ControllerResultTestController.FileContentType);
         }
-
         #endregion
 
         #region HTTP Status tests

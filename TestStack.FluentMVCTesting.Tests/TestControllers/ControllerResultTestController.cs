@@ -131,23 +131,6 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
             return PartialView("DefaultPartialExplicit");
         }
 
-        public ActionResult EmptyFile()
-        {
-            var content = new byte[] {};
-            return File(content, FileContentType);
-        }
-
-        public ActionResult EmptyStream()
-        {
-            var content = new MemoryStream();
-            return File(content, FileContentType);
-        }
-
-        public ActionResult EmptyFilePath()
-        {
-            return File(FileName, FileContentType);
-        }
-
         public ActionResult NamedView()
         {
             return View(ViewName);
@@ -166,6 +149,25 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         public ActionResult RandomPartial()
         {
             return PartialView(RandomViewName);
+        }
+        #endregion
+
+        #region Files
+        public ActionResult EmptyFile()
+        {
+            var content = new byte[] { };
+            return File(content, FileContentType);
+        }
+
+        public ActionResult EmptyStream()
+        {
+            var content = new MemoryStream();
+            return File(content, FileContentType);
+        }
+
+        public ActionResult EmptyFilePath()
+        {
+            return File(FileName, FileContentType);
         }
         #endregion
 

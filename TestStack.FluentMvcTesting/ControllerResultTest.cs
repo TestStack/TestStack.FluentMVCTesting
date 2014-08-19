@@ -210,6 +210,10 @@ namespace TestStack.FluentMVCTesting
             return ShouldRenderPartialView(_actionName);
         }
 
+        #endregion
+
+        #region File Results
+
         public FileContentResult ShouldRenderFile(string contentType = null)
         {
             ValidateActionReturnType<FileContentResult>();
@@ -242,7 +246,7 @@ namespace TestStack.FluentMVCTesting
         {
             ValidateActionReturnType<FilePathResult>();
 
-            var fileResult = (FilePathResult) _actionResult;
+            var fileResult = (FilePathResult)_actionResult;
 
             if (fileName != null && fileName != fileResult.FileName)
             {
