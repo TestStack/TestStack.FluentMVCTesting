@@ -214,6 +214,20 @@ namespace TestStack.FluentMVCTesting
 
         #region File Results
 
+        public FileResult ShouldRenderAnyFile(string contentType = null)
+        {
+            ValidateActionReturnType<FileResult>();
+
+            var fileResult = (FileResult)_actionResult;
+
+            if (contentType != null && fileResult.ContentType != contentType)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
+            }
+
+            return fileResult;
+        }
+
         public FileContentResult ShouldRenderFile(string contentType = null)
         {
             ValidateActionReturnType<FileContentResult>();

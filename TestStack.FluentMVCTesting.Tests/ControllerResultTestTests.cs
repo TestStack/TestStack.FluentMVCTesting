@@ -27,6 +27,7 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream()),
             ReturnType<FilePathResult>(t=> t.ShouldRenderFilePath()),
+            ReturnType<FileResult>(t => t.ShouldRenderAnyFile()),
             ReturnType<HttpStatusCodeResult>(t => t.ShouldGiveHttpStatus()),
             ReturnType<JsonResult>(t => t.ShouldReturnJson()),
         };
@@ -303,6 +304,19 @@ namespace TestStack.FluentMVCTesting.Tests
         #endregion
 
         #region File tests
+
+        [Test]
+        public void Check_for_any_file_result()
+        {
+            _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile();
+        }
+
+        [Test]
+        public void Check_for_any_file_result_and_check_content_type()
+        {
+            _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile(ControllerResultTestController.FileContentType);
+        }
+
         [Test]
         public void Check_for_file_result()
         {
