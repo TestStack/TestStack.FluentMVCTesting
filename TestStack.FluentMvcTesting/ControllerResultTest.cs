@@ -238,10 +238,18 @@ namespace TestStack.FluentMVCTesting
             return fileResult;
         }
 
-        public FilePathResult ShouldRenderFilePath()
+        public FilePathResult ShouldRenderFilePath(string fileName = null)
         {
             ValidateActionReturnType<FilePathResult>();
-            return (FilePathResult)_actionResult;
+
+            var fileResult = (FilePathResult) _actionResult;
+
+            if (fileName != null && fileName != fileResult.FileName)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file name to be '{0}', but instead was given '{1}'.", fileName, fileResult.FileName));
+            }
+
+            return fileResult;
         }
 
         #endregion
