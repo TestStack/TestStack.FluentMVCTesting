@@ -331,6 +331,18 @@ namespace TestStack.FluentMVCTesting.Tests
             _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath();
         }
 
+        [Test]
+        public void Check_for_file_path_result_and_check_file_name()
+        {
+            _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath(ControllerResultTestController.FileName);
+        }
+
+        [Test]
+        public void Check_for_file_path_result_and_check_file_name_and_check_content_type()
+        {
+            _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath(ControllerResultTestController.FileName, ControllerResultTestController.FileContentType);
+        }
+
         #endregion
 
         #region HTTP Status tests

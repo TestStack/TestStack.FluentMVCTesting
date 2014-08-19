@@ -14,6 +14,7 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         public const string RandomViewName = "Random";
         public const int Code = 403;
         public const string JsonValue = "json";
+        public const string FileName = "NamedFile";
         #endregion
 
         #region Empty, Null and Random Results
@@ -144,7 +145,7 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
 
         public ActionResult EmptyFilePath()
         {
-            return File("dummy", FileContentType);
+            return File(FileName, FileContentType);
         }
 
         public ActionResult NamedView()
