@@ -25,8 +25,12 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<PartialViewResult>(t => t.ShouldRenderPartialView("")),
             ReturnType<PartialViewResult>(t => t.ShouldRenderDefaultPartialView()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
+            ReturnType<FileContentResult>(t => t.ShouldRenderFile("")),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream()),
-            ReturnType<FilePathResult>(t=> t.ShouldRenderFilePath()),
+            ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream("")),
+            ReturnType<FilePathResult>(t => t.ShouldRenderFilePath()),
+            ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("")),
+            ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("", "")),
             ReturnType<FileResult>(t => t.ShouldRenderAnyFile()),
             ReturnType<HttpStatusCodeResult>(t => t.ShouldGiveHttpStatus()),
             ReturnType<JsonResult>(t => t.ShouldReturnJson()),
@@ -309,12 +313,27 @@ namespace TestStack.FluentMVCTesting.Tests
         public void Check_for_any_file_result()
         {
             _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile();
+            _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderAnyFile();
+            _controller.WithCallTo(c => c.EmptyStream()).ShouldRenderAnyFile();
         }
 
         [Test]
         public void Check_for_any_file_result_and_check_content_type()
         {
             _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile(ControllerResultTestController.FileContentType);
+            _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderAnyFile(ControllerResultTestController.FileContentType);
+            _controller.WithCallTo(c => c.EmptyStream()).ShouldRenderAnyFile(ControllerResultTestController.FileContentType);
+        }
+
+        [Test]
+        public void Check_for_any_file_result_and_check_invalid_content_type()
+        {
+            const string contentType = "application/dummy";
+
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile(contentType));
+
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, ControllerResultTestController.FileContentType)));
         }
 
         [Test]
@@ -342,6 +361,17 @@ namespace TestStack.FluentMVCTesting.Tests
         }
 
         [Test]
+        public void Check_for_file_stream_result_and_check_invalid_content_type()
+        {
+            const string contentType = "application/dummy";
+
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile(contentType));
+
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, ControllerResultTestController.FileContentType)));
+        }
+
+        [Test]
         public void Check_for_file_path_result()
         {
             _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath();
@@ -354,10 +384,33 @@ namespace TestStack.FluentMVCTesting.Tests
         }
 
         [Test]
+        public void Check_for_file_path_result_and_check_invalid_file_name()
+        {
+            const string name = "dummy";
+
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath(name));
+
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file name to be '{0}', but instead was given '{1}'.", name, ControllerResultTestController.FileName)));
+        }
+
+        [Test]
         public void Check_for_file_path_result_and_check_file_name_and_check_content_type()
         {
             _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath(ControllerResultTestController.FileName, ControllerResultTestController.FileContentType);
         }
+
+        [Test]
+        public void Check_for_file_path_result_and_check_file_name_and_check_invalid_content_type()
+        {
+            const string contentType = "application/dummy";
+
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath(ControllerResultTestController.FileName, contentType));
+
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, ControllerResultTestController.FileContentType)));
+        }
+
         #endregion
 
         #region HTTP Status tests
