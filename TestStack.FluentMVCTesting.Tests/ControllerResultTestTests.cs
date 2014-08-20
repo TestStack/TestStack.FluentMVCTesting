@@ -27,6 +27,7 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream()),
             ReturnType<FilePathResult>(t=> t.ShouldRenderFilePath()),
+            ReturnType<FileResult>(t => t.ShouldRenderAnyFile()),
             ReturnType<HttpStatusCodeResult>(t => t.ShouldGiveHttpStatus()),
             ReturnType<JsonResult>(t => t.ShouldReturnJson()),
         };
@@ -300,6 +301,21 @@ namespace TestStack.FluentMVCTesting.Tests
             );
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", ControllerResultTestController.PartialName, ControllerResultTestController.RandomViewName)));
         }
+        #endregion
+
+        #region File tests
+
+        [Test]
+        public void Check_for_any_file_result()
+        {
+            _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile();
+        }
+
+        [Test]
+        public void Check_for_any_file_result_and_check_content_type()
+        {
+            _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile(ControllerResultTestController.FileContentType);
+        }
 
         [Test]
         public void Check_for_file_result()
@@ -342,7 +358,6 @@ namespace TestStack.FluentMVCTesting.Tests
         {
             _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath(ControllerResultTestController.FileName, ControllerResultTestController.FileContentType);
         }
-
         #endregion
 
         #region HTTP Status tests
