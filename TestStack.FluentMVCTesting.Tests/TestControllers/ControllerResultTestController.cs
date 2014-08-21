@@ -15,6 +15,7 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         public const int Code = 403;
         public const string JsonValue = "json";
         public const string FileName = "NamedFile";
+        public static byte[] FileContents = { 1 };
         #endregion
 
         #region Empty, Null and Random Results
@@ -161,7 +162,7 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
 
         public ActionResult File()
         {
-            return EmptyFile();
+            return File(FileContents, FileContentType);
         }
 
         public ActionResult EmptyStream()

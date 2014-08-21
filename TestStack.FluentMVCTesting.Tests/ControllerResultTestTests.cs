@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Web.Mvc;
@@ -28,6 +29,7 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<FileContentResult>(t => t.ShouldRenderFile("")),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents()),
+            ReturnType<FileContentResult>(t => t.ShouldRenderFileContents(new byte[0])),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream("")),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath()),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("")),
@@ -341,6 +343,25 @@ namespace TestStack.FluentMVCTesting.Tests
         public void Check_for_file_content_result()
         {
             _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderFileContents();
+        }
+
+        [Test]
+        public void Check_for_file_content_result_and_check_binary_content()
+        {
+            _controller.WithCallTo(c => c.File()).ShouldRenderFileContents(ControllerResultTestController.FileContents);
+        }
+
+        [Test]
+        public void Check_for_file_content_result_and_check_invalid_binary_content()
+        {
+            byte[] contents = { 1, 2 };
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.File()).ShouldRenderFileContents(contents));
+
+            Assert.True(exception.Message.StartsWith("Expected file contents to be "));
+            Assert.True(exception.Message.EndsWith("."));
+            Assert.True(string.Join(",", contents).All(exception.Message.Contains));
+            Assert.True(string.Join(",", ControllerResultTestController.FileContents).All(exception.Message.Contains));
         }
 
         [Test]

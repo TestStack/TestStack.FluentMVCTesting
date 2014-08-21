@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
@@ -229,10 +230,21 @@ namespace TestStack.FluentMVCTesting
             return fileResult;
         }
 
-        public FileContentResult ShouldRenderFileContents()
+        public FileContentResult ShouldRenderFileContents(byte[] contents = null)
         {
             ValidateActionReturnType<FileContentResult>();
-            return (FileContentResult) _actionResult;
+
+            var fileResult = (FileContentResult) _actionResult;
+
+            if (contents != null && !fileResult.FileContents.SequenceEqual(contents))
+            {
+                throw new ActionResultAssertionException(string.Format(
+                    "Expected file contents to be equal to {0}, but instead was given {1}.",
+                    string.Join(",", contents),
+                    string.Join(",", fileResult.FileContents)));
+            }
+
+            return fileResult;
         }
 
         public FileContentResult ShouldRenderFile(string contentType = null)
