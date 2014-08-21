@@ -253,6 +253,7 @@ namespace TestStack.FluentMVCTesting
             return fileResult;
         }
 
+        [Obsolete("Obsolete: Use ShouldRenderFileContents instead.")]
         public FileContentResult ShouldRenderFile(string contentType = null)
         {
             ValidateActionReturnType<FileContentResult>();
