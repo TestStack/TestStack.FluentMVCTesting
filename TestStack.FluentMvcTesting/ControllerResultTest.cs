@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.UI.WebControls;
 
 namespace TestStack.FluentMVCTesting
 {
@@ -230,7 +231,7 @@ namespace TestStack.FluentMVCTesting
             return fileResult;
         }
 
-        public FileContentResult ShouldRenderFileContents(byte[] contents = null)
+        public FileContentResult ShouldRenderFileContents(byte[] contents = null, string contentType = null)
         {
             ValidateActionReturnType<FileContentResult>();
 
@@ -242,6 +243,11 @@ namespace TestStack.FluentMVCTesting
                     "Expected file contents to be equal to {0}, but instead was given {1}.",
                     string.Join(",", contents),
                     string.Join(",", fileResult.FileContents)));
+            }
+
+            if (contentType != null && fileResult.ContentType != contentType)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
             }
 
             return fileResult;
