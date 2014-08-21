@@ -2,6 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -226,6 +227,12 @@ namespace TestStack.FluentMVCTesting
             }
 
             return fileResult;
+        }
+
+        public FileContentResult ShouldRenderFileContents()
+        {
+            ValidateActionReturnType<FileContentResult>();
+            return (FileContentResult) _actionResult;
         }
 
         public FileContentResult ShouldRenderFile(string contentType = null)

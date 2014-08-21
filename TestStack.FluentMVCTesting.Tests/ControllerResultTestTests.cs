@@ -27,6 +27,7 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFile("")),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream()),
+            ReturnType<FileContentResult>(t => t.ShouldRenderFileContents()),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream("")),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath()),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("")),
@@ -334,6 +335,12 @@ namespace TestStack.FluentMVCTesting.Tests
                 _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile(contentType));
 
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, ControllerResultTestController.FileContentType)));
+        }
+
+        [Test]
+        public void Check_for_file_content_result()
+        {
+            _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderFileContents();
         }
 
         [Test]

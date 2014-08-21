@@ -159,6 +159,11 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
             return File(content, FileContentType);
         }
 
+        public ActionResult File()
+        {
+            return EmptyFile();
+        }
+
         public ActionResult EmptyStream()
         {
             var content = new MemoryStream();
