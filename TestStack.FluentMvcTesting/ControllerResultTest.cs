@@ -237,17 +237,17 @@ namespace TestStack.FluentMVCTesting
 
             var fileResult = (FileContentResult) _actionResult;
 
+            if (contentType != null && fileResult.ContentType != contentType)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
+            }
+
             if (contents != null && !fileResult.FileContents.SequenceEqual(contents))
             {
                 throw new ActionResultAssertionException(string.Format(
                     "Expected file contents to be equal to [{0}], but instead was given [{1}].",
                     string.Join(", ", contents),
                     string.Join(", ", fileResult.FileContents)));
-            }
-
-            if (contentType != null && fileResult.ContentType != contentType)
-            {
-                throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
             }
 
             return fileResult;
@@ -288,14 +288,14 @@ namespace TestStack.FluentMVCTesting
 
             var fileResult = (FilePathResult)_actionResult;
 
-            if (fileName != null && fileName != fileResult.FileName)
-            {
-                throw new ActionResultAssertionException(string.Format("Expected file name to be '{0}', but instead was given '{1}'.", fileName, fileResult.FileName));
-            }
-
             if (contentType != null && fileResult.ContentType != contentType)
             {
                 throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
+            }
+
+            if (fileName != null && fileName != fileResult.FileName)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file name to be '{0}', but instead was given '{1}'.", fileName, fileResult.FileName));
             }
 
             return fileResult;
