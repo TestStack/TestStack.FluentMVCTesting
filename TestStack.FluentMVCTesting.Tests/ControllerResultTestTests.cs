@@ -359,10 +359,10 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.File()).ShouldRenderFileContents(contents));
 
-            Assert.True(exception.Message.StartsWith("Expected file contents to be "));
-            Assert.True(exception.Message.EndsWith("."));
-            Assert.True(string.Join(",", contents).All(exception.Message.Contains));
-            Assert.True(string.Join(",", ControllerResultTestController.FileContents).All(exception.Message.Contains));
+            Assert.True(exception.Message.StartsWith("Expected file contents to be equal to ["));
+            Assert.True(exception.Message.EndsWith("]."));
+            Assert.True(string.Join(", ", contents).All(exception.Message.Contains));
+            Assert.True(string.Join(", ", ControllerResultTestController.FileContents).All(exception.Message.Contains));
         }
 
         [Test]

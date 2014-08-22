@@ -240,9 +240,9 @@ namespace TestStack.FluentMVCTesting
             if (contents != null && !fileResult.FileContents.SequenceEqual(contents))
             {
                 throw new ActionResultAssertionException(string.Format(
-                    "Expected file contents to be equal to {0}, but instead was given {1}.",
-                    string.Join(",", contents),
-                    string.Join(",", fileResult.FileContents)));
+                    "Expected file contents to be equal to [{0}], but instead was given [{1}].",
+                    string.Join(", ", contents),
+                    string.Join(", ", fileResult.FileContents)));
             }
 
             if (contentType != null && fileResult.ContentType != contentType)
