@@ -1,10 +1,13 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.UI.WebControls;
 
 namespace TestStack.FluentMVCTesting
 {
@@ -228,6 +231,29 @@ namespace TestStack.FluentMVCTesting
             return fileResult;
         }
 
+        public FileContentResult ShouldRenderFileContents(byte[] contents = null, string contentType = null)
+        {
+            ValidateActionReturnType<FileContentResult>();
+
+            var fileResult = (FileContentResult) _actionResult;
+
+            if (contentType != null && fileResult.ContentType != contentType)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
+            }
+
+            if (contents != null && !fileResult.FileContents.SequenceEqual(contents))
+            {
+                throw new ActionResultAssertionException(string.Format(
+                    "Expected file contents to be equal to [{0}], but instead was given [{1}].",
+                    string.Join(", ", contents),
+                    string.Join(", ", fileResult.FileContents)));
+            }
+
+            return fileResult;
+        }
+
+        [Obsolete("Obsolete: Use ShouldRenderFileContents instead.")]
         public FileContentResult ShouldRenderFile(string contentType = null)
         {
             ValidateActionReturnType<FileContentResult>();
@@ -262,14 +288,14 @@ namespace TestStack.FluentMVCTesting
 
             var fileResult = (FilePathResult)_actionResult;
 
-            if (fileName != null && fileName != fileResult.FileName)
-            {
-                throw new ActionResultAssertionException(string.Format("Expected file name to be '{0}', but instead was given '{1}'.", fileName, fileResult.FileName));
-            }
-
             if (contentType != null && fileResult.ContentType != contentType)
             {
                 throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
+            }
+
+            if (fileName != null && fileName != fileResult.FileName)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file name to be '{0}', but instead was given '{1}'.", fileName, fileResult.FileName));
             }
 
             return fileResult;
