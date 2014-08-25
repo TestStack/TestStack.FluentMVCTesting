@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -214,6 +215,26 @@ namespace TestStack.FluentMVCTesting
         }
 
         #endregion
+
+        public FileContentResult ShouldRenderFileContents(string contents, string contentType = null)
+        {
+            ValidateActionReturnType<FileContentResult>();
+
+            var fileResult = (FileContentResult) _actionResult;
+
+            if (contentType != null && fileResult.ContentType != contentType)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
+            }
+
+            var reconstitutedText = Encoding.UTF8.GetString(fileResult.FileContents);
+            if (contents != reconstitutedText)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file contents to be \"{0}\", but instead was \"{1}\".", contents, reconstitutedText));
+            }
+
+            return fileResult;
+        }
 
         #region File Results
 
