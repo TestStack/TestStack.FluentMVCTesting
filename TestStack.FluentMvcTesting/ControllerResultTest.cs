@@ -216,7 +216,7 @@ namespace TestStack.FluentMVCTesting
 
         #endregion
 
-        public FileContentResult ShouldRenderFileContents(string contents, string contentType = null)
+        public FileContentResult ShouldRenderFileContents(string contents, string contentType = null, Encoding encoding = null)
         {
             ValidateActionReturnType<FileContentResult>();
 
@@ -227,7 +227,8 @@ namespace TestStack.FluentMVCTesting
                 throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
             }
 
-            var reconstitutedText = Encoding.UTF8.GetString(fileResult.FileContents);
+            if (encoding == null) encoding = Encoding.UTF8;
+            var reconstitutedText = encoding.GetString(fileResult.FileContents);
             if (contents != reconstitutedText)
             {
                 throw new ActionResultAssertionException(string.Format("Expected file contents to be \"{0}\", but instead was \"{1}\".", contents, reconstitutedText));

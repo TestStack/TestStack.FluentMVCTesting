@@ -169,7 +169,12 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
 
         public ActionResult TextualFile()
         {
-            var encodedContents = Encoding.UTF8.GetBytes(TextualFileContents);
+            return TextualFile(Encoding.UTF8);
+        }
+
+        public ActionResult TextualFile(Encoding encoding)
+        {
+            var encodedContents = encoding.GetBytes(TextualFileContents);
             return File(encodedContents, FileContentType);
         }
 

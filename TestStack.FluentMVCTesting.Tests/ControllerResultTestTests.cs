@@ -7,6 +7,8 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using NUnit.Framework;
 using TestStack.FluentMVCTesting.Tests.TestControllers;
+using System.Text;
+
 
 namespace TestStack.FluentMVCTesting.Tests
 {
@@ -34,6 +36,7 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents(new byte[0], "")),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents("")),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents("", "")),
+            ReturnType<FileContentResult>(t => t.ShouldRenderFileContents("", "", Encoding.UTF8)),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream("")),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath()),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("")),
@@ -313,7 +316,9 @@ namespace TestStack.FluentMVCTesting.Tests
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", ControllerResultTestController.PartialName, ControllerResultTestController.RandomViewName)));
         }
         #endregion
-       
+
+
+
         #region File tests
 
         [Test]
@@ -443,6 +448,32 @@ namespace TestStack.FluentMVCTesting.Tests
 
             // Assert that the content type validation occurs before that of the actual contents.
             Assert.That(exception.Message.Contains("content type"));
+        }
+
+        [Test]
+        public void Check_for_file_content_result_and_check_textual_content_using_given_char_encoding()
+        {
+            var encoding = Encoding.BigEndianUnicode;
+
+            _controller.WithCallTo(c => c.TextualFile(encoding))
+                .ShouldRenderFileContents(ControllerResultTestController.TextualFileContents, encoding: encoding);
+        }
+
+        [Test]
+        public void Check_for_file_content_result_and_check_textual_content_using_given_char_encoding_and_check_content_type()
+        {
+            var encoding = Encoding.BigEndianUnicode;
+
+            _controller.WithCallTo(c => c.TextualFile(encoding)).ShouldRenderFileContents(ControllerResultTestController.TextualFileContents, ControllerResultTestController.FileContentType, encoding);
+        }
+
+        [Test]
+        public void Check_for_file_content_result_and_check_textual_content_using_invalid_given_char_encoding()
+        {
+            Assert.Throws<ActionResultAssertionException>(() =>
+                _controller.WithCallTo(c => c.TextualFile())
+                    .ShouldRenderFileContents(ControllerResultTestController.TextualFileContents,
+                        ControllerResultTestController.FileContentType, Encoding.BigEndianUnicode));
         }
 
         [Test]
