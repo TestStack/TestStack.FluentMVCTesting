@@ -313,7 +313,7 @@ namespace TestStack.FluentMVCTesting.Tests
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", ControllerResultTestController.PartialName, ControllerResultTestController.RandomViewName)));
         }
         #endregion
-
+       
         #region File tests
 
         [Test]
@@ -394,7 +394,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() => 
                 _controller.WithCallTo(c => c.BinaryFile()).ShouldRenderFileContents(contents, contentType));
 
-            // When supplied with both an invalid content type and invalid content, test the content type first.
+            // Assert that the content type validation occurs before that of the actual contents.
             Assert.That(exception.Message.Contains("content type"));
         }
 
@@ -441,7 +441,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.TextualFile()).ShouldRenderFileContents(contents, contentType));
 
-            // When supplied with both an invalid content type and invalid content, test the content type first.
+            // Assert that the content type validation occurs before that of the actual contents.
             Assert.That(exception.Message.Contains("content type"));
         }
 
@@ -529,7 +529,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.EmptyFilePath()).ShouldRenderFilePath(name, contentType));
 
-            // When supplied with both an invalid content type and invalid file name, test the content type first.
+            // Assert that the content type validation occurs before that of the file name.
             Assert.That(exception.Message.Contains("content type"));
         }
 
