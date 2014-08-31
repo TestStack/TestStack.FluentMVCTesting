@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using NUnit.Framework;
 using TestStack.FluentMVCTesting.Tests.TestControllers;
@@ -317,8 +316,6 @@ namespace TestStack.FluentMVCTesting.Tests
         }
         #endregion
 
-
-
         #region File tests
 
         [Test]
@@ -427,7 +424,7 @@ namespace TestStack.FluentMVCTesting.Tests
         }
 
         [Test]
-        public void Check_for_file_content_result_and_check_textual_content_and_check_invalid_content_result()
+        public void Check_for_file_content_result_and_check_textual_content_and_check_invalid_content_typet()
         {
             const string contentType = "application/dummy";
 
@@ -438,7 +435,7 @@ namespace TestStack.FluentMVCTesting.Tests
         }
 
         [Test]
-        public void Check_for_file_content_result_and_check_invalid_textual_content_and_check_invalid_content_result()
+        public void Check_for_file_content_result_and_check_invalid_textual_content_and_check_invalid_content_type()
         {
             const string contents = "dummy content";
             const string contentType = "application/dummy";
@@ -471,9 +468,7 @@ namespace TestStack.FluentMVCTesting.Tests
         public void Check_for_file_content_result_and_check_textual_content_using_invalid_given_char_encoding()
         {
             Assert.Throws<ActionResultAssertionException>(() =>
-                _controller.WithCallTo(c => c.TextualFile())
-                    .ShouldRenderFileContents(ControllerResultTestController.TextualFileContents,
-                        ControllerResultTestController.FileContentType, Encoding.BigEndianUnicode));
+                _controller.WithCallTo(c => c.TextualFile()).ShouldRenderFileContents(ControllerResultTestController.TextualFileContents, ControllerResultTestController.FileContentType, Encoding.BigEndianUnicode));
         }
 
         [Test]
