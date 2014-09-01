@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -214,10 +215,36 @@ namespace TestStack.FluentMVCTesting
 
         #endregion
 
-        public FileStreamResult ShouldRenderFileStream()
+        public FileStreamResult ShouldRenderFileStream(Stream stream = null)
         {
             ValidateActionReturnType<FileStreamResult>();
-            return (FileStreamResult) _actionResult;
+
+            var fileResult = (FileStreamResult)_actionResult;
+
+            if (stream != null)
+            {
+                byte[] expected = ConvertStreamToArray(stream);
+                byte[] actual = ConvertStreamToArray(fileResult.FileStream);
+
+                if (!expected.SequenceEqual(actual))
+                {
+                    throw new ActionResultAssertionException(string.Format(
+                        "Expected stream contents to be equal to [{0}], but instead was given [{1}].",
+                        string.Join(", ", expected),
+                        string.Join(", ", actual)));
+                }
+            }
+
+            return fileResult;
+        }
+
+        private static byte[] ConvertStreamToArray(Stream stream)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
         }
 
         #region File Results

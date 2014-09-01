@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Security.Permissions;
 using System.Web.Mvc;
 using NUnit.Framework;
 using TestStack.FluentMVCTesting.Tests.TestControllers;
@@ -39,6 +41,7 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("")),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("", "")),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream()),
+            ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream(new MemoryStream())),
             ReturnType<FileResult>(t => t.ShouldRenderAnyFile()),
             ReturnType<HttpStatusCodeResult>(t => t.ShouldGiveHttpStatus()),
             ReturnType<JsonResult>(t => t.ShouldReturnJson()),
@@ -323,6 +326,52 @@ namespace TestStack.FluentMVCTesting.Tests
                 .ShouldRenderFileStream();
         }
 
+        [Test]
+        public void Check_for_file_stream_result_and_check_stream_data()
+        {
+            _controller
+                .WithCallTo(c => c.EmptyStream())
+                .ShouldRenderFileStream(ControllerResultTestController.EmptyStreamContents);
+        }
+
+        [Test]
+        public void Check_for_file_stream_result_and_check_invalid_stream_data()
+        {
+            var buffer = new byte[] { 1, 2 };
+            var expectedStream = new MemoryStream(buffer);
+
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller
+                    .WithCallTo(c => c.EmptyStream())
+                    .ShouldRenderFileStream(expectedStream)
+            );
+
+            var expected = string.Format("[{0}]", string.Join(", ", buffer));
+            var actual   = string.Format("[{0}]", string.Join(", ", ControllerResultTestController.EmptyStreamBuffer));
+            var message  = string.Format("Expected stream contents to be equal to {0}, but instead was given {1}.", expected, actual);
+
+            Assert.That(exception.Message, Is.EqualTo(message));
+        }
+
+        [Test]
+        public void Check_for_file_stream_result_with_populated_file_and_check_invalid_stream_data()
+        {
+            var buffer = new byte[] { 1, 2 };
+            var expectedStream = new MemoryStream(buffer);
+
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller
+                    .WithCallTo(c => c.PopulatedStream())
+                    .ShouldRenderFileStream(expectedStream)
+            );
+
+            var expected = string.Format("[{0}]", string.Join(", ", buffer));
+            var actual   = string.Format("[{0}]", string.Join(", ", ControllerResultTestController.EmptyStreamBuffer));
+            var message  = string.Format("Expected stream contents to be equal to {0}, but instead was given {1}.", expected, actual);
+
+            Assert.That(exception.Message, Is.EqualTo(message));
+        }
+
         #region File tests
 
         [Test]
@@ -400,7 +449,7 @@ namespace TestStack.FluentMVCTesting.Tests
             byte[] contents = { 1, 2 };
             const string contentType = "application/dummy";
 
-            var exception = Assert.Throws<ActionResultAssertionException>(() => 
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.BinaryFile()).ShouldRenderFileContents(contents, contentType));
 
             // Assert that the content type validation occurs before that of the actual contents.

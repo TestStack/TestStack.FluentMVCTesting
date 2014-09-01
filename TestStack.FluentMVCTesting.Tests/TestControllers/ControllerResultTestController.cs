@@ -18,6 +18,12 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         public const string FileName = "NamedFile";
         public static byte[] BinaryFileContents = { 1 };
         public static string TextualFileContents = "textual content";
+
+        public static readonly byte[] EmptyStreamBuffer = { };
+        public static readonly byte[] PopulatedStreamBuffer = { 1 };
+        public static readonly Stream EmptyStreamContents = new MemoryStream(EmptyStreamBuffer);
+        public static readonly Stream PopulatedStreamContents = new MemoryStream(PopulatedStreamBuffer);
+
         #endregion
 
         #region Empty, Null and Random Results
@@ -180,8 +186,12 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
 
         public ActionResult EmptyStream()
         {
-            var content = new MemoryStream();
-            return File(content, FileContentType);
+            return File(EmptyStreamContents, FileContentType);
+        }
+
+        public ActionResult PopulatedStream()
+        {
+            return File(PopulatedStreamContents, FileContentType);
         }
 
         public ActionResult EmptyFilePath()
