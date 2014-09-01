@@ -215,52 +215,6 @@ namespace TestStack.FluentMVCTesting
 
         #endregion
 
-        public FileStreamResult ShouldRenderFileStream(byte[] content, string contentType = null)
-        {
-            return ShouldRenderFileStream(new MemoryStream(content), contentType);
-        }
-
-        public FileStreamResult ShouldRenderFileStream(Stream stream = null, string contentType = null)
-        {
-            ValidateActionReturnType<FileStreamResult>();
-
-            var fileResult = (FileStreamResult)_actionResult;
-
-            if (contentType != null && fileResult.ContentType != contentType)
-            {
-                throw new ActionResultAssertionException(string.Format(
-                    "Expected stream to be of content type '{0}', but instead was given '{1}'.", 
-                    contentType, 
-                    fileResult.ContentType));
-            }
-
-            if (stream != null)
-            {
-                byte[] expected = ConvertStreamToArray(stream);
-                byte[] actual = ConvertStreamToArray(fileResult.FileStream);
-
-                if (!expected.SequenceEqual(actual))
-                {
-                    throw new ActionResultAssertionException(string.Format(
-                        "Expected stream contents to be equal to [{0}], but instead was given [{1}].",
-                        string.Join(", ", expected),
-                        string.Join(", ", actual)));
-                }
-            }
-
-            return fileResult;
-        }
-
-        private static byte[] ConvertStreamToArray(Stream stream)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                stream.Position = 0;
-                return memoryStream.ToArray();
-            }
-        }
-
         #region File Results
 
         public FileResult ShouldRenderAnyFile(string contentType = null)
@@ -337,6 +291,80 @@ namespace TestStack.FluentMVCTesting
             }
 
             return fileResult;
+        }
+
+        public FileStreamResult ShouldRenderFileStream(byte[] content, string contentType = null)
+        {
+            return ShouldRenderFileStream(new MemoryStream(content), contentType);
+        }
+
+        public FileStreamResult ShouldRenderFileStream(Stream stream = null, string contentType = null)
+        {
+            ValidateActionReturnType<FileStreamResult>();
+            var fileResult = (FileStreamResult)_actionResult;
+
+            if (contentType != null && fileResult.ContentType != contentType)
+            {
+                throw new ActionResultAssertionException(string.Format(
+                    "Expected stream to be of content type '{0}', but instead was given '{1}'.",
+                    contentType,
+                    fileResult.ContentType));
+            }
+
+            if (stream != null)
+            {
+                // This is not optimal but I do not want to pre-optimize in this case.
+                byte[] expected = ConvertStreamToArray(stream);
+                byte[] actual = ConvertStreamToArray(fileResult.FileStream);
+
+                if (!expected.SequenceEqual(actual))
+                {
+                    throw new ActionResultAssertionException(string.Format(
+                        "Expected stream contents to be equal to [{0}], but instead was given [{1}].",
+                        string.Join(", ", expected),
+                        string.Join(", ", actual)));
+                }
+            }
+
+            return fileResult;
+        }
+
+        public FileStreamResult ShouldRenderFileStream(string contents, string contentType = null, Encoding encoding = null)
+        {
+            ValidateActionReturnType<FileStreamResult>();
+            var fileResult = (FileStreamResult)_actionResult;
+
+            if (contentType != null && fileResult.ContentType != contentType)
+            {
+                throw new ActionResultAssertionException(string.Format(
+                    "Expected stream to be of content type '{0}', but instead was given '{1}'.",
+                    contentType,
+                    fileResult.ContentType));
+            }
+
+            if (encoding == null)
+                encoding = Encoding.UTF8;
+
+            var reconstitutedText = encoding.GetString(ConvertStreamToArray(fileResult.FileStream));
+            if (contents != reconstitutedText)
+            {
+                throw new ActionResultAssertionException(string.Format(
+                    "Expected file contents to be \"{0}\", but instead was \"{1}\".",
+                    contents,
+                    reconstitutedText));
+            }
+
+            return fileResult;
+        }
+
+        private static byte[] ConvertStreamToArray(Stream stream)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                stream.Position = 0;
+                return memoryStream.ToArray();
+            }
         }
 
         public FilePathResult ShouldRenderFilePath(string fileName = null, string contentType = null)

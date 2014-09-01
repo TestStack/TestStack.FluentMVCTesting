@@ -17,12 +17,10 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         public const string JsonValue = "json";
         public const string FileName = "NamedFile";
         public static byte[] BinaryFileContents = { 1 };
-        public static string TextualFileContents = "textual content";
-
-        public static readonly byte[] EmptyStreamBuffer = { };
-        public static readonly byte[] PopulatedStreamBuffer = { 1 };
-        public static readonly Stream EmptyStreamContents = new MemoryStream(EmptyStreamBuffer);
-        public static readonly Stream PopulatedStreamContents = new MemoryStream(PopulatedStreamBuffer);
+        public static string TextualFileContent = "textual content";
+        public static byte[] EmptyFileBuffer = {  };
+        public static readonly Stream EmptyStreamContents = new MemoryStream(EmptyFileBuffer);
+        public static readonly Stream BinaryStreamContents = new MemoryStream(BinaryFileContents);
 
         #endregion
 
@@ -180,7 +178,7 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
 
         public ActionResult TextualFile(Encoding encoding)
         {
-            var encodedContents = encoding.GetBytes(TextualFileContents);
+            var encodedContents = encoding.GetBytes(TextualFileContent);
             return File(encodedContents, FileContentType);
         }
 
@@ -189,9 +187,21 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
             return File(EmptyStreamContents, FileContentType);
         }
 
-        public ActionResult PopulatedStream()
+        public ActionResult BinaryStream()
         {
-            return File(PopulatedStreamContents, FileContentType);
+            return File(BinaryStreamContents, FileContentType);
+        }
+
+        public ActionResult TextualStream()
+        {
+            return TextualStream(Encoding.UTF8);
+        }
+
+        public ActionResult TextualStream(Encoding encoding)
+        {
+            var encondedContent = encoding.GetBytes(TextualFileContent);
+            var stream = new MemoryStream(encondedContent);
+            return File(stream, FileContentType);
         }
 
         public ActionResult EmptyFilePath()
