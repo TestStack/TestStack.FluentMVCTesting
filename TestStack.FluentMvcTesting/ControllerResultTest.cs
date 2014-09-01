@@ -215,6 +215,11 @@ namespace TestStack.FluentMVCTesting
 
         #endregion
 
+        public FileStreamResult ShouldRenderFileStream(byte[] content, string contentType = null)
+        {
+            return ShouldRenderFileStream(new MemoryStream(content), contentType);
+        }
+
         public FileStreamResult ShouldRenderFileStream(Stream stream = null, string contentType = null)
         {
             ValidateActionReturnType<FileStreamResult>();
@@ -251,6 +256,7 @@ namespace TestStack.FluentMVCTesting
             using (var memoryStream = new MemoryStream())
             {
                 stream.CopyTo(memoryStream);
+                stream.Position = 0;
                 return memoryStream.ToArray();
             }
         }

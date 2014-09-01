@@ -44,6 +44,8 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream(new MemoryStream())),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream(contentType: "")),
             ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream(new MemoryStream(), "")),
+            ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream(new byte[0])),
+            ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream(new byte[0], "")),
             ReturnType<FileResult>(t => t.ShouldRenderAnyFile()),
             ReturnType<HttpStatusCodeResult>(t => t.ShouldGiveHttpStatus()),
             ReturnType<JsonResult>(t => t.ShouldReturnJson()),
@@ -410,6 +412,77 @@ namespace TestStack.FluentMVCTesting.Tests
                 _controller
                     .WithCallTo(c => c.EmptyStream())
                     .ShouldRenderFileStream(expectedStream, contentType));
+
+            // Assert that the content type validation occurs before that of the actual contents.
+            Assert.That(exception.Message.Contains("content type"));
+        }
+
+        [Test]
+        public void Check_for_file_stream_result_and_check_binary_contents()
+        {
+            _controller
+                .WithCallTo(c => c.PopulatedStream())
+                .ShouldRenderFileStream(ControllerResultTestController.PopulatedStreamBuffer);
+        }
+
+        [Test]
+        public void Check_for_file_stream_result_and_check_invalid_binary_contents()
+        {
+            var contents = new byte[] { 1, 2 };
+
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller
+                    .WithCallTo(c => c.PopulatedStream())
+                    .ShouldRenderFileStream(contents)
+            );
+
+            var expected = string.Format("[{0}]", string.Join(", ", contents));
+            var actual = string.Format("[{0}]", string.Join(", ", ControllerResultTestController.PopulatedStreamBuffer));
+            var message = string.Format("Expected stream contents to be equal to {0}, but instead was given {1}.", expected, actual);
+
+            Assert.That(exception.Message, Is.EqualTo(message));
+        }
+
+        [Test]
+        public void Check_for_file_stream_result_and_check_binary_contents_and_check_content_type()
+        {
+            _controller
+                .WithCallTo(c => c.PopulatedStream())
+                .ShouldRenderFileStream(
+                    ControllerResultTestController.PopulatedStreamBuffer,
+                    ControllerResultTestController.FileContentType);
+        }
+
+        [Test]
+        public void Check_for_file_stream_result_and_check_binary_contents_and_check_invalid_content_type()
+        {
+            const string contentType = "application/dummy";
+
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller
+                    .WithCallTo(c => c.EmptyStream())
+                    .ShouldRenderFileStream(
+                        ControllerResultTestController.PopulatedStreamBuffer, 
+                        contentType)
+            );
+
+            var message = 
+                string.Format("Expected stream to be of content type '{0}', but instead was given '{1}'.", 
+                    contentType, ControllerResultTestController.FileContentType);
+
+            Assert.That(exception.Message, Is.EqualTo(message));
+        }
+
+        [Test]
+        public void Check_for_file_stream_result_and_check_invalid_binary_contents_and_check_invalid_content_type()
+        {
+            var contents = new byte[] { 1, 2 };
+            const string contentType = "application/dummy";
+
+            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+                _controller
+                    .WithCallTo(c => c.EmptyStream())
+                    .ShouldRenderFileStream(contents, contentType));
 
             // Assert that the content type validation occurs before that of the actual contents.
             Assert.That(exception.Message.Contains("content type"));
