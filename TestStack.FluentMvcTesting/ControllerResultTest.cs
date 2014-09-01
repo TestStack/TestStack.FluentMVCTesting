@@ -292,20 +292,6 @@ namespace TestStack.FluentMVCTesting
             return fileResult;
         }
 
-        public FileStreamResult ShouldRenderFileStream(string contentType = null)
-        {
-            ValidateActionReturnType<FileStreamResult>();
-
-            var fileResult = (FileStreamResult)_actionResult;
-
-            if (contentType != null && fileResult.ContentType != contentType)
-            {
-                throw new ActionResultAssertionException(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, fileResult.ContentType));
-            }
-
-            return fileResult;
-        }
-
         public FilePathResult ShouldRenderFilePath(string fileName = null, string contentType = null)
         {
             ValidateActionReturnType<FilePathResult>();

@@ -29,14 +29,12 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<PartialViewResult>(t => t.ShouldRenderDefaultPartialView()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFile("")),
-            ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents(new byte[0])),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents(new byte[0], "")),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents("")),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents("", "")),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents("", "", Encoding.UTF8)),
-            ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream("")),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath()),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("")),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("", "")),
@@ -481,29 +479,6 @@ namespace TestStack.FluentMVCTesting.Tests
         public void Check_for_file_result_and_check_content_type()
         {
             _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderFile(ControllerResultTestController.FileContentType);
-        }
-
-        [Test]
-        public void Check_for_file_stream_result()
-        {
-            _controller.WithCallTo(c => c.EmptyStream()).ShouldRenderFileStream();
-        }
-
-        [Test]
-        public void Check_for_file_stream_result_and_check_content_type()
-        {
-            _controller.WithCallTo(c => c.EmptyStream()).ShouldRenderFileStream(ControllerResultTestController.FileContentType);
-        }
-
-        [Test]
-        public void Check_for_file_stream_result_and_check_invalid_content_type()
-        {
-            const string contentType = "application/dummy";
-
-            var exception = Assert.Throws<ActionResultAssertionException>(() =>
-                _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderAnyFile(contentType));
-
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, ControllerResultTestController.FileContentType)));
         }
 
         [Test]
