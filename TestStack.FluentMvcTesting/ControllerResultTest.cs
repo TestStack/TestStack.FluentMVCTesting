@@ -215,11 +215,19 @@ namespace TestStack.FluentMVCTesting
 
         #endregion
 
-        public FileStreamResult ShouldRenderFileStream(Stream stream = null)
+        public FileStreamResult ShouldRenderFileStream(Stream stream = null, string contentType = null)
         {
             ValidateActionReturnType<FileStreamResult>();
 
             var fileResult = (FileStreamResult)_actionResult;
+
+            if (contentType != null && fileResult.ContentType != contentType)
+            {
+                throw new ActionResultAssertionException(string.Format(
+                    "Expected stream to be of content type '{0}', but instead was given '{1}'.", 
+                    contentType, 
+                    fileResult.ContentType));
+            }
 
             if (stream != null)
             {
