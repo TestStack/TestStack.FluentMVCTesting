@@ -83,8 +83,8 @@
     <Compile Include="ViewResultTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FluentMVCTesting.nuspec" />
     <None Include="packages.config" />
+    <None Include="TestStack.FluentMVCTesting.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
