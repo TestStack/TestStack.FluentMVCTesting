@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using System.Web.Mvc;
 
 namespace TestStack.FluentMVCTesting.Tests.TestControllers
@@ -15,7 +16,8 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         public const int Code = 403;
         public const string JsonValue = "json";
         public const string FileName = "NamedFile";
-        public static byte[] FileContents = { 1 };
+        public static byte[] BinaryFileContents = { 1 };
+        public static string TextualFileContents = "textual content";
         #endregion
 
         #region Empty, Null and Random Results
@@ -160,9 +162,20 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
             return File(content, FileContentType);
         }
 
-        public ActionResult File()
+        public ActionResult BinaryFile()
         {
-            return File(FileContents, FileContentType);
+            return File(BinaryFileContents, FileContentType);
+        }
+
+        public ActionResult TextualFile()
+        {
+            return TextualFile(Encoding.UTF8);
+        }
+
+        public ActionResult TextualFile(Encoding encoding)
+        {
+            var encodedContents = encoding.GetBytes(TextualFileContents);
+            return File(encodedContents, FileContentType);
         }
 
         public ActionResult EmptyStream()

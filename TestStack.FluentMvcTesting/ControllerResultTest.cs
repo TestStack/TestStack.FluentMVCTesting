@@ -3,11 +3,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
-using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.UI.WebControls;
 
 namespace TestStack.FluentMVCTesting
 {
@@ -248,6 +247,31 @@ namespace TestStack.FluentMVCTesting
                     "Expected file contents to be equal to [{0}], but instead was given [{1}].",
                     string.Join(", ", contents),
                     string.Join(", ", fileResult.FileContents)));
+            }
+
+            return fileResult;
+        }
+
+        public FileContentResult ShouldRenderFileContents(string contents, string contentType = null, Encoding encoding = null)
+        {
+            ValidateActionReturnType<FileContentResult>();
+
+            var fileResult = (FileContentResult)_actionResult;
+
+            if (contentType != null && fileResult.ContentType != contentType)
+            {
+                throw new ActionResultAssertionException(
+                    string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.", contentType,
+                        fileResult.ContentType));
+            }
+
+            if (encoding == null)
+                encoding = Encoding.UTF8;
+
+            var reconstitutedText = encoding.GetString(fileResult.FileContents);
+            if (contents != reconstitutedText)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected file contents to be \"{0}\", but instead was \"{1}\".", contents, reconstitutedText));
             }
 
             return fileResult;
