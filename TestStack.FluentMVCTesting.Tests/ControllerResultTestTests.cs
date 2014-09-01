@@ -38,6 +38,7 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath()),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("")),
             ReturnType<FilePathResult>(t => t.ShouldRenderFilePath("", "")),
+            ReturnType<FileStreamResult>(t => t.ShouldRenderFileStream()),
             ReturnType<FileResult>(t => t.ShouldRenderAnyFile()),
             ReturnType<HttpStatusCodeResult>(t => t.ShouldGiveHttpStatus()),
             ReturnType<JsonResult>(t => t.ShouldReturnJson()),
@@ -313,6 +314,14 @@ namespace TestStack.FluentMVCTesting.Tests
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", ControllerResultTestController.PartialName, ControllerResultTestController.RandomViewName)));
         }
         #endregion
+
+        [Test]
+        public void Check_for_file_stream_result()
+        {
+            _controller
+                .WithCallTo(c => c.EmptyStream())
+                .ShouldRenderFileStream();
+        }
 
         #region File tests
 

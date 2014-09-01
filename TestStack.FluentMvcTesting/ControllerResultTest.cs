@@ -214,6 +214,12 @@ namespace TestStack.FluentMVCTesting
 
         #endregion
 
+        public FileStreamResult ShouldRenderFileStream()
+        {
+            ValidateActionReturnType<FileStreamResult>();
+            return (FileStreamResult) _actionResult;
+        }
+
         #region File Results
 
         public FileResult ShouldRenderAnyFile(string contentType = null)
