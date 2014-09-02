@@ -313,7 +313,6 @@ namespace TestStack.FluentMVCTesting
 
             if (stream != null)
             {
-                // This is not optimal but I do not want to pre-optimize in this case.
                 byte[] expected = ConvertStreamToArray(stream);
                 byte[] actual = ConvertStreamToArray(fileResult.FileStream);
 
