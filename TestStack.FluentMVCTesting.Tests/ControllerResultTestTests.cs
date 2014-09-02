@@ -502,7 +502,7 @@ namespace TestStack.FluentMVCTesting.Tests
 
             var expected = string.Format("[{0}]", string.Join(", ", buffer));
             var actual   = string.Format("[{0}]", string.Join(", ", ControllerResultTestController.EmptyFileBuffer));
-            var message  = string.Format("Expected stream contents to be equal to {0}, but instead was given {1}.", expected, actual);
+            var message  = string.Format("Expected file contents to be equal to {0}, but instead was given {1}.", expected, actual);
 
             Assert.That(exception.Message, Is.EqualTo(message));
         }
@@ -518,7 +518,7 @@ namespace TestStack.FluentMVCTesting.Tests
 
             var expected = string.Format("[{0}]", string.Join(", ", buffer));
             var actual   = string.Format("[{0}]", string.Join(", ", ControllerResultTestController.BinaryFileContents));
-            var message  = string.Format("Expected stream contents to be equal to {0}, but instead was given {1}.", expected, actual);
+            var message  = string.Format("Expected file contents to be equal to {0}, but instead was given {1}.", expected, actual);
 
             Assert.That(exception.Message, Is.EqualTo(message));
         }
@@ -539,7 +539,7 @@ namespace TestStack.FluentMVCTesting.Tests
                 _controller.WithCallTo(c => c.EmptyStream()).ShouldRenderFileStream(ControllerResultTestController.EmptyStreamContents, contentType));
 
             Assert.That(exception.Message, Is.EqualTo(string.Format(
-                "Expected stream to be of content type '{0}', but instead was given '{1}'.", contentType, ControllerResultTestController.FileContentType)));
+                "Expected file to be of content type '{0}', but instead was given '{1}'.", contentType, ControllerResultTestController.FileContentType)));
         }
 
         [Test]
@@ -573,7 +573,7 @@ namespace TestStack.FluentMVCTesting.Tests
 
             var expected = string.Format("[{0}]", string.Join(", ", content));
             var actual   = string.Format("[{0}]", string.Join(", ", ControllerResultTestController.BinaryFileContents));
-            var message  = string.Format("Expected stream contents to be equal to {0}, but instead was given {1}.", expected, actual);
+            var message  = string.Format("Expected file contents to be equal to {0}, but instead was given {1}.", expected, actual);
 
             Assert.That(exception.Message, Is.EqualTo(message));
         }
@@ -593,7 +593,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.BinaryStream()).ShouldRenderFileStream(ControllerResultTestController.BinaryFileContents, contentType));
 
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected stream to be of content type '{0}', but instead was given '{1}'.",
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.",
                     contentType, ControllerResultTestController.FileContentType)));
         }
 
@@ -643,7 +643,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.TextualStream()).ShouldRenderFileStream(ControllerResultTestController.TextualFileContent, contentType));
 
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected stream to be of content type '{0}', but instead was given '{1}'.",
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file to be of content type '{0}', but instead was given '{1}'.",
                     contentType, ControllerResultTestController.FileContentType)));
         }
 
