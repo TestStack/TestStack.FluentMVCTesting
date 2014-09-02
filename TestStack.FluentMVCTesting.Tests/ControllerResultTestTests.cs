@@ -28,8 +28,6 @@ namespace TestStack.FluentMVCTesting.Tests
             ReturnType<ViewResult>(t => t.ShouldRenderDefaultView()),
             ReturnType<PartialViewResult>(t => t.ShouldRenderPartialView("")),
             ReturnType<PartialViewResult>(t => t.ShouldRenderDefaultPartialView()),
-            ReturnType<FileContentResult>(t => t.ShouldRenderFile()),
-            ReturnType<FileContentResult>(t => t.ShouldRenderFile("")),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents()),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents(new byte[0])),
             ReturnType<FileContentResult>(t => t.ShouldRenderFileContents(new byte[0], "")),
@@ -477,18 +475,6 @@ namespace TestStack.FluentMVCTesting.Tests
         {
             Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.TextualFile()).ShouldRenderFileContents(ControllerResultTestController.TextualFileContent, ControllerResultTestController.FileContentType, Encoding.BigEndianUnicode));
-        }
-
-        [Test]
-        public void Check_for_file_result()
-        {
-            _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderFile();
-        }
-
-        [Test]
-        public void Check_for_file_result_and_check_content_type()
-        {
-            _controller.WithCallTo(c => c.EmptyFile()).ShouldRenderFile(ControllerResultTestController.FileContentType);
         }
 
         [Test]

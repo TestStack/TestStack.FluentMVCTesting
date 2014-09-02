@@ -18,9 +18,27 @@ Use a [named argument](http://msdn.microsoft.com/en-gb/library/dd264739.aspx).
 
 As where you would have previously done this:
 
-    .ShouldRenderFileStream("application/json");
+    ShouldRenderFileStream("application/json");
  
 You must now do this: 
 
-    .ShouldRenderFileStream(contentType: "application/json");
+    ShouldRenderFileStream(contentType: "application/json");
+    
+    
+## ShouldRenderFileMethod
+
+The `ShouldRenderFile` method has been removed.
+
+### Reason
+
+The `ShouldRenderFile` method was equivocal because it had the possibility to be interperted to test for a `FileResult` when in fact, it tested for a `FileContentResult`. 
+
+It is for this reason that we introduced two unequivocal methods namely, `ShouldRenderAnyFile` and `ShouldRenderFileContents`.
+
+### Fix
+
+Use the `ShouldRenderFileContents` method instead: 
+
+    ShouldRenderAnyFile()
+    ShouldRenderAnyFile(contentType: "application/json")
     
