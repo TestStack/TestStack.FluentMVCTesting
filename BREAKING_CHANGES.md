@@ -2,15 +2,15 @@
 
 ## ShouldRenderFileStream Method
 
-The following overload of the `ShouldRenderFile` method has been *replaced*:
+The following overload of the `ShouldRenderFileStream` method has been *replaced*:
 
     public FileStreamResult ShouldRenderFileStream(string contentType = null)
 
-I place emphasis on the word "replace" because it is important to note that this overload has not been removed but replaced - this means that you will not encounter a compile-time error but you will encounter a logical error when you run the test.
+We place emphasis on the word "replace" because it is important to note that this overload has not been removed but replaced - you will not encounter a compile-time error if you upgrade, but you will encounter a logical error when you run your existing test.
 
 ### Reason
 
-The aforementioned overload has been replaced in order to enable an overload that takes an actual stream for comparison in a way that is consistent with the existing convention.
+The aforementioned overload has been replaced in order to enable an overload that takes a stream for comparison in a way that is consistent with the existing convention.
 
 ### Fix
 
