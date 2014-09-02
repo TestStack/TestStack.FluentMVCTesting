@@ -40,5 +40,6 @@
     <file src="bin\Release\TestStack.FluentMVCTesting.dll" target="lib\NET40" />
     <file src="bin\Release\TestStack.FluentMVCTesting.pdb" target="lib\NET40" />
     <file src="**\*.cs" exclude="obj\**\*.*" target="src" />
+    <file src="readme.txt" target="" />
   </files>
 </package>
