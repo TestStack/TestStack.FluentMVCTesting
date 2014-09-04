@@ -32,6 +32,10 @@
     <dependencies>
       <dependency id="Microsoft.AspNet.Mvc" version="3.0" />
     </dependencies>
+    <releaseNotes>
+      For breaking changes from previous versions see
+      https://github.com/TestStack/TestStack.FluentMVCTesting/blob/master/BREAKING_CHANGES.md
+    </releaseNotes>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />
     </frameworkAssemblies>
