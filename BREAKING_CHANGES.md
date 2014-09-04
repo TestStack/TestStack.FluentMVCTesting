@@ -31,7 +31,7 @@ The `ShouldRenderFile` method has been removed.
 
 ### Reason
 
-The `ShouldRenderFile` method was equivocal because it had the possibility to be interperted to test for a `FileResult` when in fact, it tested for a `FileContentResult`. 
+The `ShouldRenderFile` method was ambiguous because it had the possibility to be interperted to test for a `FileResult` when in fact, it tested for a `FileContentResult`. 
 
 It is for this reason that we introduced two unequivocal methods namely, `ShouldRenderAnyFile` and `ShouldRenderFileContents`.
 
