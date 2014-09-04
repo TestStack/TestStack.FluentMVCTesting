@@ -17,7 +17,11 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         public const string JsonValue = "json";
         public const string FileName = "NamedFile";
         public static byte[] BinaryFileContents = { 1 };
-        public static string TextualFileContents = "textual content";
+        public static string TextualFileContent = "textual content";
+        public static byte[] EmptyFileBuffer = {  };
+        public static readonly Stream EmptyStreamContents = new MemoryStream(EmptyFileBuffer);
+        public static readonly Stream BinaryStreamContents = new MemoryStream(BinaryFileContents);
+
         #endregion
 
         #region Empty, Null and Random Results
@@ -174,14 +178,30 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
 
         public ActionResult TextualFile(Encoding encoding)
         {
-            var encodedContents = encoding.GetBytes(TextualFileContents);
+            var encodedContents = encoding.GetBytes(TextualFileContent);
             return File(encodedContents, FileContentType);
         }
 
         public ActionResult EmptyStream()
         {
-            var content = new MemoryStream();
-            return File(content, FileContentType);
+            return File(EmptyStreamContents, FileContentType);
+        }
+
+        public ActionResult BinaryStream()
+        {
+            return File(BinaryStreamContents, FileContentType);
+        }
+
+        public ActionResult TextualStream()
+        {
+            return TextualStream(Encoding.UTF8);
+        }
+
+        public ActionResult TextualStream(Encoding encoding)
+        {
+            var encondedContent = encoding.GetBytes(TextualFileContent);
+            var stream = new MemoryStream(encondedContent);
+            return File(stream, FileContentType);
         }
 
         public ActionResult EmptyFilePath()

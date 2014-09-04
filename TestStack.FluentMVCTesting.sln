@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting", "TestStack.FluentMVCTesting\TestStack.FluentMVCTesting.csproj", "{152CA00F-18D3-4CF5-8CA0-2C5B70CBEA19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting.Tests", "TestStack.FluentMVCTesting.Tests\TestStack.FluentMVCTesting.Tests.csproj", "{4DCC907C-A08A-4139-BB6B-2D34B21F318B}"

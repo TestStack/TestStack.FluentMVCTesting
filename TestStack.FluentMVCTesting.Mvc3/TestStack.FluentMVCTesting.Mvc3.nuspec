@@ -32,6 +32,10 @@
     <dependencies>
       <dependency id="Microsoft.AspNet.Mvc" version="3.0" />
     </dependencies>
+    <releaseNotes>
+      For breaking changes from previous versions see
+      https://github.com/TestStack/TestStack.FluentMVCTesting/blob/master/BREAKING_CHANGES.md
+    </releaseNotes>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />
     </frameworkAssemblies>
@@ -40,5 +44,6 @@
      <file src="bin\Release\TestStack.FluentMVCTesting.Mvc3.dll" target="lib\NET40" />
      <file src="bin\Release\TestStack.FluentMVCTesting.Mvc3.pdb" target="lib\NET40" />
      <file src="..\TestStack.FluentMvcTesting\**\*.cs" exclude="..\TestStack.FluentMvcTesting\obj\**\*.*" target="src" />
+    <file src="..\TestStack.FluentMvcTesting\readme.txt" target="" />
   </files>
 </package>
