@@ -796,7 +796,7 @@ namespace TestStack.FluentMVCTesting.Tests
 
             var exception = Assert.Throws<ActionResultAssertionException>(() => _controller.WithCallTo(c => c.Content()).ShouldReturnContent(content));
 
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected content to be {0}, but instead was {1}.", content, ControllerResultTestController.TextualContent)));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected content to be \"{0}\", but instead was \"{1}\".", content, ControllerResultTestController.TextualContent)));
         }
 
         [Test]
@@ -812,7 +812,7 @@ namespace TestStack.FluentMVCTesting.Tests
 
             var exception = Assert.Throws<ActionResultAssertionException>(() => _controller.WithCallTo(c => c.Content()).ShouldReturnContent(ControllerResultTestController.TextualContent, contentType));
 
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected content type to be {0}, but instead was {1}.", contentType, ControllerResultTestController.ContentType)));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected content type to be \"{0}\", but instead was \"{1}\".", contentType, ControllerResultTestController.ContentType)));
         }
 
         [Test]
