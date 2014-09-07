@@ -844,6 +844,14 @@ namespace TestStack.FluentMVCTesting.Tests
             Assert.That(exception.Message.Contains("content type"));
         }
 
+        [Test]
+        public void Emit_readable_error_message_when_the_actual_content_encoding_has_not_been_specified()
+        {
+            var exception = Assert.Throws<ActionResultAssertionException>(() => _controller.WithCallTo(c => c.ContentWithoutEncodingSpecified()).ShouldReturnContent(encoding: ControllerResultTestController.TextualContentEncoding));
+
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected encoding to be equal to {0}, but instead was null.", ControllerResultTestController.TextualContentEncoding.EncodingName)));
+        }
+
         #endregion
     }
 }

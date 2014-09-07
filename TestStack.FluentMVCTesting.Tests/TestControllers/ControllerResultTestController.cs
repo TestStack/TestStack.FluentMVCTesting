@@ -237,6 +237,11 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
             return Content(TextualContent, ContentType, TextualContentEncoding);
         }
 
+        public ActionResult ContentWithoutEncodingSpecified()
+        {
+            return Content(TextualContent, ContentType);
+        }
+
         #endregion
     }
 

@@ -425,7 +425,7 @@ namespace TestStack.FluentMVCTesting
                 throw new ActionResultAssertionException(string.Format(
                     "Expected encoding to be equal to {0}, but instead was {1}.",
                     encoding.EncodingName,
-                    contentResult.ContentEncoding.EncodingName));
+                    contentResult.ContentEncoding != null ? contentResult.ContentEncoding.EncodingName : @"null"));
             }
 
             return contentResult;
