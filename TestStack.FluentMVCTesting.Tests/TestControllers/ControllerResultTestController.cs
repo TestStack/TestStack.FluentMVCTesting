@@ -21,7 +21,9 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         public static byte[] EmptyFileBuffer = {  };
         public static readonly Stream EmptyStreamContents = new MemoryStream(EmptyFileBuffer);
         public static readonly Stream BinaryStreamContents = new MemoryStream(BinaryFileContents);
-
+        public const string TextualContent = "textual content";
+        public static readonly Encoding TextualContentEncoding = Encoding.UTF8;
+        public const string ContentType = "application/contentType";
         #endregion
 
         #region Empty, Null and Random Results
@@ -226,6 +228,15 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         {
             return Json(JsonValue);
         }
+        #endregion
+
+        #region Content
+        
+        public ActionResult Content()
+        {
+            return Content(TextualContent, ContentType, TextualContentEncoding);
+        }
+
         #endregion
     }
 
