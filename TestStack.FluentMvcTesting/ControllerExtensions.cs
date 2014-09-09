@@ -59,5 +59,16 @@ namespace TestStack.FluentMVCTesting
 
             return controller.WithCallTo(actionCall);
         }
+
+        public static void ShouldHaveTempDataProperty(this Controller controller, string key)
+        {
+            var actual = controller.TempData[key];
+
+            if (actual == null)
+            {
+                throw new TempDataAssertionException(string.Format(
+                    "Expected TempData to have a non-null value with key \"{0}\", but none found.", key));
+            }
+        }
     }
 }
