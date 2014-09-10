@@ -27,7 +27,7 @@ namespace TestStack.FluentMVCTesting
                 throw new TempDataAssertionException(string.Format(
                     "Expected value to be of type {0}, but instead was {1}.",
                     value.GetType().FullName,
-                    _controller.TempData[key].GetType().FullName));
+                    actual.GetType().FullName));
             }
 
             if (value != null && !value.Equals(actual))
