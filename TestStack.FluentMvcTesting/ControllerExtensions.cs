@@ -62,7 +62,7 @@ namespace TestStack.FluentMVCTesting
             return controller.WithCallTo(actionCall);
         }
 
-        public static void ShouldHaveTempDataProperty(this Controller controller, string key, object value = null)
+        public static void ShouldHaveTempDataProperty(this ControllerBase controller, string key, object value = null)
         {
             var actual = controller.TempData[key];
 
@@ -87,7 +87,7 @@ namespace TestStack.FluentMVCTesting
             }
         }
 
-        public static void ShouldHaveTempDataProperty<TValue>(this Controller controller, string key, Func<TValue, bool> predicate)
+        public static void ShouldHaveTempDataProperty<TValue>(this ControllerBase controller, string key, Func<TValue, bool> predicate)
         {
             var actual = controller.TempData[key];
 
