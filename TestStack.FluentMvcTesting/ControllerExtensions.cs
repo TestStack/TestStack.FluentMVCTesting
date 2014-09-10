@@ -72,20 +72,34 @@ namespace TestStack.FluentMVCTesting
                     "Expected TempData to have a non-null value with key \"{0}\", but none found.", key));
             }
 
-            if (value == null) return;
-
-            if (actual.GetType() != value.GetType())
+            if (value != null && actual.GetType() != value.GetType())
             {
                 throw new TempDataAssertionException(string.Format(
                     "Expected value to be of type {0}, but instead was {1}.",
                     value.GetType().FullName,
                     controller.TempData[key].GetType().FullName));
-                }
+            }
 
-            if (!value.Equals(actual))
+            if (value != null && !value.Equals(actual))
             {
                 throw new TempDataAssertionException(string.Format(
                     "Expected value for key \"{0}\" to be \"{1}\", but instead found \"{2}\"", key, value, actual));
+            }
+        }
+
+        public static void ShouldHaveTempDataProperty<TValue>(this Controller controller, string key, Func<TValue, bool> predicate)
+        {
+            var actual = controller.TempData[key];
+
+            if (actual == null)
+            {
+                throw new TempDataAssertionException(string.Format(
+                    "Expected TempData to have a non-null value with key \"{0}\", but none found.", key));
+            }
+
+            if (!predicate((TValue)actual))
+            {
+                throw new TempDataAssertionException("Expected view model to pass the given condition, but it failed.");
             }
         }
     }

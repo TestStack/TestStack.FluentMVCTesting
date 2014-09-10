@@ -111,5 +111,28 @@ namespace TestStack.FluentMVCTesting.Tests
 
             _controller.ShouldHaveTempDataProperty(key, expectedValue);
         }
+
+        [Test]
+        public void Check_for_existent_temp_data_property_and_check_value_using_valid_predicate()
+        {
+            const string key = "";
+            const int value = 1;
+            _controller.TempData[key] = value;
+
+            _controller
+                .ShouldHaveTempDataProperty<int>(key, x => x == value);
+        }
+
+        [Test]
+        public void Check_for_existent_temp_data_property_and_check_value_using_invalid_predicate()
+        {
+            const string key = "";
+            _controller.TempData[key] = 1;
+
+            var exception = Assert.Throws<TempDataAssertionException>(() =>
+                _controller.ShouldHaveTempDataProperty<int>(key, x => x == 0));
+
+            Assert.That(exception.Message, Is.EqualTo("Expected view model to pass the given condition, but it failed."));
+        }
     }
 }
