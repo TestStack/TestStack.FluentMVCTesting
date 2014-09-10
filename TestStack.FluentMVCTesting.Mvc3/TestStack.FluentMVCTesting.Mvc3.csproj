@@ -88,6 +88,9 @@
     <Compile Include="..\TestStack.FluentMvcTesting\ModelTest.cs">
       <Link>ModelTest.cs</Link>
     </Compile>
+    <Compile Include="..\TestStack.FluentMvcTesting\TempDataResultTest.cs">
+      <Link>TempDataResultTest.cs</Link>
+    </Compile>
     <Compile Include="..\TestStack.FluentMvcTesting\ViewResultTest.cs">
       <Link>ViewResultTest.cs</Link>
     </Compile>

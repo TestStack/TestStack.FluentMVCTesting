@@ -62,7 +62,7 @@ namespace TestStack.FluentMVCTesting
             return controller.WithCallTo(actionCall);
         }
 
-        public static void ShouldHaveTempDataProperty(this ControllerBase controller, string key, object value = null)
+        public static TempDataResultTest ShouldHaveTempDataProperty(this ControllerBase controller, string key, object value = null)
         {
             var actual = controller.TempData[key];
 
@@ -85,9 +85,11 @@ namespace TestStack.FluentMVCTesting
                 throw new TempDataAssertionException(string.Format(
                     "Expected value for key \"{0}\" to be \"{1}\", but instead found \"{2}\"", key, value, actual));
             }
+
+            return new TempDataResultTest(controller);
         }
 
-        public static void ShouldHaveTempDataProperty<TValue>(this ControllerBase controller, string key, Func<TValue, bool> predicate)
+        public static TempDataResultTest ShouldHaveTempDataProperty<TValue>(this ControllerBase controller, string key, Func<TValue, bool> predicate)
         {
             var actual = controller.TempData[key];
 
@@ -101,6 +103,8 @@ namespace TestStack.FluentMVCTesting
             {
                 throw new TempDataAssertionException("Expected view model to pass the given condition, but it failed.");
             }
+
+            return new TempDataResultTest(controller);
         }
     }
 }
