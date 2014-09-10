@@ -107,5 +107,17 @@ namespace TestStack.FluentMVCTesting.Tests
 
             Assert.That(exception.Message, Is.EqualTo("Expected view model to pass the given condition, but it failed."));
         }
+
+        [Test]
+        public void Check_for_non_existent_temp_data_property_when_supplied_with_predicate()
+        {
+            const string key = "";
+
+            var exception = Assert.Throws<TempDataAssertionException>(() =>
+                _tempDataTest.AndShouldHaveTempDataProperty<int>(key, x => x == 0));
+
+            Assert.That(exception.Message, Is.EqualTo(string.Format(
+                "Expected TempData to have a non-null value with key \"{0}\", but none found.", key)));
+        }
     }
 }
