@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -60,7 +62,7 @@ namespace TestStack.FluentMVCTesting
             return controller.WithCallTo(actionCall);
         }
 
-        public static void ShouldHaveTempDataProperty(this Controller controller, string key)
+        public static void ShouldHaveTempDataProperty(this Controller controller, string key, object value = null)
         {
             var actual = controller.TempData[key];
 
@@ -68,6 +70,22 @@ namespace TestStack.FluentMVCTesting
             {
                 throw new TempDataAssertionException(string.Format(
                     "Expected TempData to have a non-null value with key \"{0}\", but none found.", key));
+            }
+
+            if (value == null) return;
+
+            if (actual.GetType() != value.GetType())
+            {
+                throw new TempDataAssertionException(string.Format(
+                    "Expected value to be of type {0}, but instead was {1}.",
+                    value.GetType().FullName,
+                    controller.TempData[key].GetType().FullName));
+                }
+
+            if (!value.Equals(actual))
+            {
+                throw new TempDataAssertionException(string.Format(
+                    "Expected value for key \"{0}\" to be \"{1}\", but instead found \"{2}\"", key, value, actual));
             }
         }
     }
