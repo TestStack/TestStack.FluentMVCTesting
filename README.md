@@ -105,16 +105,21 @@ _controller.WithCallTo(c => c.Index())
     .ShouldRedirectTo<SomeOtherController>(c => c.SomeAction());
     
 _controller.WithCallTo(c => c.Index())
-    .ShouldRenderFile("text/plain");
+    .ShouldRenderAnyFile("content/type");
+
+_controller.WithCallTo(c => c.Index())
+    .ShouldRenderFileContents("text");
+
+_controller.WithCallTo(c => c.Index())
+    .ShouldReturnContent("expected content");
     
 _controller.WithCallTo(c => c.Index())
     .ShouldGiveHttpStatus(404);
     
 _controller.WithCallTo(c => c.Index()).ShouldReturnJson(data =>
-    {
-        Assert.That(data.SomeProperty, Is.EqualTo("SomeValue");
-    }
-);
+{
+    Assert.That(data.SomeProperty, Is.EqualTo("SomeValue");
+});
 ```
 
 Any questions, comments or additions?
