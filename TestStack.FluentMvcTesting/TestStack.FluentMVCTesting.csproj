@@ -80,6 +80,7 @@
     <Compile Include="ModelErrorTest.cs" />
     <Compile Include="ModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TempDataResultTest.cs" />
     <Compile Include="ViewResultTest.cs" />
   </ItemGroup>
   <ItemGroup>

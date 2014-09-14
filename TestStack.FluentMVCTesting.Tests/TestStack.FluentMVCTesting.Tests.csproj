@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="AsyncControllerTests.cs" />
     <Compile Include="RouteValueDictionaryExtensionsTests.cs" />
+    <Compile Include="TempDataResultTest.cs" />
     <Compile Include="TestControllers\AsyncController.cs" />
     <Compile Include="ControllerExtensionsTests.cs" />
     <Compile Include="ControllerResultTestTests.cs" />
