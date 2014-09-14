@@ -43,34 +43,34 @@ Make sure to check out [the documentation](http://docs.teststack.net/fluentmvcte
 Say you set up the following test class (this example with NUnit, but it will work for any test framework).
 
 ```c#
-    using MyApp.Controllers;
-    using NUnit.Framework;
-    using TestStack.FluentMVCTesting;
+using MyApp.Controllers;
+using NUnit.Framework;
+using TestStack.FluentMVCTesting;
 
-    namespace MyApp.Tests.Controllers
+namespace MyApp.Tests.Controllers
+{
+    [TestFixture]
+    class HomeControllerShould
     {
-        [TestFixture]
-        class HomeControllerShould
-        {
-            private HomeController _controller;
+        private HomeController _controller;
 
-            [SetUp]
-            public void Setup()
-            {
-                _controller = new HomeController();
-            }
+        [SetUp]
+        public void Setup()
+        {
+            _controller = new HomeController();
         }
     }
+}
 ```
 
 Then you can create a test like this:
 
 ```c#
-            [Test]
-            public void Render_default_view_for_get_to_index()
-            {
-                _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView();
-            }
+[Test]
+public void Render_default_view_for_get_to_index()
+{
+    _controller.WithCallTo(c => c.Index()).ShouldRenderDefaultView();
+}
 ```
 
 This checks that when `_controller.Index()` is called then the `ActionResult` that is returned is of type `ViewResult` and that the view name returned is either "Index" or "" (the default view for the Index action); easy huh?
@@ -105,16 +105,21 @@ _controller.WithCallTo(c => c.Index())
     .ShouldRedirectTo<SomeOtherController>(c => c.SomeAction());
     
 _controller.WithCallTo(c => c.Index())
-    .ShouldRenderFile("text/plain");
+    .ShouldRenderAnyFile("content/type");
+
+_controller.WithCallTo(c => c.Index())
+    .ShouldRenderFileContents("text");
+
+_controller.WithCallTo(c => c.Index())
+    .ShouldReturnContent("expected content");
     
 _controller.WithCallTo(c => c.Index())
     .ShouldGiveHttpStatus(404);
     
 _controller.WithCallTo(c => c.Index()).ShouldReturnJson(data =>
-    {
-        Assert.That(data.SomeProperty, Is.EqualTo("SomeValue");
-    }
-);
+{
+    Assert.That(data.SomeProperty, Is.EqualTo("SomeValue");
+});
 ```
 
 Any questions, comments or additions?
