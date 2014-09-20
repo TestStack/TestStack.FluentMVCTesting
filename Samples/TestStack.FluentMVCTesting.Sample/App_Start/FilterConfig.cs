@@ -1,6 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 
-namespace TestStack.FluentMVCTesting.Sample.App_Start
+namespace TestStack.FluentMVCTesting.Sample
 {
     public class FilterConfig
     {

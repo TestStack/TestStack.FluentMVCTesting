@@ -12,7 +12,7 @@
     </authors>
     <description>
        Simple, terse, fluent unit testing of ASP.NET MVC Controllers.
-       ASP.NET MVC 4 version; install FluentMVCTesting.Mvc3 if you are using MVC 3.
+       ASP.NET MVC 5 version; install FluentMVCTesting.Mvc4 if you are using MVC4 or FluentMVCTesting.Mvc3 if you are using MVC 3.
     </description>
     <projectUrl>
       https://github.com/TestStack/TestStack.FluentMVCTesting
@@ -30,7 +30,7 @@
        en-US 
     </language>
     <dependencies>
-      <dependency id="Microsoft.AspNet.Mvc" version="4.0" />
+      <dependency id="Microsoft.AspNet.Mvc" version="5.2.2" />
     </dependencies>
     <releaseNotes>
       For breaking changes from previous versions see 
@@ -41,8 +41,8 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="bin\Release\TestStack.FluentMVCTesting.dll" target="lib\NET40" />
-    <file src="bin\Release\TestStack.FluentMVCTesting.pdb" target="lib\NET40" />
+    <file src="bin\Release\TestStack.FluentMVCTesting.dll" target="lib\NET45" />
+    <file src="bin\Release\TestStack.FluentMVCTesting.pdb" target="lib\NET45" />
     <file src="**\*.cs" exclude="obj\**\*.*" target="src" />
     <file src="readme.txt" target="" />
   </files>

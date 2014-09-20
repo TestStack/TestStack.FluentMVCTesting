@@ -1,7 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace TestStack.FluentMVCTesting.Sample.App_Start
+namespace TestStack.FluentMVCTesting.Sample
 {
     public class RouteConfig
     {

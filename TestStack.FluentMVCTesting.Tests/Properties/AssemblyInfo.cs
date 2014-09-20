@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TerseControllerTesting.Tests")]
+[assembly: AssemblyTitle("TestStack.FluentMVCTesting.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TerseControllerTesting.Tests")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyProduct("TestStack.FluentMVCTesting.Tests")]
+[assembly: AssemblyCopyright("Copyright ©  2014 TestStack")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

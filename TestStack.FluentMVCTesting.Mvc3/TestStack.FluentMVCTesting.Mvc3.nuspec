@@ -12,7 +12,7 @@
     </authors>
     <description>
       Simple, terse, fluent unit testing of ASP.NET MVC Controllers.
-      ASP.NET MVC 3 version; install FluentMVCTesting if you are using MVC4.
+      ASP.NET MVC 3 version; install FluentMVCTesting if you are using MVC5 or FluentMVCTesting.Mvc4 if you are using MVC4.
     </description>
     <projectUrl>
       https://github.com/TestStack/TestStack.FluentMVCTesting
