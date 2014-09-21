@@ -18,11 +18,15 @@ Installation
 
 You can install this library using NuGet into your Test Library; it will automatically reference System.Web and System.Web.Mvc (via NuGet packages, sorry it also installs a heap of other dependencies - it would be cool if Microsoft provided a package with just the MVC dll!) for you.
 
-If you are using ASP.NET MVC 4 then:
+If you are using ASP.NET MVC 5 (.NET 4.5+) then:
 
     Install-Package TestStack.FluentMVCTesting
 
-If you are using ASP.NET MVC 3 then:
+If you are using ASP.NET MVC 4 (.NET 4.0+) then:
+
+	Install-Package TestStack.FluentMVCTesting.Mvc4
+
+If you are using ASP.NET MVC 3 (.NET 4.0+) then:
 
     Install-Package TestStack.FluentMVCTesting.Mvc3
 
