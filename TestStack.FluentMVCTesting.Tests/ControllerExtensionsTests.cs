@@ -146,5 +146,25 @@ namespace TestStack.FluentMVCTesting.Tests
             Assert.That(exception.Message, Is.EqualTo(string.Format(
                 "Expected TempData to have a non-null value with key \"{0}\", but none found.", key)));
         }
+
+        [Test]
+        public void Check_for_non_existent_temp_data_property()
+        {
+            _controller
+                .ShouldNotHaveTempDataProperty("");
+        }
+
+        [Test]
+        public void Check_for_unexpected_existent_temp_data_property()
+        {
+            const string Key = "";
+            _controller.TempData[Key] = "";
+
+            var exception = Assert.Throws<TempDataAssertionException>(() =>
+                _controller.ShouldNotHaveTempDataProperty(Key));
+
+            Assert.That(exception.Message, Is.EqualTo(string.Format(
+                "Expected TempData to have no value with key \"{0}\", but found one.", Key)));
+        }
     }
 }
