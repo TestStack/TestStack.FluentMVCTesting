@@ -53,7 +53,7 @@ namespace TestStack.FluentMVCTesting.Tests
         }
 
         [Test]
-        public void Check_for_non_existent_temp_data_property()
+        public void Check_for_unexpected_non_existent_temp_data_property()
         {
             const string key = "";
 
@@ -136,7 +136,7 @@ namespace TestStack.FluentMVCTesting.Tests
         }
 
         [Test]
-        public void Check_for_non_existent_temp_data_property_when_supplied_with_predicate()
+        public void Check_for_unexpected_non_existent_temp_data_property_when_supplied_with_predicate()
         {
             const string key = "";
 
