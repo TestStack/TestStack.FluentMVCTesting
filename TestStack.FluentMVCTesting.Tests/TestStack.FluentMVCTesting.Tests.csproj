@@ -82,11 +82,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncControllerTests.cs" />
+    <Compile Include="ControllerResultTestTests\ShouldGiveHttpStatusTests.cs" />
+    <Compile Include="ControllerResultTestTests\ShouldRedirectToTests.cs" />
+    <Compile Include="ControllerResultTestTests\ShouldRenderFileTests.cs" />
+    <Compile Include="ControllerResultTestTests\ShouldRenderViewTests.cs" />
+    <Compile Include="ControllerResultTestTests\ShouldReturnEmptyResultTests.cs" />
+    <Compile Include="ControllerResultTestTests\ShouldReturnJsonTests.cs" />
+    <Compile Include="ControllerResultTestTests\ShouldReturnContentTests.cs" />
     <Compile Include="RouteValueDictionaryExtensionsTests.cs" />
     <Compile Include="TempDataResultTest.cs" />
     <Compile Include="TestControllers\AsyncController.cs" />
     <Compile Include="ControllerExtensionsTests.cs" />
-    <Compile Include="ControllerResultTestTests.cs" />
+    <Compile Include="ControllerResultTestTests\ControllerResultTestTests.cs" />
     <Compile Include="ModelTestTests.cs" />
     <Compile Include="ModelErrorTestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
