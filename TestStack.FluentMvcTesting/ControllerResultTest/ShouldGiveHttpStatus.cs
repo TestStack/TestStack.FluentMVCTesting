@@ -5,8 +5,6 @@ namespace TestStack.FluentMVCTesting
 {
     public partial class ControllerResultTest<T>
     {
-        #region Http Status
-
         public void ShouldGiveHttpStatus()
         {
             ValidateActionReturnType<HttpStatusCodeResult>();
@@ -26,7 +24,5 @@ namespace TestStack.FluentMVCTesting
         {
             ShouldGiveHttpStatus((int)status);
         }
-
-        #endregion 
     }
 }
