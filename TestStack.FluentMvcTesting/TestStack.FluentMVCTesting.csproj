@@ -76,9 +76,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerResultTest\ShouldGiveHttpStatus.cs" />
+    <Compile Include="ControllerResultTest\ShouldRedirectTo.cs" />
+    <Compile Include="ControllerResultTest\ShouldRenderFile.cs" />
+    <Compile Include="ControllerResultTest\ShouldRenderView.cs" />
+    <Compile Include="ControllerResultTest\ShouldReturnContent.cs" />
+    <Compile Include="ControllerResultTest\ShouldReturnEmptyResult.cs" />
+    <Compile Include="ControllerResultTest\ShouldReturnJson.cs" />
     <Compile Include="RouteValueDictionaryExtension.cs" />
     <Compile Include="ControllerExtensions.cs" />
-    <Compile Include="ControllerResultTest.cs" />
+    <Compile Include="ControllerResultTest\ControllerResultTest.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="ModelErrorTest.cs" />
     <Compile Include="ModelTest.cs" />

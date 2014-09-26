@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Routing;
+﻿using System.Web.Routing;
 
 namespace TestStack.FluentMVCTesting
 {

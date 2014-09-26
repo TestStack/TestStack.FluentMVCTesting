@@ -2,7 +2,6 @@
 
 namespace TestStack.FluentMVCTesting
 {
-
     public class TempDataAssertionException : Exception
     {
         public TempDataAssertionException(string message) : base(message) { }
