@@ -1,4 +1,7 @@
 using System;
+using System.Linq.Expressions;
+using System.Text.RegularExpressions;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace TestStack.FluentMVCTesting
@@ -37,13 +40,21 @@ namespace TestStack.FluentMVCTesting
             return test;
         }
 
-        public ModelTest<TModel> WithModel<TModel>(Func<TModel, bool> predicate) where TModel : class
+        public ModelTest<TModel> WithModel<TModel>(Expression<Func<TModel, bool>> predicate) where TModel : class
         {
             var test = WithModel<TModel>();
 
             var model = _viewResult.Model as TModel;
-            if (!predicate(model))
-                throw new ViewResultModelAssertionException("Expected view model to pass the given condition, but it failed.");
+
+            var modelLex = Json.Encode(model);
+            var predicateLex = Regex.Replace(predicate.ToString(), "[()]", "");
+            var compiledPredicate = predicate.Compile();
+
+            if (!compiledPredicate(model))
+                throw new ViewResultModelAssertionException(string.Format(
+                    "Expected view model {0} to pass the given condition ({1}), but it failed.",
+                    modelLex, 
+                    predicateLex));
 
             return test;
         }

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Text.RegularExpressions;
+using System.Web.Mvc;
 using NUnit.Framework;
 
 namespace TestStack.FluentMVCTesting.Tests
@@ -71,7 +72,26 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
                 _viewResultTest.WithModel<TestViewModel>(m => m.Property1 == null)
             );
-            Assert.That(exception.Message, Is.EqualTo("Expected view model to pass the given condition, but it failed."));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model {{\"Property1\":\"{0}\",\"Property2\":{1}}} to pass the given condition (m => m.Property1 == null), but it failed.", _model.Property1, _model.Property2)));
+        }
+
+        [Test]
+        public void Check_for_invalid_model_using_predicate_with_two_conditions()
+        {
+            var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
+                _viewResultTest.WithModel<TestViewModel>(m => m.Property1 == null && m.Property2 == 2)
+            );
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model {{\"Property1\":\"{0}\",\"Property2\":{1}}} to pass the given condition (m => m.Property1 == null && m.Property2 == 2), but it failed.", _model.Property1, _model.Property2)));
+        }
+
+        [Test]
+        public void Check_for_invalid_model_using_predicate_with_closure()
+        {
+            int capturedOuterVariable = 2;
+            var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
+                _viewResultTest.WithModel<TestViewModel>(m => m.Property1 == null && m.Property2 == capturedOuterVariable)
+            );
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model {{\"Property1\":\"{0}\",\"Property2\":{1}}} to pass the given condition (m => m.Property1 == null AndAlso m.Property2 == 2), but it failed.", _model.Property1, capturedOuterVariable)));
         }
 
         [Test]
