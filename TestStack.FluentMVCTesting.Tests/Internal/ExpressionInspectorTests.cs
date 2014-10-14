@@ -27,7 +27,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
         }
 
         [Test]
-        public void Correctly_parse_inequality_comparison_with_int_operands()
+        public void Correctly_parse_inequality_comparison()
         {
             Expression<Func<int, bool>> func = number => number != 5;
             ExpressionInspector sut = new ExpressionInspector();
@@ -43,6 +43,15 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
             Assert.AreEqual("number => number == " + Number, actual);
+        }
+
+        [Test]
+        public void Correctly_parse_relational_comparison()
+        {
+            Expression<Func<int, bool>> func = number => number < 5;
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("number => number < 5", actual);
         }
     }
 }
