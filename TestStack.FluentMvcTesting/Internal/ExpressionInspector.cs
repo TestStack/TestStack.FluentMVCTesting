@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace TestStack.FluentMVCTesting.Internal
 {
     internal class ExpressionInspector
     {
-        internal void Inspect(LambdaExpression expression)
+        internal string Inspect(LambdaExpression expression)
         {
-            throw new NotImplementedException();
+            return Regex.Replace(expression.ToString(), "[()]", "");
         }
     }
 }
