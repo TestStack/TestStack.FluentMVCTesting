@@ -25,5 +25,14 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             var actual = sut.Inspect(func);
             Assert.AreEqual("number => number == 5", actual);
         }
+
+        [Test]
+        public void Correctly_parse_inequality_comparison_with_int_operands()
+        {
+            Expression<Func<int, bool>> func = number => number != 5;
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("number => number != 5", actual);
+        }
     }
 }
