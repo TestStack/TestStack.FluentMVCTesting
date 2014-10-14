@@ -27,6 +27,24 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
         }
 
         [Test]
+        public void Correctly_parse_equality_comparison_with_property_operand()
+        {
+            Expression<Func<PostViewModel, bool>> func = post => post.Title == "A";
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("post => post.Title == \"A\"", actual);
+        }
+
+        [Test]
+        public void Correctly_parse_equality_comparison_with_property_operands()
+        {
+            Expression<Func<PostViewModel, bool>> func = post => post.Title == post.Slug;
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("post => post.Title == post.Slug", actual);
+        }
+
+        [Test]
         public void Correctly_parse_inequality_comparison()
         {
             Expression<Func<int, bool>> func = number => number != 5;
@@ -53,5 +71,11 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             var actual = sut.Inspect(func);
             Assert.AreEqual("number => number < 5", actual);
         }
+    }
+
+    public class PostViewModel
+    {
+        public string Title { get; set; }
+        public string Slug { get; set; }
     }
 }
