@@ -82,6 +82,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Assert.AreEqual("text => text == \"any\" || text.Length == 3", actual);
         }
 
+        [Test]
         public void Correctly_parse_two_conditional_or_operators()
         {
             Expression<Func<string, bool>> func =
@@ -99,6 +100,15 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
             Assert.AreEqual("post => post.Title == \"\" || post.OrElse == \"\"", actual);
+        }
+
+        [Test]
+        public void Correctly_parse_expression_whose_source_text_contains_parentheses()
+        {
+            Expression<Func<PostViewModel, bool>> func = post => post.Title.Contains("");
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("post => post.Title.Contains(\"\")", actual);
         }
     }
 
