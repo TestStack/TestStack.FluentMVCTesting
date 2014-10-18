@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using TestStack.FluentMVCTesting.Internal;
 
 namespace TestStack.FluentMVCTesting
 {
@@ -46,8 +47,9 @@ namespace TestStack.FluentMVCTesting
 
             var model = _viewResult.Model as TModel;
 
+            var inspector = new ExpressionInspector();
             var modelLex = Json.Encode(model);
-            var predicateLex = Regex.Replace(predicate.ToString(), "[()]", "");
+            var predicateLex = inspector.Inspect(predicate);
             var compiledPredicate = predicate.Compile();
 
             if (!compiledPredicate(model))
