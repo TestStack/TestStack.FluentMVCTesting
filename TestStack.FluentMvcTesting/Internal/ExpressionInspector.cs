@@ -7,7 +7,7 @@ namespace TestStack.FluentMVCTesting.Internal
     {
         internal string Inspect(LambdaExpression expression)
         {
-            return Regex.Replace(expression.ToString(), "[()]", "")
+            return expression.ToString()
                 .Replace(" OrElse ", " || ");
         }
     }

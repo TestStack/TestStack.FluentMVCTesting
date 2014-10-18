@@ -14,7 +14,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Expression<Func<string, bool>> func = text => text == "any";
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("text => text == \"any\"", actual);
+            Assert.AreEqual("text => (text == \"any\")", actual);
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Expression<Func<int, bool>> func = number => number == 5;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("number => number == 5", actual);
+            Assert.AreEqual("number => (number == 5)", actual);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Expression<Func<PostViewModel, bool>> func = post => post.Title == "A";
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("post => post.Title == \"A\"", actual);
+            Assert.AreEqual("post => (post.Title == \"A\")", actual);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Expression<Func<PostViewModel, bool>> func = post => post.Title == post.Slug;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("post => post.Title == post.Slug", actual);
+            Assert.AreEqual("post => (post.Title == post.Slug)", actual);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Expression<Func<int, bool>> func = number => number != 5;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("number => number != 5", actual);
+            Assert.AreEqual("number => (number != 5)", actual);
         }
 
         [Test]
@@ -60,7 +60,8 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Expression<Func<int, bool>> func = number => number == Number;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("number => number == " + Number, actual);
+            Assert.AreEqual(
+                string.Concat("number => (number == ", Number, ")"), actual);
         }
 
         [Test]
@@ -69,7 +70,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Expression<Func<int, bool>> func = number => number < 5;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("number => number < 5", actual);
+            Assert.AreEqual("number => (number < 5)", actual);
         }
 
         [Test]
@@ -79,7 +80,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
                 text => text == "any" || text.Length == 3;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("text => text == \"any\" || text.Length == 3", actual);
+            Assert.AreEqual("text => ((text == \"any\") || (text.Length == 3))", actual);
         }
 
         [Test]
@@ -89,7 +90,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
                 text => text == "any" || text.Length == 3 || text.Length == 9;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("text => text == \"any\" || text.Length == 3 || text.Length == 9", actual);
+            Assert.AreEqual("text => (((text == \"any\") || (text.Length == 3)) || (text.Length == 9))", actual);
         }
 
         [Test]
@@ -99,7 +100,7 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
                 post => post.Title == "" || post.OrElse == "";
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("post => post.Title == \"\" || post.OrElse == \"\"", actual);
+            Assert.AreEqual("post => ((post.Title == \"\") || (post.OrElse == \"\"))", actual);
         }
 
         [Test]
