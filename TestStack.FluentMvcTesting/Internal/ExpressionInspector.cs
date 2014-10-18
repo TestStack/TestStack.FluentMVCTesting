@@ -9,7 +9,10 @@ namespace TestStack.FluentMVCTesting.Internal
         {
             return expression.ToString()
                 .Replace(" OrElse ", " || ")
-                .Replace(" AndAlso ", " && ");
+                .Replace(" AndAlso ", " && ")
+                .Replace(" Or ", " | ")
+                .Replace(" And ", " & ");
+
         }
     }
 }

@@ -83,6 +83,16 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Assert.AreEqual("text => ((text == \"any\") || (text.Length == 3))", actual);
         }
 
+        [Test]
+        public void Correctly_parse_two_conditional_or_operators()
+        {
+            Expression<Func<string, bool>> func =
+                text => text == "any" || text.Length == 3 || text.Length == 9;
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("text => (((text == \"any\") || (text.Length == 3)) || (text.Length == 9))", actual);
+        }
+
 
         [Test]
         public void Correctly_parse_conditional_and_operator()
@@ -95,14 +105,26 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
         }
 
         [Test]
-        public void Correctly_parse_two_conditional_or_operators()
+        public void Correctly_parse_logical_and_operator()
         {
             Expression<Func<string, bool>> func =
-                text => text == "any" || text.Length == 3 || text.Length == 9;
+                text => text == "any" & text.Length == 3;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("text => (((text == \"any\") || (text.Length == 3)) || (text.Length == 9))", actual);
+            Assert.AreEqual("text => ((text == \"any\") & (text.Length == 3))", actual);
         }
+
+
+        [Test]
+        public void Correctly_parse_logical_or_operator()
+        {
+            Expression<Func<string, bool>> func =
+                text => text == "any" | text.Length == 3;
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("text => ((text == \"any\") | (text.Length == 3))", actual);
+        }
+
 
         [Test]
         public void Not_mistake_property_called_OrElse_for_conditional_or_operator()
