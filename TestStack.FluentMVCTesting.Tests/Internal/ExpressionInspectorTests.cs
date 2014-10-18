@@ -153,6 +153,16 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             var actual = sut.Inspect(func);
             Assert.AreEqual("post => post.Title.Contains(\"\")", actual);
         }
+
+        [Test]
+        public void Correctly_parse_logical_xor_operator()
+        {
+            Expression<Func<string, bool>> func =
+                text => text == "any" ^ text.Length == 3;
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("text => ((text == \"any\") ^ (text.Length == 3))", actual);
+        }
     }
 
     public class PostViewModel
