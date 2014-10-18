@@ -83,6 +83,17 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Assert.AreEqual("text => ((text == \"any\") || (text.Length == 3))", actual);
         }
 
+
+        [Test]
+        public void Correctly_parse_conditional_and_operator()
+        {
+            Expression<Func<string, bool>> func =
+                text => text == "any" && text.Length == 3;
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("text => ((text == \"any\") && (text.Length == 3))", actual);
+        }
+
         [Test]
         public void Correctly_parse_two_conditional_or_operators()
         {

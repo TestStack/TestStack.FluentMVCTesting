@@ -8,7 +8,8 @@ namespace TestStack.FluentMVCTesting.Internal
         internal string Inspect(LambdaExpression expression)
         {
             return expression.ToString()
-                .Replace(" OrElse ", " || ");
+                .Replace(" OrElse ", " || ")
+                .Replace(" AndAlso ", " && ");
         }
     }
 }
