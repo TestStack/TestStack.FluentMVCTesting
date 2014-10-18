@@ -36,12 +36,23 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
         }
 
         [Test]
-        public void Correctly_parse_equality_comparison_with_property_operands()
+        public void Correctly_parse_equality_comparison_with_two_property_operands()
         {
-            Expression<Func<PostViewModel, bool>> func = post => post.Title == post.Slug;
+            Expression<Func<PostViewModel, bool>> func = post => 
+                post.Title == post.Slug;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
             Assert.AreEqual("post => (post.Title == post.Slug)", actual);
+        }
+
+        [Test]
+        public void Correctly_parse_equality_comparison_with_captured_constant_operand()
+        {
+            const int Number = 5;
+            Expression<Func<int, bool>> func = number => number == Number;
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual(string.Concat("number => (number == ", Number, ")"), actual);
         }
 
         [Test]
@@ -54,23 +65,31 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
         }
 
         [Test]
-        public void Correctly_parse_equality_comparison_with_captured_constant_operand()
-        {
-            const int Number = 5;
-            Expression<Func<int, bool>> func = number => number == Number;
-            ExpressionInspector sut = new ExpressionInspector();
-            var actual = sut.Inspect(func);
-            Assert.AreEqual(
-                string.Concat("number => (number == ", Number, ")"), actual);
-        }
-
-        [Test]
         public void Correctly_parse_relational_comparison()
         {
             Expression<Func<int, bool>> func = number => number < 5;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
             Assert.AreEqual("number => (number < 5)", actual);
+        }
+
+        [Test]
+        public void Correctly_parse_expression_whose_source_text_contains_parentheses()
+        {
+            Expression<Func<PostViewModel, bool>> func = post => post.Title.Contains("");
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("post => post.Title.Contains(\"\")", actual);
+        }
+
+        [Test]
+        public void Correctly_parse_null_coalescing_operator()
+        {
+            Expression<Func<string, bool>> func =
+                text => text == ("" ?? "a");
+            ExpressionInspector sut = new ExpressionInspector();
+            var actual = sut.Inspect(func);
+            Assert.AreEqual("text => (text == (\"\" ?? \"a\"))", actual);
         }
 
         [Test]
@@ -90,9 +109,9 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
                 text => text == "any" || text.Length == 3 || text.Length == 9;
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
-            Assert.AreEqual("text => (((text == \"any\") || (text.Length == 3)) || (text.Length == 9))", actual);
+            Assert.AreEqual(
+                "text => (((text == \"any\") || (text.Length == 3)) || (text.Length == 9))", actual);
         }
-
 
         [Test]
         public void Correctly_parse_conditional_and_operator()
@@ -114,7 +133,6 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             Assert.AreEqual("text => ((text == \"any\") & (text.Length == 3))", actual);
         }
 
-
         [Test]
         public void Correctly_parse_logical_or_operator()
         {
@@ -126,16 +144,6 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
         }
 
         [Test]
-        public void Correctly_parse_null_coalescing_operator()
-        {
-            Expression<Func<string, bool>> func =
-                text => text == ("" ?? "a");
-            ExpressionInspector sut = new ExpressionInspector();
-            var actual = sut.Inspect(func);
-            Assert.AreEqual("text => (text == (\"\" ?? \"a\"))", actual);
-        }
-
-        [Test]
         public void Not_mistake_property_called_OrElse_for_conditional_or_operator()
         {
             Expression<Func<PostViewModel, bool>> func =
@@ -143,15 +151,6 @@ namespace TestStack.FluentMVCTesting.Tests.Internal
             ExpressionInspector sut = new ExpressionInspector();
             var actual = sut.Inspect(func);
             Assert.AreEqual("post => ((post.Title == \"\") || (post.OrElse == \"\"))", actual);
-        }
-
-        [Test]
-        public void Correctly_parse_expression_whose_source_text_contains_parentheses()
-        {
-            Expression<Func<PostViewModel, bool>> func = post => post.Title.Contains("");
-            ExpressionInspector sut = new ExpressionInspector();
-            var actual = sut.Inspect(func);
-            Assert.AreEqual("post => post.Title.Contains(\"\")", actual);
         }
 
         [Test]

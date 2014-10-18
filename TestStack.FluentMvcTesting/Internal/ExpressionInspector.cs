@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 
 namespace TestStack.FluentMVCTesting.Internal
 {
@@ -12,7 +11,6 @@ namespace TestStack.FluentMVCTesting.Internal
                 .Replace(" AndAlso ", " && ")
                 .Replace(" Or ", " | ")
                 .Replace(" And ", " & ");
-
         }
     }
 }
