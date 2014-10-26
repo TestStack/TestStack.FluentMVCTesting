@@ -35,3 +35,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: InternalsVisibleTo("TestStack.FluentMVCTesting.Tests")]
+[assembly: InternalsVisibleTo("TestStack.FluentMVCTesting.Mvc3.Tests")]
+[assembly: InternalsVisibleTo("TestStack.FluentMVCTesting.Mvc4.Tests")]
