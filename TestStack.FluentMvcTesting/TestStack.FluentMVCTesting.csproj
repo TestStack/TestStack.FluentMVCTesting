@@ -83,6 +83,7 @@
     <Compile Include="ControllerResultTest\ShouldReturnContent.cs" />
     <Compile Include="ControllerResultTest\ShouldReturnEmptyResult.cs" />
     <Compile Include="ControllerResultTest\ShouldReturnJson.cs" />
+    <Compile Include="Internal\ExpressionInspector.cs" />
     <Compile Include="RouteValueDictionaryExtension.cs" />
     <Compile Include="ControllerExtensions.cs" />
     <Compile Include="ControllerResultTest\ControllerResultTest.cs" />

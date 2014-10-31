@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Text.RegularExpressions;
+using System.Web.Mvc;
 using NUnit.Framework;
 
 namespace TestStack.FluentMVCTesting.Tests
@@ -71,7 +72,26 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
                 _viewResultTest.WithModel<TestViewModel>(m => m.Property1 == null)
             );
-            Assert.That(exception.Message, Is.EqualTo("Expected view model to pass the given condition, but it failed."));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model {{\"Property1\":\"{0}\",\"Property2\":{1}}} to pass the given condition (m => (m.Property1 == null)), but it failed.", _model.Property1, _model.Property2)));
+        }
+
+        [Test]
+        public void Check_for_invalid_model_using_predicate_with_conditional_or()
+        {
+            var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
+                _viewResultTest.WithModel<TestViewModel>(m => m.Property1 == null || m.Property2 == 1)
+            );
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model {{\"Property1\":\"{0}\",\"Property2\":{1}}} to pass the given condition (m => ((m.Property1 == null) || (m.Property2 == 1))), but it failed.", _model.Property1, _model.Property2)));
+        }
+
+        [Test]
+        public void Check_for_invalid_model_using_predicate_with_primitive_operand()
+        {
+            _viewResult.ViewData.Model = "abc";
+            var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
+                _viewResultTest.WithModel<string>(m => m == "ab")
+            );
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model \"{0}\" to pass the given condition (m => (m == \"ab\")), but it failed.", _viewResult.ViewData.Model)));
         }
 
         [Test]
@@ -94,7 +114,7 @@ namespace TestStack.FluentMVCTesting.Tests
         }
     }
 
-    class InvalidViewModel {}
+    class InvalidViewModel { }
     public class TestViewModel
     {
         public string Property1 { get; set; }
