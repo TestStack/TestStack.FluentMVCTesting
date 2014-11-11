@@ -12,7 +12,7 @@ namespace TestStack.FluentMVCTesting
         public void ShouldRedirectTo(string url)
         {
             ValidateActionReturnType<RedirectResult>();
-            var redirectResult = (RedirectResult)_actionResult;
+            var redirectResult = (RedirectResult)ActionResult;
 
             if (redirectResult.Url != url)
                 throw new ActionResultAssertionException(string.Format("Expected redirect to URL '{0}', but instead was given a redirect to URL '{1}'.", url, redirectResult.Url));
@@ -21,7 +21,7 @@ namespace TestStack.FluentMVCTesting
         public RouteValueDictionary ShouldRedirectToRoute(string route)
         {
             ValidateActionReturnType<RedirectToRouteResult>();
-            var redirectResult = (RedirectToRouteResult)_actionResult;
+            var redirectResult = (RedirectToRouteResult)ActionResult;
 
             if (redirectResult.RouteName != route)
                 throw new ActionResultAssertionException(string.Format("Expected redirect to route '{0}', but instead was given a redirect to route '{1}'.", route, redirectResult.RouteName));
@@ -31,27 +31,27 @@ namespace TestStack.FluentMVCTesting
 
         public RouteValueDictionary ShouldRedirectTo(Func<T, Func<ActionResult>> actionRedirectedTo)
         {
-            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
         }
 
         public RouteValueDictionary ShouldRedirectTo(Func<T, Func<int, ActionResult>> actionRedirectedTo)
         {
-            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
         }
 
         public RouteValueDictionary ShouldRedirectTo<T1>(Func<T, Func<T1, ActionResult>> actionRedirectedTo)
         {
-            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
         }
 
         public RouteValueDictionary ShouldRedirectTo<T1, T2>(Func<T, Func<T1, T2, ActionResult>> actionRedirectedTo)
         {
-            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
         }
 
         public RouteValueDictionary ShouldRedirectTo<T1, T2, T3>(Func<T, Func<T1, T2, T3, ActionResult>> actionRedirectedTo)
         {
-            return ShouldRedirectTo(actionRedirectedTo(_controller).Method);
+            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
         }
 
         public RouteValueDictionary ShouldRedirectTo(Expression<Action<T>> actionRedirectedTo)
@@ -66,7 +66,7 @@ namespace TestStack.FluentMVCTesting
 
             var controllerName = new Regex(@"Controller$").Replace(typeof(T).Name, "");
             var actionName = method.Name;
-            var redirectResult = (RedirectToRouteResult)_actionResult;
+            var redirectResult = (RedirectToRouteResult)ActionResult;
 
             if (redirectResult.RouteValues.ContainsKey("Controller") && redirectResult.RouteValues["Controller"].ToString() != controllerName)
                 throw new ActionResultAssertionException(string.Format("Expected redirect to controller '{0}', but instead was given a redirect to controller '{1}'.", controllerName, redirectResult.RouteValues["Controller"]));
@@ -114,7 +114,7 @@ namespace TestStack.FluentMVCTesting
             var controllerName = new Regex(@"Controller$").Replace(typeof(TController).Name, "");
             var actionName = methodInfo.Name;
 
-            var redirectResult = (RedirectToRouteResult)_actionResult;
+            var redirectResult = (RedirectToRouteResult)ActionResult;
 
             if (redirectResult.RouteValues["Controller"] == null)
                 throw new ActionResultAssertionException(string.Format("Expected redirect to action '{0}' in '{1}' controller, but instead was given redirect to action '{2}' within the same controller.", actionName, controllerName, redirectResult.RouteValues["Action"]));
