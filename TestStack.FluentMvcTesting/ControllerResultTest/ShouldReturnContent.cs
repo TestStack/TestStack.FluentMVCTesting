@@ -8,7 +8,7 @@ namespace TestStack.FluentMVCTesting
         public ContentResult ShouldReturnContent(string content = null, string contentType = null, Encoding encoding = null)
         {
             ValidateActionReturnType<ContentResult>();
-            var contentResult = (ContentResult)_actionResult;
+            var contentResult = (ContentResult)ActionResult;
 
             if (contentType != null && contentType != contentResult.ContentType)
             {

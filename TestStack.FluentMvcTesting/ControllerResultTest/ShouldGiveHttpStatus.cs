@@ -14,7 +14,7 @@ namespace TestStack.FluentMVCTesting
         {
             ValidateActionReturnType<HttpStatusCodeResult>();
 
-            var statusCodeResult = (HttpStatusCodeResult)_actionResult;
+            var statusCodeResult = (HttpStatusCodeResult)ActionResult;
 
             if (statusCodeResult.StatusCode != status)
                 throw new ActionResultAssertionException(string.Format("Expected HTTP status code to be '{0}', but instead received a '{1}'.", status, statusCodeResult.StatusCode));

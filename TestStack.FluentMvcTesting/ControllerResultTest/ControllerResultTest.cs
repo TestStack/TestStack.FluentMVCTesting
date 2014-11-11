@@ -4,30 +4,30 @@ namespace TestStack.FluentMVCTesting
 {
     public partial class ControllerResultTest<T> where T : Controller
     {
-        private readonly T _controller;
-        private readonly string _actionName;
-        private readonly ActionResult _actionResult;
+        public T Controller { get; private set; }
+        public string ActionName { get; private set; }
+        public ActionResult ActionResult { get; private set; }
 
-        private void ValidateActionReturnType<TActionResult>() where TActionResult : ActionResult
+        public void ValidateActionReturnType<TActionResult>() where TActionResult : ActionResult
         {
-            var castedActionResult = _actionResult as TActionResult;
+            var castedActionResult = ActionResult as TActionResult;
 
-            if (_actionResult == null)
+            if (ActionResult == null)
                 throw new ActionResultAssertionException(string.Format("Received null action result when expecting {0}.", typeof(TActionResult).Name));
 
             if (castedActionResult == null)
                 throw new ActionResultAssertionException(
                     string.Format("Expected action result to be a {0}, but instead received a {1}.",
-                                  typeof(TActionResult).Name, _actionResult.GetType().Name
+                                  typeof(TActionResult).Name, ActionResult.GetType().Name
                         )
                     );
         }
 
         public ControllerResultTest(T controller, string actionName, ActionResult actionResult)
         {
-            _controller = controller;
-            _actionName = actionName;
-            _actionResult = actionResult;
+            Controller = controller;
+            ActionName = actionName;
+            ActionResult = actionResult;
         }
     }
 }

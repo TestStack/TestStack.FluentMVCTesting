@@ -30,7 +30,7 @@ namespace TestStack.FluentMVCTesting
         public FileResult ShouldRenderAnyFile(string contentType = null)
         {
             ValidateActionReturnType<FileResult>();
-            var fileResult = (FileResult)_actionResult;
+            var fileResult = (FileResult)ActionResult;
 
             EnsureContentTypeIsSame(fileResult.ContentType, contentType);
 
@@ -40,7 +40,7 @@ namespace TestStack.FluentMVCTesting
         public FileContentResult ShouldRenderFileContents(byte[] contents = null, string contentType = null)
         {
             ValidateActionReturnType<FileContentResult>();
-            var fileResult = (FileContentResult)_actionResult;
+            var fileResult = (FileContentResult)ActionResult;
 
             EnsureContentTypeIsSame(fileResult.ContentType, contentType);
 
@@ -58,7 +58,7 @@ namespace TestStack.FluentMVCTesting
         public FileContentResult ShouldRenderFileContents(string contents, string contentType = null, Encoding encoding = null)
         {
             ValidateActionReturnType<FileContentResult>();
-            var fileResult = (FileContentResult)_actionResult;
+            var fileResult = (FileContentResult)ActionResult;
 
             EnsureContentTypeIsSame(fileResult.ContentType, contentType);
 
@@ -86,7 +86,7 @@ namespace TestStack.FluentMVCTesting
         public FileStreamResult ShouldRenderFileStream(Stream stream = null, string contentType = null)
         {
             ValidateActionReturnType<FileStreamResult>();
-            var fileResult = (FileStreamResult)_actionResult;
+            var fileResult = (FileStreamResult)ActionResult;
 
             EnsureContentTypeIsSame(fileResult.ContentType, contentType);
 
@@ -110,7 +110,7 @@ namespace TestStack.FluentMVCTesting
         public FileStreamResult ShouldRenderFileStream(string contents, string contentType = null, Encoding encoding = null)
         {
             ValidateActionReturnType<FileStreamResult>();
-            var fileResult = (FileStreamResult)_actionResult;
+            var fileResult = (FileStreamResult)ActionResult;
 
             EnsureContentTypeIsSame(fileResult.ContentType, contentType);
 
@@ -132,7 +132,7 @@ namespace TestStack.FluentMVCTesting
         public FilePathResult ShouldRenderFilePath(string fileName = null, string contentType = null)
         {
             ValidateActionReturnType<FilePathResult>();
-            var fileResult = (FilePathResult)_actionResult;
+            var fileResult = (FilePathResult)ActionResult;
 
             EnsureContentTypeIsSame(fileResult.ContentType, contentType);
 

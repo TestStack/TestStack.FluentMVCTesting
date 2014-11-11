@@ -8,14 +8,14 @@ namespace TestStack.FluentMVCTesting
         {
             ValidateActionReturnType<TViewResult>();
 
-            var viewResult = (TViewResult)_actionResult;
+            var viewResult = (TViewResult)ActionResult;
 
-            if (viewResult.ViewName != viewName && (viewName != _actionName || viewResult.ViewName != ""))
+            if (viewResult.ViewName != viewName && (viewName != ActionName || viewResult.ViewName != ""))
             {
-                throw new ActionResultAssertionException(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", viewName, viewResult.ViewName == "" ? _actionName : viewResult.ViewName));
+                throw new ActionResultAssertionException(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", viewName, viewResult.ViewName == "" ? ActionName : viewResult.ViewName));
             }
 
-            return new ViewResultTest(viewResult, _controller);
+            return new ViewResultTest(viewResult, Controller);
         }
 
         public ViewResultTest ShouldRenderView(string viewName)
@@ -30,12 +30,12 @@ namespace TestStack.FluentMVCTesting
 
         public ViewResultTest ShouldRenderDefaultView()
         {
-            return ShouldRenderView(_actionName);
+            return ShouldRenderView(ActionName);
         }
 
         public ViewResultTest ShouldRenderDefaultPartialView()
         {
-            return ShouldRenderPartialView(_actionName);
+            return ShouldRenderPartialView(ActionName);
         }
     }
 }

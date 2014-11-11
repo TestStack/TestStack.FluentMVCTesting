@@ -13,7 +13,7 @@ namespace TestStack.FluentMVCTesting
         public void ShouldReturnJson(Action<dynamic> assertion)
         {
             ValidateActionReturnType<JsonResult>();
-            var jsonResult = (JsonResult)_actionResult;
+            var jsonResult = (JsonResult)ActionResult;
             assertion(jsonResult.Data);
         }
     }
