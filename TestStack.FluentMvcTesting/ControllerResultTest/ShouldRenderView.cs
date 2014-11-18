@@ -12,7 +12,8 @@ namespace TestStack.FluentMVCTesting
 
             if (viewResult.ViewName != viewName && (viewName != ActionName || viewResult.ViewName != ""))
             {
-                throw new ActionResultAssertionException(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", viewName, viewResult.ViewName == "" ? ActionName : viewResult.ViewName));
+                var actual = viewResult.ViewName == "" ? ActionName : viewResult.ViewName;
+                throw new ActionResultAssertionException("Expected result view to be '\{viewName}', but instead was given '\{actual}'.");
             }
 
             return new ViewResultTest(viewResult, Controller);

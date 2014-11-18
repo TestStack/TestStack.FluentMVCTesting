@@ -12,8 +12,7 @@ namespace TestStack.FluentMVCTesting
             if (expected == null) return;
             if (actual != expected)
             {
-                throw new ActionResultAssertionException(string.Format(
-                    "Expected file to be of content type '{0}', but instead was given '{1}'.", expected, actual));
+                throw new ActionResultAssertionException("Expected file to be of content type '\{expected}', but instead was given '\{actual}'.");
             }
         }
 
@@ -46,8 +45,7 @@ namespace TestStack.FluentMVCTesting
 
             if (contents != null && !fileResult.FileContents.SequenceEqual(contents))
             {
-                throw new ActionResultAssertionException(string.Format(
-                    "Expected file contents to be equal to [{0}], but instead was given [{1}].",
+                throw new ActionResultAssertionException(string.Format("Expected file contents to be equal to [{0}], but instead was given [{1}].",
                     string.Join(", ", contents),
                     string.Join(", ", fileResult.FileContents)));
             }
@@ -68,10 +66,7 @@ namespace TestStack.FluentMVCTesting
             var reconstitutedText = encoding.GetString(fileResult.FileContents);
             if (contents != reconstitutedText)
             {
-                throw new ActionResultAssertionException(string.Format(
-                    "Expected file contents to be \"{0}\", but instead was \"{1}\".",
-                    contents,
-                    reconstitutedText));
+                throw new ActionResultAssertionException("Expected file contents to be \"\{contents}\", but instead was \"\{reconstitutedText}\".");
             }
 
             return fileResult;
@@ -120,10 +115,7 @@ namespace TestStack.FluentMVCTesting
             var reconstitutedText = encoding.GetString(ConvertStreamToArray(fileResult.FileStream));
             if (contents != reconstitutedText)
             {
-                throw new ActionResultAssertionException(string.Format(
-                    "Expected file contents to be \"{0}\", but instead was \"{1}\".",
-                    contents,
-                    reconstitutedText));
+                throw new ActionResultAssertionException("Expected file contents to be \"\{contents}\", but instead was \"\{reconstitutedText}\".");
             }
 
             return fileResult;
@@ -138,10 +130,7 @@ namespace TestStack.FluentMVCTesting
 
             if (fileName != null && fileName != fileResult.FileName)
             {
-                throw new ActionResultAssertionException(string.Format(
-                    "Expected file name to be '{0}', but instead was given '{1}'.",
-                    fileName,
-                    fileResult.FileName));
+                throw new ActionResultAssertionException("Expected file name to be '\{fileName}', but instead was given '\{fileResult.FileName}'.");
             }
 
             return fileResult;
