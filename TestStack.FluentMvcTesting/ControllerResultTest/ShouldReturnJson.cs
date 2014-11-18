@@ -5,10 +5,7 @@ namespace TestStack.FluentMVCTesting
 {
     public partial class ControllerResultTest<T>
     {
-        public void ShouldReturnJson()
-        {
-            ValidateActionReturnType<JsonResult>();
-        }
+        public void ShouldReturnJson() => ValidateActionReturnType<JsonResult>();
 
         public void ShouldReturnJson(Action<dynamic> assertion)
         {

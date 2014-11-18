@@ -66,19 +66,13 @@ namespace TestStack.FluentMVCTesting
             return _modelTest;
         }
 
-        public IModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError)
-        {
-            return _modelTest.AndModelErrorFor(memberWithError);
-        }
+        public IModelErrorTest<TModel> AndModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithError) => 
+            _modelTest.AndModelErrorFor(memberWithError);
 
-        public IModelErrorTest<TModel> AndModelError(string errorKey)
-        {
-            return _modelTest.AndModelError(errorKey);
-        }
+        public IModelErrorTest<TModel> AndModelError(string errorKey) => 
+            _modelTest.AndModelError(errorKey);
 
-        public IModelTest<TModel> AndNoModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithNoError)
-        {
-            return _modelTest.AndNoModelErrorFor(memberWithNoError);
-        }
+        public IModelTest<TModel> AndNoModelErrorFor<TAttribute>(Expression<Func<TModel, TAttribute>> memberWithNoError) => 
+            _modelTest.AndNoModelErrorFor(memberWithNoError);
     }
 }

@@ -18,24 +18,9 @@ namespace TestStack.FluentMVCTesting
             return new ViewResultTest(viewResult, Controller);
         }
 
-        public ViewResultTest ShouldRenderView(string viewName)
-        {
-            return ShouldRenderViewResult<ViewResult>(viewName);
-        }
-
-        public ViewResultTest ShouldRenderPartialView(string viewName)
-        {
-            return ShouldRenderViewResult<PartialViewResult>(viewName);
-        }
-
-        public ViewResultTest ShouldRenderDefaultView()
-        {
-            return ShouldRenderView(ActionName);
-        }
-
-        public ViewResultTest ShouldRenderDefaultPartialView()
-        {
-            return ShouldRenderPartialView(ActionName);
-        }
+        public ViewResultTest ShouldRenderView(string viewName) => ShouldRenderViewResult<ViewResult>(viewName);
+        public ViewResultTest ShouldRenderPartialView(string viewName) => ShouldRenderViewResult<PartialViewResult>(viewName);
+        public ViewResultTest ShouldRenderDefaultView() => ShouldRenderView(ActionName);
+        public ViewResultTest ShouldRenderDefaultPartialView() => ShouldRenderPartialView(ActionName);
     }
 }

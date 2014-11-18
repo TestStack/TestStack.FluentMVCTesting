@@ -29,30 +29,20 @@ namespace TestStack.FluentMVCTesting
             return redirectResult.RouteValues;
         }
 
-        public RouteValueDictionary ShouldRedirectTo(Func<T, Func<ActionResult>> actionRedirectedTo)
-        {
-            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
-        }
+        public RouteValueDictionary ShouldRedirectTo(Func<T, Func<ActionResult>> actionRedirectedTo) => 
+            ShouldRedirectTo(actionRedirectedTo(Controller).Method);
 
-        public RouteValueDictionary ShouldRedirectTo(Func<T, Func<int, ActionResult>> actionRedirectedTo)
-        {
-            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
-        }
+        public RouteValueDictionary ShouldRedirectTo(Func<T, Func<int, ActionResult>> actionRedirectedTo) => 
+            ShouldRedirectTo(actionRedirectedTo(Controller).Method);
 
-        public RouteValueDictionary ShouldRedirectTo<T1>(Func<T, Func<T1, ActionResult>> actionRedirectedTo)
-        {
-            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
-        }
+        public RouteValueDictionary ShouldRedirectTo<T1>(Func<T, Func<T1, ActionResult>> actionRedirectedTo) => 
+            ShouldRedirectTo(actionRedirectedTo(Controller).Method);
 
-        public RouteValueDictionary ShouldRedirectTo<T1, T2>(Func<T, Func<T1, T2, ActionResult>> actionRedirectedTo)
-        {
-            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
-        }
+        public RouteValueDictionary ShouldRedirectTo<T1, T2>(Func<T, Func<T1, T2, ActionResult>> actionRedirectedTo) => 
+            ShouldRedirectTo(actionRedirectedTo(Controller).Method);
 
-        public RouteValueDictionary ShouldRedirectTo<T1, T2, T3>(Func<T, Func<T1, T2, T3, ActionResult>> actionRedirectedTo)
-        {
-            return ShouldRedirectTo(actionRedirectedTo(Controller).Method);
-        }
+        public RouteValueDictionary ShouldRedirectTo<T1, T2, T3>(Func<T, Func<T1, T2, T3, ActionResult>> actionRedirectedTo) => 
+            ShouldRedirectTo(actionRedirectedTo(Controller).Method);
 
         public RouteValueDictionary ShouldRedirectTo(Expression<Action<T>> actionRedirectedTo)
         {
