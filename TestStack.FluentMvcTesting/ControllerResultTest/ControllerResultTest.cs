@@ -4,9 +4,9 @@ namespace TestStack.FluentMVCTesting
 {
     public partial class ControllerResultTest<T> where T : Controller
     {
-        public T Controller { get; private set; }
-        public string ActionName { get; private set; }
-        public ActionResult ActionResult { get; private set; }
+        public T Controller { get; }
+        public string ActionName { get; }
+        public ActionResult ActionResult { get; }
 
         public void ValidateActionReturnType<TActionResult>() where TActionResult : ActionResult
         {
