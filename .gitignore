@@ -14,3 +14,4 @@ _ReSharper*
 */NhibernateProfiler*/tools
 packages
 /TestStack.FluentMVCTesting.Example/App_Data
+/TestStack.FluentMVCTesting.sln.ide
