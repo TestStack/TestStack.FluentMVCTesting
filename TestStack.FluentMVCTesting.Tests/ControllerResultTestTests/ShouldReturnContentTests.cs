@@ -85,12 +85,12 @@ namespace TestStack.FluentMVCTesting.Tests
         [Test]
         public void Return_the_content_result()
         {
-            ContentResult expected = (ContentResult)_controller.Content();
-            ContentResult actual = _controller.WithCallTo(c => c.Content())
+            var expected = (ContentResult)_controller.Content();
+            var actual = _controller.WithCallTo(c => c.Content())
                 .ShouldReturnContent(ControllerResultTestController.TextualContent);
-            Assert.AreEqual(expected.Content, actual.Content);
-            Assert.AreEqual(expected.ContentType, actual.ContentType);
-            Assert.AreEqual(expected.ContentEncoding, actual.ContentEncoding);
+            Assert.That(actual.Content,Is.EqualTo(expected.Content));
+            Assert.That(actual.ContentType, Is.EqualTo(expected.ContentType));
+            Assert.That(actual.ContentEncoding, Is.EqualTo(expected.ContentEncoding));
         }
     }
 }

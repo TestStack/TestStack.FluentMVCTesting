@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Web.Mvc;
 using NUnit.Framework;
 using TestStack.FluentMVCTesting.Tests.TestControllers;
 
@@ -31,31 +30,31 @@ namespace TestStack.FluentMVCTesting.Tests
         [Test]
         public void Return_the_http_status_result()
         {
-            HttpStatusCodeResult expected = _controller.StatusCode();
-            HttpStatusCodeResult actual = _controller.WithCallTo(c => c.StatusCode())
+            var expected = _controller.StatusCode();
+            var actual = _controller.WithCallTo(c => c.StatusCode())
                 .ShouldGiveHttpStatus();
-            Assert.AreEqual(expected.StatusCode, actual.StatusCode);
-            Assert.AreEqual(expected.StatusDescription, actual.StatusDescription);
+            Assert.That(actual.StatusCode,Is.EqualTo(expected.StatusCode));
+            Assert.That(actual.StatusDescription, Is.EqualTo(expected.StatusDescription));
         }
 
         [Test]
-        public void Reeturn_the_http_status_result_when_the_assertion_against_integer_is_true()
+        public void Return_the_http_status_result_when_the_assertion_against_integer_is_true()
         {
-            HttpStatusCodeResult expected = _controller.StatusCode();
-            HttpStatusCodeResult actual = _controller.WithCallTo(c => c.StatusCode())
+            var expected = _controller.StatusCode();
+            var actual = _controller.WithCallTo(c => c.StatusCode())
                 .ShouldGiveHttpStatus(ControllerResultTestController.Code);
-            Assert.AreEqual(expected.StatusCode, actual.StatusCode);
-            Assert.AreEqual(expected.StatusDescription, actual.StatusDescription);
+            Assert.That(actual.StatusCode, Is.EqualTo(expected.StatusCode));
+            Assert.That(actual.StatusDescription, Is.EqualTo(expected.StatusDescription));
         }
 
         [Test]
-        public void Reeturn_the_http_status_result_when_the_assertion_against_status_code_enum_is_true()
+        public void Return_the_http_status_result_when_the_assertion_against_status_code_enum_is_true()
         {
-            HttpStatusCodeResult expected = _controller.StatusCode();
-            HttpStatusCodeResult actual = _controller.WithCallTo(c => c.StatusCode())
+            var expected = _controller.StatusCode();
+            var actual = _controller.WithCallTo(c => c.StatusCode())
                 .ShouldGiveHttpStatus((HttpStatusCode) ControllerResultTestController.Code);
-            Assert.AreEqual(expected.StatusCode, actual.StatusCode);
-            Assert.AreEqual(expected.StatusDescription, actual.StatusDescription);
+            Assert.That(actual.StatusCode, Is.EqualTo(expected.StatusCode));
+            Assert.That(actual.StatusDescription, Is.EqualTo(expected.StatusDescription));
         }
     }
 }

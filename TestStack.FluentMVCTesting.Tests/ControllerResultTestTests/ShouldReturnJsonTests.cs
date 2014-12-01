@@ -1,5 +1,4 @@
-﻿using System.Web.Mvc;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using TestStack.FluentMVCTesting.Tests.TestControllers;
 
 namespace TestStack.FluentMVCTesting.Tests
@@ -16,20 +15,20 @@ namespace TestStack.FluentMVCTesting.Tests
         [Test]
         public void Return_the_json_result()
         {
-            JsonResult expected = _controller.Json();
-            JsonResult actual = _controller.WithCallTo(c => c.Json()).ShouldReturnJson();
-            Assert.AreEqual(expected.Data, actual.Data);
-            Assert.AreEqual(expected.JsonRequestBehavior, actual.JsonRequestBehavior);
+            var expected = _controller.Json();
+            var actual = _controller.WithCallTo(c => c.Json()).ShouldReturnJson();
+            Assert.That(actual.Data, Is.EqualTo(expected.Data));
+            Assert.That(actual.JsonRequestBehavior, Is.EqualTo(expected.JsonRequestBehavior));
         }
 
         [Test]
         public void Return_the_json_result_when_the_assertion_is_true()
         {
-            JsonResult expected = _controller.Json();
-            JsonResult actual =_controller.WithCallTo(c => c.Json())
+            var expected = _controller.Json();
+            var actual =_controller.WithCallTo(c => c.Json())
                 .ShouldReturnJson(d => Assert.That(d, Is.EqualTo(ControllerResultTestController.JsonValue)));
-            Assert.AreEqual(expected.Data, actual.Data);
-            Assert.AreEqual(expected.JsonRequestBehavior, actual.JsonRequestBehavior);
+            Assert.That(actual.Data, Is.EqualTo(expected.Data));
+            Assert.That(actual.JsonRequestBehavior, Is.EqualTo(expected.JsonRequestBehavior));
         }
     }
 }
