@@ -224,7 +224,7 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         #endregion
 
         #region JSON
-        public ActionResult Json()
+        public JsonResult Json()
         {
             return Json(JsonValue);
         }
