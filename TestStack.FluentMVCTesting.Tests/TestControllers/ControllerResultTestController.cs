@@ -217,7 +217,7 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         {
             return HttpNotFound();
         }
-        public ActionResult StatusCode()
+        public HttpStatusCodeResult StatusCode()
         {
             return new HttpStatusCodeResult(Code);
         }
