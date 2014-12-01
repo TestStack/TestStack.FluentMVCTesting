@@ -9,5 +9,13 @@ namespace TestStack.FluentMVCTesting.Tests
         {
             _controller.WithCallTo(c => c.EmptyResult()).ShouldReturnEmptyResult();
         }
+
+        [Test]
+        public void Return_the_empty_result()
+        {
+            var actual = _controller.WithCallTo(c => c.EmptyResult())
+                .ShouldReturnEmptyResult();
+            Assert.NotNull(actual);
+        }
     }
 }

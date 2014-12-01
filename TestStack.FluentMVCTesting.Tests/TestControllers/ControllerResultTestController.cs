@@ -27,7 +27,7 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         #endregion
 
         #region Empty, Null and Random Results
-        public ActionResult EmptyResult()
+        public EmptyResult EmptyResult()
         {
             return new EmptyResult();
         }
@@ -217,14 +217,14 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         {
             return HttpNotFound();
         }
-        public ActionResult StatusCode()
+        public HttpStatusCodeResult StatusCode()
         {
             return new HttpStatusCodeResult(Code);
         }
         #endregion
 
         #region JSON
-        public ActionResult Json()
+        public JsonResult Json()
         {
             return Json(JsonValue);
         }

@@ -5,12 +5,13 @@ namespace TestStack.FluentMVCTesting
 {
     public partial class ControllerResultTest<T>
     {
-        public void ShouldGiveHttpStatus()
+        public HttpStatusCodeResult ShouldGiveHttpStatus()
         {
             ValidateActionReturnType<HttpStatusCodeResult>();
+            return (HttpStatusCodeResult) ActionResult;
         }
 
-        public void ShouldGiveHttpStatus(int status)
+        public HttpStatusCodeResult ShouldGiveHttpStatus(int status)
         {
             ValidateActionReturnType<HttpStatusCodeResult>();
 
@@ -18,11 +19,13 @@ namespace TestStack.FluentMVCTesting
 
             if (statusCodeResult.StatusCode != status)
                 throw new ActionResultAssertionException(string.Format("Expected HTTP status code to be '{0}', but instead received a '{1}'.", status, statusCodeResult.StatusCode));
+            return (HttpStatusCodeResult) ActionResult;
         }
 
-        public void ShouldGiveHttpStatus(HttpStatusCode status)
+        public HttpStatusCodeResult ShouldGiveHttpStatus(HttpStatusCode status)
         {
             ShouldGiveHttpStatus((int)status);
+            return (HttpStatusCodeResult)ActionResult;
         }
     }
 }

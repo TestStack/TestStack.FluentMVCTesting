@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Web.Mvc;
 using System.Text;
 using TestStack.FluentMVCTesting.Tests.TestControllers;
 
@@ -79,6 +80,17 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() => _controller.WithCallTo(c => c.ContentWithoutEncodingSpecified()).ShouldReturnContent(encoding: ControllerResultTestController.TextualContentEncoding));
 
             Assert.That(exception.Message, Is.EqualTo(string.Format("Expected encoding to be equal to {0}, but instead was null.", ControllerResultTestController.TextualContentEncoding.EncodingName)));
+        }
+
+        [Test]
+        public void Return_the_content_result()
+        {
+            var expected = (ContentResult)_controller.Content();
+            var actual = _controller.WithCallTo(c => c.Content())
+                .ShouldReturnContent(ControllerResultTestController.TextualContent);
+            Assert.That(actual.Content,Is.EqualTo(expected.Content));
+            Assert.That(actual.ContentType, Is.EqualTo(expected.ContentType));
+            Assert.That(actual.ContentEncoding, Is.EqualTo(expected.ContentEncoding));
         }
     }
 }
