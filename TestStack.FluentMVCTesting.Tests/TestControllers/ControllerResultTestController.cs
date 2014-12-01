@@ -27,7 +27,7 @@ namespace TestStack.FluentMVCTesting.Tests.TestControllers
         #endregion
 
         #region Empty, Null and Random Results
-        public ActionResult EmptyResult()
+        public EmptyResult EmptyResult()
         {
             return new EmptyResult();
         }

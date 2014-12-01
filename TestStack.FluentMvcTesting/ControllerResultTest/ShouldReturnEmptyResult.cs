@@ -4,9 +4,10 @@ namespace TestStack.FluentMVCTesting
 {
     public partial class ControllerResultTest<T>
     {
-        public void ShouldReturnEmptyResult()
+        public EmptyResult ShouldReturnEmptyResult()
         {
             ValidateActionReturnType<EmptyResult>();
+            return (EmptyResult) ActionResult;
         }
     }
 }
