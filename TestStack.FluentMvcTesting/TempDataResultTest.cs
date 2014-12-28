@@ -23,5 +23,11 @@ namespace TestStack.FluentMVCTesting
             _controller.ShouldHaveTempDataProperty(key, predicate);
             return this;
         }
+
+        public TempDataResultTest AndShouldNotHaveTempDataProperty(string empty)
+        {
+            _controller.ShouldNotHaveTempDataProperty(empty);
+            return this;
+        }
     }
 }

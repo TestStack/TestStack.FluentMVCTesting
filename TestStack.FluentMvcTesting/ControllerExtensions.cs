@@ -105,7 +105,7 @@ namespace TestStack.FluentMVCTesting
             return new TempDataResultTest(controller);
         }
 
-        public static TempDataResultTest ShouldNotHaveTempDataProperty(this Controller controller, string key)
+        public static TempDataResultTest ShouldNotHaveTempDataProperty(this ControllerBase controller, string key)
         {
             var actual = controller.TempData[key];
 
