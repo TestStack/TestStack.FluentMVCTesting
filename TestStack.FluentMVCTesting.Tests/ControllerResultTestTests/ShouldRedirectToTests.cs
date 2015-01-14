@@ -179,13 +179,24 @@ namespace TestStack.FluentMVCTesting.Tests
             Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'SomeOtherAction', but instead was given a redirect to action 'SomeAction'."));
         }
 
+        // TODO: 
+        //  Remove this test instead of commenting it.
+        //  Give this issue 47 test a better name.
+
+        //[Test]
+        //public void Check_for_redirect_to_action_with_non_specified_controller()
+        //{
+        //    var exception = Assert.Throws<ActionResultAssertionException>(() =>
+        //        _controller.WithCallTo(c => c.RedirectToAnotherActionNoController()).ShouldRedirectTo<SomeOtherController>(c => c.SomeOtherAction())
+        //    );
+        //    Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'SomeOtherAction' in 'SomeOther' controller, but instead was given redirect to action 'SomeAction' within the same controller."));
+        //}
+
         [Test]
-        public void Check_for_redirect_to_action_with_non_specified_controller()
+        public void Issue47()
         {
-            var exception = Assert.Throws<ActionResultAssertionException>(() =>
-                _controller.WithCallTo(c => c.RedirectToAnotherActionNoController()).ShouldRedirectTo<SomeOtherController>(c => c.SomeOtherAction())
-            );
-            Assert.That(exception.Message, Is.EqualTo("Expected redirect to action 'SomeOtherAction' in 'SomeOther' controller, but instead was given redirect to action 'SomeAction' within the same controller."));
+            _controller.WithCallTo(c => c.RedirectToActionWithNoParameters())
+                .ShouldRedirectTo<ControllerResultTestController>(c => c.ActionWithNoParameters());
         }
     }
 }
