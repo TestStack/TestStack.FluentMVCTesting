@@ -116,10 +116,14 @@ namespace TestStack.FluentMVCTesting
 
             var redirectResult = (RedirectToRouteResult)ActionResult;
 
-            if (redirectResult.RouteValues["Controller"] == null)
-            //throw new ActionResultAssertionException(string.Format("Expected redirect to action '{0}' in '{1}' controller, but instead was given redirect to action '{2}' within the same controller.", actionName, controllerName, redirectResult.RouteValues["Action"]));
+            if (redirectResult.RouteValues["Controller"] == null && typeof(TController) == typeof(T))
             {
                 return redirectResult.RouteValues;
+            }
+
+            if (redirectResult.RouteValues["Controller"] == null)
+            {
+                throw new ActionResultAssertionException(string.Format("Expected redirect to action '{0}' in '{1}' controller, but instead was given redirect to action '{2}' within the same controller.", actionName, controllerName, redirectResult.RouteValues["Action"]));
             }
 
             if (redirectResult.RouteValues["Controller"].ToString() != controllerName)
