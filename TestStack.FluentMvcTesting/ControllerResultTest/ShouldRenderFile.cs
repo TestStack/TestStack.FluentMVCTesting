@@ -69,7 +69,7 @@ namespace TestStack.FluentMVCTesting
             if (contents != reconstitutedText)
             {
                 throw new ActionResultAssertionException(string.Format(
-                    "Expected file contents to be \"{0}\", but instead was \"{1}\".",
+                    "Expected file contents to be '{0}', but instead was '{1}'.",
                     contents,
                     reconstitutedText));
             }
@@ -121,7 +121,7 @@ namespace TestStack.FluentMVCTesting
             if (contents != reconstitutedText)
             {
                 throw new ActionResultAssertionException(string.Format(
-                    "Expected file contents to be \"{0}\", but instead was \"{1}\".",
+                    "Expected file contents to be '{0}', but instead was '{1}'.",
                     contents,
                     reconstitutedText));
             }
