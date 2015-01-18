@@ -104,7 +104,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.TextualFile()).ShouldRenderFileContents(contents));
 
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file contents to be \"{0}\", but instead was \"{1}\".", contents, ControllerResultTestController.TextualFileContent)));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file contents to be '{0}', but instead was '{1}'.", contents, ControllerResultTestController.TextualFileContent)));
         }
 
         [Test]
@@ -309,7 +309,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ActionResultAssertionException>(() =>
                 _controller.WithCallTo(c => c.TextualStream()).ShouldRenderFileStream(contents));
 
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file contents to be \"{0}\", but instead was \"{1}\".", contents, ControllerResultTestController.TextualFileContent)));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected file contents to be '{0}', but instead was '{1}'.", contents, ControllerResultTestController.TextualFileContent)));
         }
 
         [Test]

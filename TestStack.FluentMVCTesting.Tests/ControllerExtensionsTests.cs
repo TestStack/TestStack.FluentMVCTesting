@@ -61,7 +61,7 @@ namespace TestStack.FluentMVCTesting.Tests
                 _controller.ShouldHaveTempDataProperty(key));
 
             Assert.That(exception.Message, Is.EqualTo(string.Format(
-                "Expected TempData to have a non-null value with key \"{0}\", but none found.", key)));
+                "Expected TempData to have a non-null value with key '{0}', but none found.", key)));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<TempDataAssertionException>(() =>
                 _controller.ShouldHaveTempDataProperty(key, expectedValue));
 
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected value for key \"{0}\" to be \"{1}\", but instead found \"{2}\"", key, expectedValue, actualValue)));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected value for key '{0}' to be '{1}', but instead found '{2}'", key, expectedValue, actualValue)));
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace TestStack.FluentMVCTesting.Tests
                 _controller.ShouldHaveTempDataProperty<int>(key, x => x == 0));
 
             Assert.That(exception.Message, Is.EqualTo(string.Format(
-                "Expected TempData to have a non-null value with key \"{0}\", but none found.", key)));
+                "Expected TempData to have a non-null value with key '{0}', but none found.", key)));
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace TestStack.FluentMVCTesting.Tests
                 _controller.ShouldNotHaveTempDataProperty(Key));
 
             Assert.That(exception.Message, Is.EqualTo(string.Format(
-                "Expected TempData to have no value with key \"{0}\", but found one.", Key)));
+                "Expected TempData to have no value with key '{0}', but found one.", Key)));
         }
     }
 }

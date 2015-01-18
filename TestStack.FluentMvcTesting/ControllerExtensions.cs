@@ -67,7 +67,7 @@ namespace TestStack.FluentMVCTesting
             if (actual == null)
             {
                 throw new TempDataAssertionException(string.Format(
-                    "Expected TempData to have a non-null value with key \"{0}\", but none found.", key));
+                    "Expected TempData to have a non-null value with key '{0}', but none found.", key));
             }
 
             if (value != null && actual.GetType() != value.GetType())
@@ -81,7 +81,7 @@ namespace TestStack.FluentMVCTesting
             if (value != null && !value.Equals(actual))
             {
                 throw new TempDataAssertionException(string.Format(
-                    "Expected value for key \"{0}\" to be \"{1}\", but instead found \"{2}\"", key, value, actual));
+                    "Expected value for key '{0}' to be '{1}', but instead found '{2}'", key, value, actual));
             }
 
             return new TempDataResultTest(controller);
@@ -94,7 +94,7 @@ namespace TestStack.FluentMVCTesting
             if (actual == null)
             {
                 throw new TempDataAssertionException(string.Format(
-                    "Expected TempData to have a non-null value with key \"{0}\", but none found.", key));
+                    "Expected TempData to have a non-null value with key '{0}', but none found.", key));
             }
 
             if (!predicate((TValue)actual))
@@ -112,7 +112,7 @@ namespace TestStack.FluentMVCTesting
             if (actual != null)
             {
                 throw new TempDataAssertionException(string.Format(
-                    "Expected TempData to have no value with key \"{0}\", but found one.", key));
+                    "Expected TempData to have no value with key '{0}', but found one.", key));
             }
 
             return new TempDataResultTest(controller);
