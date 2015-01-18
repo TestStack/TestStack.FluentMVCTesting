@@ -1,3 +1,28 @@
+# Version 3.0.0
+
+## ShouldRedirectTo Method
+
+It used to be the case that when you invoked `ShouldRedirectTo<TController>` where `TController` is the same type as the `Controller` under test like this:
+
+	var sut = new HomeController();
+	sut.WithCallTo(c => c.Index())
+	    .ShouldRedirectTo<HomeController>(c => c.Index());
+ 
+  an `ActionResultAssertionException` would be thrown. 
+
+An exception is no longer thrown.
+
+### Reason
+
+There is no reason why a test like this one should fail.
+
+You can read the original problem specification and discussion  [here](https://github.com/TestStack/TestStack.FluentMVCTesting/issues/47).
+
+
+### Fix
+
+If your project has been impacted by this particular breaking change, you might consider reevaluate the correctness of the affected tests. 
+
 # Version 2.0.0
 
 ## ShouldRenderFileStream Method
