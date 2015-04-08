@@ -266,6 +266,10 @@ namespace ExpressionToString
                     return "||";
                 case ExpressionType.Subtract:
                     return "-";
+                case ExpressionType.Coalesce:
+                    return "??";
+                case ExpressionType.ExclusiveOr:
+                    return "^";
                 default:
                     throw new NotImplementedException();
             }
