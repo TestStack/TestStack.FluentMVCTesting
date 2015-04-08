@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using ExpressionToString;
 
 namespace TestStack.FluentMVCTesting.Internal
 {
@@ -6,11 +7,7 @@ namespace TestStack.FluentMVCTesting.Internal
     {
         internal string Inspect(LambdaExpression expression)
         {
-            return expression.ToString()
-                .Replace(" OrElse ", " || ")
-                .Replace(" AndAlso ", " && ")
-                .Replace(" Or ", " | ")
-                .Replace(" And ", " & ");
+            return ExpressionStringBuilder.ToString(expression);
         }
     }
 }

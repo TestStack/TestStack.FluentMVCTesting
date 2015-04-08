@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Packages\ExpressionStringBuilder.0.9.2\ExpressionStringBuilder.cs" />
     <Compile Include="ControllerResultTest\ShouldGiveHttpStatus.cs" />
     <Compile Include="ControllerResultTest\ShouldRedirectTo.cs" />
     <Compile Include="ControllerResultTest\ShouldRenderFile.cs" />
