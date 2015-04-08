@@ -13,7 +13,7 @@ namespace TestStack.FluentMVCTesting
             if (contentType != null && contentType != contentResult.ContentType)
             {
                 throw new ActionResultAssertionException(string.Format(
-                    "Expected content type to be \"{0}\", but instead was \"{1}\".",
+                    "Expected content type to be '{0}', but instead was '{1}'.",
                     contentType,
                     contentResult.ContentType));
             }
@@ -21,7 +21,7 @@ namespace TestStack.FluentMVCTesting
             if (content != null && content != contentResult.Content)
             {
                 throw new ActionResultAssertionException(string.Format(
-                    "Expected content to be \"{0}\", but instead was \"{1}\".",
+                    "Expected content to be '{0}', but instead was '{1}'.",
                     content,
                     contentResult.Content));
             }

@@ -23,6 +23,18 @@ You can read the original problem specification and discussion  [here](https://g
 
 If your project has been impacted by this particular breaking change, you might consider reevaluate the correctness of the affected tests. 
 
+## Error Messages
+
+Some error messages surrounded actual values in double quotes. Others surrounded the values in single quotes. In version 3.0.0 *all* values are surrounded in single quotes.
+
+### Reason
+
+Consistency.
+
+### Fix
+
+Amend all effected tests to expect single quotes instead of double quotes.
+
 # Version 2.0.0
 
 ## ShouldRenderFileStream Method
