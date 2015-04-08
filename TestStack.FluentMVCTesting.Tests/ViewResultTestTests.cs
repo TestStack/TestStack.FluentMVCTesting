@@ -72,7 +72,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
                 _viewResultTest.WithModel<TestViewModel>(m => m.Property1 == null)
             );
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model {{\"Property1\":\"{0}\",\"Property2\":{1}}} to pass the given condition (m => (m.Property1 == null)), but it failed.", _model.Property1, _model.Property2)));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model {{\"Property1\":\"{0}\",\"Property2\":{1}}} to pass the given condition ((m) => (m.Property1 == null)), but it failed.", _model.Property1, _model.Property2)));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
                 _viewResultTest.WithModel<TestViewModel>(m => m.Property1 == null || m.Property2 == 1)
             );
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model {{\"Property1\":\"{0}\",\"Property2\":{1}}} to pass the given condition (m => ((m.Property1 == null) || (m.Property2 == 1))), but it failed.", _model.Property1, _model.Property2)));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model {{\"Property1\":\"{0}\",\"Property2\":{1}}} to pass the given condition ((m) => ((m.Property1 == null) || (m.Property2 == 1))), but it failed.", _model.Property1, _model.Property2)));
         }
 
         [Test]
@@ -91,7 +91,18 @@ namespace TestStack.FluentMVCTesting.Tests
             var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
                 _viewResultTest.WithModel<string>(m => m == "ab")
             );
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model \"{0}\" to pass the given condition (m => (m == \"ab\")), but it failed.", _viewResult.ViewData.Model)));
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model \"{0}\" to pass the given condition ((m) => (m == \"ab\")), but it failed.", _viewResult.ViewData.Model)));
+        }
+
+        [Test]
+        public void Check_for_invalid_model_using_predicate_with_captured_var_operand()
+        {
+            var capturedOuterVar = "ab";
+            _viewResult.ViewData.Model = "abc";
+            var exception = Assert.Throws<ViewResultModelAssertionException>(() =>
+                _viewResultTest.WithModel<string>(m => m == capturedOuterVar)
+            );
+            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected view model \"{0}\" to pass the given condition ((m) => (m == capturedOuterVar)), but it failed.", _viewResult.ViewData.Model)));
         }
 
         [Test]

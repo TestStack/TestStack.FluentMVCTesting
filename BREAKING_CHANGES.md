@@ -23,7 +23,7 @@ You can read the original problem specification and discussion  [here](https://g
 
 If your project has been impacted by this particular breaking change, you might consider reevaluate the correctness of the affected tests. 
 
-## Error Messages
+## Error Message Quotes
 
 Some error messages surrounded actual values in double quotes. Others surrounded the values in single quotes. In version 3.0.0 *all* values are surrounded in single quotes.
 
@@ -33,7 +33,27 @@ Consistency.
 
 ### Fix
 
-Amend all effected tests to expect single quotes instead of double quotes.
+Amend any affected tests to expect single quotes instead of double quotes.
+
+## Error Message Lambda Expression
+
+In error messages, lambda expressions arguments are now surrounded in a pair of parentheses. For example:
+
+	... to pass the given condition (model => (model.Property1 != null))
+
+will now look like this:
+
+	... to pass the given condition ((model) => (model.Property1 != null))
+
+As you can see, the argument called `model` is now surrounded in parentheses.
+
+###Reason
+
+FluentMVCTesting now uses [ExpressionToString](https://github.com/JakeGinnivan/ExpressionToString) to humanize expression trees. ExpressionToString surrounds arguments in parentheses.
+
+###Fix
+
+Amend any affected tests to expect lambda expression arguments to be surrounded in parentheses.
 
 # Version 2.0.0
 

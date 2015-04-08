@@ -89,7 +89,6 @@
     <Compile Include="ControllerResultTestTests\ShouldReturnEmptyResultTests.cs" />
     <Compile Include="ControllerResultTestTests\ShouldReturnJsonTests.cs" />
     <Compile Include="ControllerResultTestTests\ShouldReturnContentTests.cs" />
-    <Compile Include="Internal\ExpressionInspectorTests.cs" />
     <Compile Include="RouteValueDictionaryExtensionsTests.cs" />
     <Compile Include="TempDataResultTest.cs" />
     <Compile Include="TestControllers\AsyncController.cs" />
