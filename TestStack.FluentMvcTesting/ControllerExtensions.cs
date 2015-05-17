@@ -3,11 +3,14 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
+#if NET45
+using Xania.AspNet.Simulator;
+#endif
+
 namespace TestStack.FluentMVCTesting
 {
     public static class ControllerExtensions
     {
-
         public static T WithModelErrors<T>(this T controller) where T : Controller
         {
             controller.ModelState.AddModelError("Key", "Value");
@@ -18,11 +21,19 @@ namespace TestStack.FluentMVCTesting
             where T : Controller
             where TAction : ActionResult
         {
+#if NET45
+            var expression = Expression.Lambda<Func<T, object>>(Expression.Convert(actionCall.Body, typeof(object)), actionCall.Parameters);
+            var action = controller.Action(expression);
+            var result = action.Execute();
+
+            return new ControllerResultTest<T>(controller, action.ActionDescriptor.ActionName, result.ActionResult);
+#else
             var actionName = ((MethodCallExpression)actionCall.Body).Method.Name;
 
             var actionResult = actionCall.Compile().Invoke(controller);
 
             return new ControllerResultTest<T>(controller, actionName, actionResult);
+#endif
         }
 
         public static ControllerResultTest<T> WithCallTo<T, TAction>(this T controller, Expression<Func<T, Task<TAction>>> actionCall)
@@ -35,6 +46,30 @@ namespace TestStack.FluentMVCTesting
 
             return new ControllerResultTest<T>(controller, actionName, actionResult);
         }
+
+#if NET45
+        public static ControllerResultTest<T> WithMvcPipelineTo<T, TAction>(this T controller, Expression<Func<T, TAction>> actionCall)
+            where T : Controller
+            where TAction : ActionResult
+        {
+            var expression = Expression.Lambda<Func<T, object>>(Expression.Convert(actionCall.Body, typeof (object)), actionCall.Parameters);
+            var action = controller.Action(expression);
+            var result = action.Execute();
+
+            return new ControllerResultTest<T>(controller, action.ActionDescriptor.ActionName, result.ActionResult);
+        }
+
+        public static ControllerResultTest<T> WithMvcPipelineTo<T, TAction>(this T controller, Expression<Func<T, Task<TAction>>> actionCall)
+            where T : Controller
+            where TAction : ActionResult
+        {
+            var expression = Expression.Lambda<Func<T, object>>(Expression.Convert(actionCall.Body, typeof(object)), actionCall.Parameters);
+            var action = controller.Action(expression);
+            var result = action.Execute();
+
+            return new ControllerResultTest<T>(controller, action.ActionDescriptor.ActionName, result.ActionResult);
+        }
+#endif
 
         public static ControllerResultTest<T> WithCallToChild<T, TAction>(this T controller, Expression<Func<T, TAction>> actionCall)
             where T : Controller
