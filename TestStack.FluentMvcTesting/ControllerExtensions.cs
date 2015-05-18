@@ -21,19 +21,19 @@ namespace TestStack.FluentMVCTesting
             where T : Controller
             where TAction : ActionResult
         {
-#if NET45
-            var expression = Expression.Lambda<Func<T, object>>(Expression.Convert(actionCall.Body, typeof(object)), actionCall.Parameters);
-            var action = controller.Action(expression);
-            var result = action.Execute();
+//#if NET45
+//            var expression = Expression.Lambda<Func<T, object>>(Expression.Convert(actionCall.Body, typeof(object)), actionCall.Parameters);
+//            var action = controller.Action(expression);
+//            var result = action.Execute();
 
-            return new ControllerResultTest<T>(controller, action.ActionDescriptor.ActionName, result.ActionResult);
-#else
+//            return new ControllerResultTest<T>(controller, action.ActionDescriptor.ActionName, result.ActionResult);
+//#else
             var actionName = ((MethodCallExpression)actionCall.Body).Method.Name;
 
             var actionResult = actionCall.Compile().Invoke(controller);
 
             return new ControllerResultTest<T>(controller, actionName, actionResult);
-#endif
+//#endif
         }
 
         public static ControllerResultTest<T> WithCallTo<T, TAction>(this T controller, Expression<Func<T, Task<TAction>>> actionCall)
