@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting", "TestStack.FluentMVCTesting\TestStack.FluentMVCTesting.csproj", "{152CA00F-18D3-4CF5-8CA0-2C5B70CBEA19}"
 EndProject
@@ -29,6 +29,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting.Mvc4.Tests", "TestStack.FluentMVCTesting.Mvc4.Tests\TestStack.FluentMVCTesting.Mvc4.Tests.csproj", "{5264EC40-E039-4634-B92D-79AD3656A23E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStack.FluentMVCTesting.Sample", "Samples\TestStack.FluentMVCTesting.Sample\TestStack.FluentMVCTesting.Sample.csproj", "{FD292B9E-1493-428F-8AF6-F7CF9CF463C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xania.AspNet.Simulator", "Xania.AspNet.Simulator\Xania.AspNet.Simulator.csproj", "{04B8C6C8-D531-468D-B07B-C2EBF9BF13E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,10 @@ Global
 		{FD292B9E-1493-428F-8AF6-F7CF9CF463C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD292B9E-1493-428F-8AF6-F7CF9CF463C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD292B9E-1493-428F-8AF6-F7CF9CF463C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B8C6C8-D531-468D-B07B-C2EBF9BF13E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04B8C6C8-D531-468D-B07B-C2EBF9BF13E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B8C6C8-D531-468D-B07B-C2EBF9BF13E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04B8C6C8-D531-468D-B07B-C2EBF9BF13E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
