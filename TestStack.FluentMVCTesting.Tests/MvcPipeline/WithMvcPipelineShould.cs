@@ -1,8 +1,9 @@
+using System.Web.Mvc;
+using NUnit.Framework;
+using TestStack.FluentMVCTesting.Tests.TestControllers;
+
 namespace TestStack.FluentMVCTesting.Tests.MvcPipeline
 {
-    using NUnit.Framework;
-    using TestStack.FluentMVCTesting.Tests.TestControllers;
-
 #if NET45
     [TestFixture]
     class WithMvcPipelineShould
@@ -16,20 +17,36 @@ namespace TestStack.FluentMVCTesting.Tests.MvcPipeline
         }
 
         [Test]
-        public void Work_correctly_for_valid_check()
+        public void Can_exercise_filters()
         {
-            new AsyncController()
-                .WithMvcPipelineTo(c => c.AsyncViewAction())
-                .ShouldRenderDefaultView();
+            GlobalFilters.Filters.Add(new LoggingFilter());
+            var controller = new ControllerExtensionsController();
+            
+            controller.WithMvcPipelineTo(c => c.SomeAction());
+            
+            Assert.That(LoggingFilter.OnActionExecutingRan);
+            Assert.That(LoggingFilter.OnActionExecutedRan);
         }
 
-        [Test]
-        public void Work_correctly_for_invalid_check()
+        private class LoggingFilter : ActionFilterAttribute, IActionFilter
         {
-            var controller = new AsyncController();
-            Assert.Throws<ActionResultAssertionException>(
-                () => controller.WithMvcPipelineTo(c => c.AsyncViewAction()).ShouldGiveHttpStatus()
-            );
+            public static bool OnActionExecutingRan;
+            public static bool OnActionExecutedRan;
+
+            public LoggingFilter()
+            {
+                OnActionExecutingRan = false;
+                OnActionExecutedRan = false;
+            }
+            public override void OnActionExecuting(ActionExecutingContext filterContext)
+            {
+                OnActionExecutingRan = true;
+            }
+
+            public override void OnActionExecuted(ActionExecutedContext filterContext)
+            {
+                OnActionExecutedRan = true;
+            }
         }
     }
 #endif
