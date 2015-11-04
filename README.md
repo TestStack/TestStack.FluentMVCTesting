@@ -42,7 +42,7 @@ It means you are referencing a version of System.Web.Mvc that isn't compatible w
 Show me the code!
 -----------------
 
-Make sure to check out [the documentation](http://docs.teststack.net/fluentmvctesting/) for full usage instructions.
+Make sure to check out [the documentation](http://fluentmvctesting.teststack.net/) for full usage instructions.
 
 Say you set up the following test class (this example with NUnit, but it will work for any test framework).
 
