@@ -10,7 +10,7 @@ The library is compatible with the AAA testing methodology, although it combines
 Documentation
 -------------
 
-Please see [the documentation](http://docs.teststack.net/fluentmvctesting/) for full installation and usage instructions.
+Please see [the documentation](http://fluentmvctesting.teststack.net/) for full installation and usage instructions.
 
 
 Installation
