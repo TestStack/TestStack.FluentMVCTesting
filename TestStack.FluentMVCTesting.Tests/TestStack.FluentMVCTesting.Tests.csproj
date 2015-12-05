@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncControllerTests.cs" />
+    <Compile Include="MvcPipeline\PipelineExecutorTests.cs" />
     <Compile Include="ControllerResultTestTests\ShouldGiveHttpStatusTests.cs" />
     <Compile Include="ControllerResultTestTests\ShouldRedirectToTests.cs" />
     <Compile Include="ControllerResultTestTests\ShouldRenderFileTests.cs" />

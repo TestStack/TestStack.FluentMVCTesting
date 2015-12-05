@@ -7,7 +7,6 @@ namespace TestStack.FluentMVCTesting
 {
     public static class ControllerExtensions
     {
-
         public static T WithModelErrors<T>(this T controller) where T : Controller
         {
             controller.ModelState.AddModelError("Key", "Value");
@@ -18,22 +17,17 @@ namespace TestStack.FluentMVCTesting
             where T : Controller
             where TAction : ActionResult
         {
-            var actionName = ((MethodCallExpression)actionCall.Body).Method.Name;
-
-            var actionResult = actionCall.Compile().Invoke(controller);
-
-            return new ControllerResultTest<T>(controller, actionName, actionResult);
+            //var actionExecutor = new PipelineActionExecutor();
+            var actionExecutor = new SimpleActionExecutor();
+            return actionExecutor.Execute(controller, actionCall);
         }
 
         public static ControllerResultTest<T> WithCallTo<T, TAction>(this T controller, Expression<Func<T, Task<TAction>>> actionCall)
             where T : Controller
             where TAction : ActionResult
         {
-            var actionName = ((MethodCallExpression)actionCall.Body).Method.Name;
-
-            var actionResult = actionCall.Compile().Invoke(controller).Result;
-
-            return new ControllerResultTest<T>(controller, actionName, actionResult);
+            var actionExecutor = new SimpleActionExecutor();
+            return actionExecutor.Execute(controller, actionCall);
         }
 
         public static ControllerResultTest<T> WithCallToChild<T, TAction>(this T controller, Expression<Func<T, TAction>> actionCall)

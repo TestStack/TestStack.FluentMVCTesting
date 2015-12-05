@@ -84,6 +84,23 @@
     <Compile Include="ControllerResultTest\ShouldReturnContent.cs" />
     <Compile Include="ControllerResultTest\ShouldReturnEmptyResult.cs" />
     <Compile Include="ControllerResultTest\ShouldReturnJson.cs" />
+    <Compile Include="IActionExecutor.cs" />
+    <Compile Include="MvcPipeline\Reflector.cs" />
+    <Compile Include="SimpleActionExecutor.cs" />
+    <Compile Include="MvcPipeline\WebHelpers.cs" />
+    <Compile Include="MvcPipeline\ActionRequestWrapper.cs" />
+    <Compile Include="MvcPipeline\PipelineActionExecutor.cs" />
+    <Compile Include="MvcPipeline\HttpContextSimulator.cs" />
+    <Compile Include="MvcPipeline\HttpRequestSimulator.cs" />
+    <Compile Include="MvcPipeline\MvcActionValueProvider.cs" />
+    <Compile Include="MvcPipeline\ControllerActionResult.cs" />
+    <Compile Include="MvcPipeline\MvcActionDescriptor.cs" />
+    <Compile Include="MvcPipeline\MvcActionInvoker.cs" />
+    <Compile Include="MvcPipeline\ActionContext.cs" />
+    <Compile Include="MvcPipeline\ControllerActionBase.cs" />
+    <Compile Include="MvcPipeline\MvcControllerAction.cs" />
+    <Compile Include="MvcPipeline\SimpleHttpRequest.cs" />
+    <Compile Include="MvcPipeline\SimpleSessionState.cs" />
     <Compile Include="RouteValueDictionaryExtension.cs" />
     <Compile Include="ControllerExtensions.cs" />
     <Compile Include="ControllerResultTest\ControllerResultTest.cs" />
@@ -101,6 +118,7 @@
   <ItemGroup>
     <Content Include="readme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
