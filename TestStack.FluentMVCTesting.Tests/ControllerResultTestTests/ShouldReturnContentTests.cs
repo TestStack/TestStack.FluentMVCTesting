@@ -79,7 +79,7 @@ namespace TestStack.FluentMVCTesting.Tests
         {
             var exception = Assert.Throws<ActionResultAssertionException>(() => _controller.WithCallTo(c => c.ContentWithoutEncodingSpecified()).ShouldReturnContent(encoding: ControllerResultTestController.TextualContentEncoding));
 
-            Assert.That(exception.Message, Is.EqualTo(string.Format("Expected encoding to be equal to {0}, but instead was null.", ControllerResultTestController.TextualContentEncoding.EncodingName)));
+            Assert.That(exception.Message, Is.EqualTo($"Expected encoding to be equal to {ControllerResultTestController.TextualContentEncoding.EncodingName}, but instead was null."));
         }
 
         [Test]

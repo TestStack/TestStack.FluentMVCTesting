@@ -15,6 +15,7 @@ namespace TestStack.FluentMVCTesting
     public class ModelTest<TModel> : IModelTest<TModel>
     {
         private readonly Controller _controller;
+        private string ControllerName => _controller.GetType().Name;
 
         public ModelTest(Controller controller)
         {
@@ -25,7 +26,7 @@ namespace TestStack.FluentMVCTesting
         {
             var member = ((MemberExpression)memberWithError.Body).Member.Name;
             if (!_controller.ModelState.ContainsKey(member) || _controller.ModelState[member].Errors.Count == 0)
-                throw new ViewResultModelAssertionException(string.Format("Expected controller '{0}' to have a model error for member '{1}', but none found.", _controller.GetType().Name, member));
+                throw new ViewResultModelAssertionException($"Expected controller '{ControllerName}' to have a model error for member '{member}', but none found.");
             return new ModelErrorTest<TModel>(this, member, _controller.ModelState[member].Errors);
         }
 
@@ -33,21 +34,21 @@ namespace TestStack.FluentMVCTesting
         {
             var member = ((MemberExpression)memberWithNoError.Body).Member.Name;
             if (_controller.ModelState.ContainsKey(member))
-                throw new ViewResultModelAssertionException(string.Format("Expected controller '{0}' to have no model errors for member '{1}', but found some.", _controller.GetType().Name, member));
+                throw new ViewResultModelAssertionException($"Expected controller '{ControllerName}' to have no model errors for member '{member}', but found some.");
             return this;
         }
 
         public IModelErrorTest<TModel> AndModelError(string errorKey)
         {
             if (!_controller.ModelState.ContainsKey(errorKey) || _controller.ModelState[errorKey].Errors.Count == 0)
-                throw new ViewResultModelAssertionException(string.Format("Expected controller '{0}' to have a model error against key '{1}', but none found.", _controller.GetType().Name, errorKey));
+                throw new ViewResultModelAssertionException($"Expected controller '{ControllerName}' to have a model error against key '{errorKey}', but none found.");
             return new ModelErrorTest<TModel>(this, errorKey, _controller.ModelState[errorKey].Errors);
         }
 
         public void AndNoModelErrors()
         {
             if (!_controller.ModelState.IsValid)
-                throw new ViewResultModelAssertionException(string.Format("Expected controller '{0}' to have no model errors, but it had some.", _controller.GetType().Name));
+                throw new ViewResultModelAssertionException($"Expected controller '{ControllerName}' to have no model errors, but it had some.");
         }
     }
 }

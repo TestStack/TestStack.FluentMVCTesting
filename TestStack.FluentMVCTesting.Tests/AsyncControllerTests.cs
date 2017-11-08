@@ -27,6 +27,7 @@ namespace TestStack.FluentMVCTesting.Tests
                 () => _controller.WithCallTo(c => c.AsyncViewAction()).ShouldGiveHttpStatus()
             );
         }
+        
         [Test]
         public void Work_correctly_for_valid_child_action_check()
         {

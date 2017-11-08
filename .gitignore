@@ -14,3 +14,5 @@ _ReSharper*
 */NhibernateProfiler*/tools
 packages
 /TestStack.FluentMVCTesting.Example/App_Data
+.vs/config/applicationhost.config
+.vs/TestStack.FluentMVCTesting/v15/sqlite3/storage.ide

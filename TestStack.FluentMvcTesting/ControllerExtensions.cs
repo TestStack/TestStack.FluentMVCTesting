@@ -7,7 +7,6 @@ namespace TestStack.FluentMVCTesting
 {
     public static class ControllerExtensions
     {
-
         public static T WithModelErrors<T>(this T controller) where T : Controller
         {
             controller.ModelState.AddModelError("Key", "Value");
@@ -43,7 +42,7 @@ namespace TestStack.FluentMVCTesting
             var action = ((MethodCallExpression)actionCall.Body).Method;
 
             if (!action.IsDefined(typeof(ChildActionOnlyAttribute), false))
-                throw new InvalidControllerActionException(string.Format("Expected action {0} of controller {1} to be a child action, but it didn't have the ChildActionOnly attribute.", action.Name, controller.GetType().Name));
+                throw new InvalidControllerActionException($"Expected action {action.Name} of controller {controller.GetType().Name} to be a child action, but it didn't have the ChildActionOnly attribute.");
 
             return controller.WithCallTo(actionCall);
         }
@@ -55,7 +54,7 @@ namespace TestStack.FluentMVCTesting
             var action = ((MethodCallExpression)actionCall.Body).Method;
 
             if (!action.IsDefined(typeof(ChildActionOnlyAttribute), false))
-                throw new InvalidControllerActionException(string.Format("Expected action {0} of controller {1} to be a child action, but it didn't have the ChildActionOnly attribute.", action.Name, controller.GetType().Name));
+                throw new InvalidControllerActionException($"Expected action {action.Name} of controller {controller.GetType().Name} to be a child action, but it didn't have the ChildActionOnly attribute.");
 
             return controller.WithCallTo(actionCall);
         }
@@ -66,22 +65,17 @@ namespace TestStack.FluentMVCTesting
 
             if (actual == null)
             {
-                throw new TempDataAssertionException(string.Format(
-                    "Expected TempData to have a non-null value with key '{0}', but none found.", key));
+                throw new TempDataAssertionException($"Expected TempData to have a non-null value with key '{key}', but none found.");
             }
 
             if (value != null && actual.GetType() != value.GetType())
             {
-                throw new TempDataAssertionException(string.Format(
-                    "Expected value to be of type {0}, but instead was {1}.",
-                    value.GetType().FullName,
-                    actual.GetType().FullName));
+                throw new TempDataAssertionException($"Expected value to be of type {value.GetType().FullName}, but instead was {actual.GetType().FullName}.");
             }
 
             if (value != null && !value.Equals(actual))
             {
-                throw new TempDataAssertionException(string.Format(
-                    "Expected value for key '{0}' to be '{1}', but instead found '{2}'", key, value, actual));
+                throw new TempDataAssertionException($"Expected value for key '{key}' to be '{value}', but instead found '{actual}'");
             }
 
             return new TempDataResultTest(controller);
@@ -93,8 +87,7 @@ namespace TestStack.FluentMVCTesting
 
             if (actual == null)
             {
-                throw new TempDataAssertionException(string.Format(
-                    "Expected TempData to have a non-null value with key '{0}', but none found.", key));
+                throw new TempDataAssertionException($"Expected TempData to have a non-null value with key '{key}', but none found.");
             }
 
             if (!predicate((TValue)actual))
@@ -111,8 +104,7 @@ namespace TestStack.FluentMVCTesting
 
             if (actual != null)
             {
-                throw new TempDataAssertionException(string.Format(
-                    "Expected TempData to have no value with key '{0}', but found one.", key));
+                throw new TempDataAssertionException($"Expected TempData to have no value with key '{key}', but found one.");
             }
 
             return new TempDataResultTest(controller);
