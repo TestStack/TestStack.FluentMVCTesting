@@ -7,9 +7,7 @@ namespace TestStack.FluentMVCTesting
         public static RouteValueDictionary WithRouteValue(this RouteValueDictionary dict, string key)
         {
             if (!dict.ContainsKey(key))
-            {
-                throw new MissingRouteValueException(string.Format("No value {0} in the route dictionary", key));
-            }
+                throw new MissingRouteValueException($"No value {key} in the route dictionary");
 
             return dict;
         }
@@ -21,14 +19,10 @@ namespace TestStack.FluentMVCTesting
             var actualValue = dict[key];
 
             if (!(actualValue is T))
-            {
-                throw new ValueTypeMismatchException(string.Format("Invalid type of Value with key {0} \r\n expected {1} \r\n but got {2}", key, value.GetType(), actualValue.GetType()));
-            }
+                throw new ValueTypeMismatchException($"Invalid type of Value with key {key} \r\n expected {value.GetType()} \r\n but got {actualValue.GetType()}");
 
             if (!Equals(actualValue, value))
-            {
-                throw new InvalidRouteValueException(string.Format("Invalid value for key {0} \r\n expected {1} \r\n but got {2} in the route dictionary",key ,value, actualValue));
-            }
+                throw new InvalidRouteValueException($"Invalid value for key {key} \r\n expected {value} \r\n but got {actualValue} in the route dictionary");
 
             return dict;
         }

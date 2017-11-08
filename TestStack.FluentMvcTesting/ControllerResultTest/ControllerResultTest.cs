@@ -4,23 +4,19 @@ namespace TestStack.FluentMVCTesting
 {
     public partial class ControllerResultTest<T> where T : Controller
     {
-        public T Controller { get; private set; }
-        public string ActionName { get; private set; }
-        public ActionResult ActionResult { get; private set; }
+        public T Controller { get; }
+        public string ActionName { get; }
+        public ActionResult ActionResult { get; }
 
         public void ValidateActionReturnType<TActionResult>() where TActionResult : ActionResult
         {
             var castedActionResult = ActionResult as TActionResult;
 
             if (ActionResult == null)
-                throw new ActionResultAssertionException(string.Format("Received null action result when expecting {0}.", typeof(TActionResult).Name));
+                throw new ActionResultAssertionException($"Received null action result when expecting {typeof(TActionResult).Name}.");
 
             if (castedActionResult == null)
-                throw new ActionResultAssertionException(
-                    string.Format("Expected action result to be a {0}, but instead received a {1}.",
-                                  typeof(TActionResult).Name, ActionResult.GetType().Name
-                        )
-                    );
+                throw new ActionResultAssertionException($"Expected action result to be a {typeof(TActionResult).Name}, but instead received a {ActionResult.GetType().Name}.");
         }
 
         public ControllerResultTest(T controller, string actionName, ActionResult actionResult)

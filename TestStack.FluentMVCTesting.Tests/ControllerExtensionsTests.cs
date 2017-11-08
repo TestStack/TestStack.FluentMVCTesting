@@ -10,10 +10,7 @@ namespace TestStack.FluentMVCTesting.Tests
         private ControllerExtensionsController _controller;
 
         [SetUp]
-        public void Setup()
-        {
-            _controller = new ControllerExtensionsController();
-        }
+        public void Setup() => _controller = new ControllerExtensionsController();
 
         [Test]
         public void Give_controller_modelstate_errors()

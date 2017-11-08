@@ -25,7 +25,7 @@ namespace TestStack.FluentMVCTesting
 
             var castedModel = _viewResult.Model as TModel;
             if (castedModel == null)
-                throw new ViewResultModelAssertionException(string.Format("Expected view model to be of type '{0}', but it is actually of type '{1}'.", typeof(TModel).Name, _viewResult.Model.GetType().Name));
+                throw new ViewResultModelAssertionException($"Expected view model to be of type '{typeof(TModel).Name}', but it is actually of type '{_viewResult.Model.GetType().Name}'.");
 
             return new ModelTest<TModel>(_controller);
         }
@@ -52,10 +52,7 @@ namespace TestStack.FluentMVCTesting
             var compiledPredicate = predicate.Compile();
 
             if (!compiledPredicate(model))
-                throw new ViewResultModelAssertionException(string.Format(
-                    "Expected view model {0} to pass the given condition ({1}), but it failed.",
-                    modelLex, 
-                    predicateLex));
+                throw new ViewResultModelAssertionException($"Expected view model {modelLex} to pass the given condition ({predicateLex}), but it failed.");
 
             return test;
         }

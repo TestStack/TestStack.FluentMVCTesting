@@ -12,30 +12,19 @@ namespace TestStack.FluentMVCTesting
 
             if (viewResult.ViewName != viewName && (viewName != ActionName || viewResult.ViewName != ""))
             {
-                throw new ActionResultAssertionException(string.Format("Expected result view to be '{0}', but instead was given '{1}'.", viewName, viewResult.ViewName == "" ? ActionName : viewResult.ViewName));
+                var actualViewName = viewResult.ViewName == "" ? ActionName : viewResult.ViewName;
+                throw new ActionResultAssertionException($"Expected result view to be '{viewName}', but instead was given '{actualViewName}'.");
             }
-
+                
             return new ViewResultTest(viewResult, Controller);
         }
 
-        public ViewResultTest ShouldRenderView(string viewName)
-        {
-            return ShouldRenderViewResult<ViewResult>(viewName);
-        }
+        public ViewResultTest ShouldRenderView(string viewName) => ShouldRenderViewResult<ViewResult>(viewName);
 
-        public ViewResultTest ShouldRenderPartialView(string viewName)
-        {
-            return ShouldRenderViewResult<PartialViewResult>(viewName);
-        }
+        public ViewResultTest ShouldRenderPartialView(string viewName) => ShouldRenderViewResult<PartialViewResult>(viewName);
 
-        public ViewResultTest ShouldRenderDefaultView()
-        {
-            return ShouldRenderView(ActionName);
-        }
+        public ViewResultTest ShouldRenderDefaultView() => ShouldRenderView(ActionName);
 
-        public ViewResultTest ShouldRenderDefaultPartialView()
-        {
-            return ShouldRenderPartialView(ActionName);
-        }
+        public ViewResultTest ShouldRenderDefaultPartialView() => ShouldRenderPartialView(ActionName);
     }
 }

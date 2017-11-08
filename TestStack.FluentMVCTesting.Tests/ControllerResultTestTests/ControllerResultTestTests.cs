@@ -14,10 +14,7 @@ namespace TestStack.FluentMVCTesting.Tests
         private ControllerResultTestController _controller;
 
         [SetUp]
-        public void Setup()
-        {
-            _controller = new ControllerResultTestController();
-        }
+        public void Setup() => _controller = new ControllerResultTestController();
 
         #region General Tests
         // Expected action return types for the different types of assertions
